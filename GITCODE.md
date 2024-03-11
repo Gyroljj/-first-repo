@@ -4,7 +4,7 @@
 
 > git config --global user.name "Your Name"   **配置用户名**
 > 
-> git config --global user.email "gyro239@outlook.com" **配置邮箱** 
+> git config --global user.email "email地址" **配置邮箱** 
 > 
 > git config --global credential store **存储配置**
 
