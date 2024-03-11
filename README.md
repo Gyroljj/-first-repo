@@ -2,3 +2,4 @@
 
 ## [Markdown的使用学习](https://github.com/Gyroljj/-first-repo/blob/main/READ.md)
 
+## [Git的学习笔记](https://github.com/Gyroljj/-first-repo/blob/main/GITCODE.md)
