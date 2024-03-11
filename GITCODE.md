@@ -90,3 +90,8 @@
 2. 查看远程仓库: git remote -v
 3. 拉取远程仓库内容： git pull <远程仓库名> <远程分支名>:<本地分支名> （分支名相同可省略冒号后面部分）
 
+## 分支简介和基本操作
+1. 查看分支列表 : **git branch**
+2. 创建分支 : **git branch branch-name**
+3. 切换分支 : **git checkout branch-name**
+4. 
