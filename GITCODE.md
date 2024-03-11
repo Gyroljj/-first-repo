@@ -33,7 +33,7 @@
 3. **git commit -m "message"** 提交所有暂存区的文件到本地仓库
 4. **git commit -am "message"** 提交所有已修改的文件到本地仓库
 5. **git log** 查看仓库历史提交记录（可以使用--oneline参数查看简洁的提交记录）
-6. **git ls-files** 查看暂存区中的内容
+6. **git ls-files** 默认情况下，git ls-files 列出所有已跟踪的文件，包括已修改但尚未暂存的文件。
 
 ## git reset回退版本  
 > 重置当前分支的HEAD为之前的某个提交， 并且删除所有之后的提交。
