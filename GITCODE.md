@@ -30,9 +30,10 @@
 
 1. **git status** 查看仓库的状态
 2. **git add** 添加到暂存区（也可以使用通配符，例如：git add *.txt 也可以使用目录，例如：git add . ）
-3. **git commit** 提交（只提交暂存区的内容，不会提交工作区的内容。）
-4. **git log** 查看仓库历史提交记录（可以使用--oneline参数查看简洁的提交记录）
-5. **git ls-files** 查看暂存区中的内容
+3. **git commit -m "message"** 提交所有暂存区的文件到本地仓库
+4. **git commit -am "message"** 提交所有已修改的文件到本地仓库
+5. **git log** 查看仓库历史提交记录（可以使用--oneline参数查看简洁的提交记录）
+6. **git ls-files** 查看暂存区中的内容
 
 ## git reset回退版本  
 > 重置当前分支的HEAD为之前的某个提交， 并且删除所有之后的提交。
