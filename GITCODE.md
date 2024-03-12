@@ -95,4 +95,28 @@
 2. 创建分支 : **git branch branch-name**
 3. 切换分支 : **git checkout branch-name** / **git switch branch-name**（推荐）
 4. 合并分支 : **git merge branch-name**
-5. 删除分支 ： *已合并* **git branch -d branch-name** / *未合并* **git branch -D branch-name**
+5. 删除分支 : *已合并* **git branch -d branch-name** / *未合并* **git branch -D branch-name**
+6. 查看分支树形 :  **git log --oneline --graph --decorate --all**
+
+## 解决合并冲突
+1. 两个分支未修改同一个文件的同一处位置: **Git 自动合并**
+2. 两个分支修改了同一个文件的同一处位置: **Git 产生冲突**
+3. 解决方法：  
+step1 - 手工修改冲突文件，合并冲突内容。  
+Step2 - 添加暂存区。 **git add file**  
+step3 - 提交修改。 **git commit -m "message"**
+4. 中止合并: 当不想继续执行合并操作时可以使用下面的命令来中止合并过程: **git merge --abort**
+
+## 回退和rebase
+1. **git checkout -b branch-name ID** 恢复到分支的这个时间点的状态
+2. **git rebase branch-name** : rebase 操作可以把本地未push的分叉提交历史整理成直线，看起来更加直观。
+   但是，如果多人协作时，不要对已经推送到远程的分支执行rebase操作。  
+rebase不会产生新的提交， 而是把当前分支的每一个提交都 “复制”到目标分支上，然后再把当前分支指向目标分支，
+   而merge会产生一个新的提交，这个提交有两个分支的所有修改。  
+   ![示意图](https://z4a.net/image/j9gN66)
+3. ***merge***
+   1. 优点: 不会破坏原分支的提交历史，方便回溯和查看
+   2. 缺点: 会产生额外的提交节点，分支图比较复杂
+4. ***rebase***
+   1. 优点: 不会新增额外的提交记录，形成线性历史，比较直观和干净
+   2. 缺点: 会改变提交历史，改变了当前分支branch out的节点。避免在共享分支使用。
