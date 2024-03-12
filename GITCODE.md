@@ -93,5 +93,16 @@
 ## 分支简介和基本操作
 1. 查看分支列表 : **git branch**
 2. 创建分支 : **git branch branch-name**
-3. 切换分支 : **git checkout branch-name**
-4. 
+3. 切换分支 : **git checkout branch-name** / **git switch branch-name**（推荐）
+4. 合并分支 : **git merge branch-name**
+5. 删除分支 ： *已合并* **git branch -d branch-name** / *未合并* **git branch -D branch-name**
+
+## 解决合并冲突
+1. 两个分支未修改同一个文件的同一处位置: **Git 自动合并**
+2. 两个分支修改了同一个文件的同一处位置: **Git 产生冲突**
+3. 解决方法：  
+step1 - 手工修改冲突文件，合并冲突内容。  
+Step2 - 添加暂存区。 **git add file**  
+step3 - 提交修改。 **git commit -m "message"**
+4. 中止合并: 当不想继续执行合并操作时可以使用下面的命令来中止合并过程: **git merge --abort**
+
