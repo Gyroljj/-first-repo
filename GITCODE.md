@@ -95,8 +95,11 @@
 2. 创建分支 : **git branch branch-name**
 3. 切换分支 : **git checkout branch-name** / **git switch branch-name**（推荐）
 4. 合并分支 : **git merge branch-name**
+<<<<<<< HEAD
 5. 删除分支 : *已合并* **git branch -d branch-name** / *未合并* **git branch -D branch-name**
 6. 查看分支树形 :  **git log --oneline --graph --decorate --all**
+=======
+5. 删除分支 ： *已合并* **git branch -d branch-name** / *未合并* **git branch -D branch-name**
 
 ## 解决合并冲突
 1. 两个分支未修改同一个文件的同一处位置: **Git 自动合并**
