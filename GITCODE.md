@@ -93,5 +93,6 @@
 ## 分支简介和基本操作
 1. 查看分支列表 : **git branch**
 2. 创建分支 : **git branch branch-name**
-3. 切换分支 : **git checkout branch-name**
-4. 
+3. 切换分支 : **git checkout branch-name** / **git switch branch-name**（推荐）
+4. 合并分支 : **git merge branch-name**
+5. 删除分支 ： *已合并* **git branch -d branch-name** / *未合并* **git branch -D branch-name**
