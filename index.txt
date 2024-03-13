@@ -1,0 +1,20 @@
+https://www.bilibili.com/video/BV1GF41177Vu/?spm_id_from=333.337.search-card.all.click&vd_source=b1ad6cc34c9cef42dfaf057c70145735
+snake game
+
+html
+文字
+https://doc.houdunren.com/%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B/html/1%20%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html
+视频
+https://www.bilibili.com/video/BV16J41187E4/?spm_id_from=333.1007.top_right_bar_window_custom_collection.content.click
+
+css
+文字
+https://doc.houdunren.com/%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B/css/1%20%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html
+视频
+https://www.bilibili.com/video/BV1tJ411Y7fB/?spm_id_from=333.788.top_right_bar_window_custom_collection.content.click
+
+js
+文字
+https://doc.houdunren.com/%E7%B3%BB%E7%BB%9F%E8%AF%BE%E7%A8%8B/js/1%20%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html
+视频
+https://www.bilibili.com/video/BV1NJ411W7wh/?spm_id_from=333.788.top_right_bar_window_custom_collection.content.click
