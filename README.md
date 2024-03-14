@@ -14,3 +14,6 @@
 
 ## [学习HTML](https://github.com/Gyroljj/-first-repo/blob/main/HTML.md)
 这是学习HTML的笔记。
+
+## [学习JavaScript](https://github.com/Gyroljj/-first-repo/blob/main/JAVASCRIPT.md)
+这是学习JavaScript的笔记
