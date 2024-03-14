@@ -190,4 +190,4 @@ for (const fruit of fruits) {
 3. 获取 `fruits` 中的下一个元素，然后重复步骤 2，直至到达 `fruits` 的末尾。
 
 ## 浅谈对象（Object）
-- 深入分析一下。JavaScript 中一切都是对象。对象是存储在单个分组中的相关功能的集合。
+- JavaScript 中一切都是对象。对象是存储在单个分组中的相关功能的集合。
