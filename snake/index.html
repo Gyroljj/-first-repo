@@ -2,9 +2,92 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>贪吃蛇</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html,body{
+            height: 100%;
+        }
+        body{
+            background: url("../imgs/bg.jpeg") no-repeat;
+            background-size: cover;
+        }
+        .btnbox{
+            width: 200px;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .btnbox button{
+            width: 100px;
+            height: 40px;
+            font-size: 23px;
+            background: deepskyblue;
+            color: black;
+            border-radius: 30px;
+        }
+        .map{
+            width: 1000px;
+            height: 600px;
+            background: url("../imgs/mapbg.png");
+            margin: auto;
+            position: fixed;
+            top: 0;left: 0;
+            right: 0;
+            bottom: 0;
+            box-shadow: 0px 0px 100px black inset,0px 0px 30px white;
+        }
+        .map>div{
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            border-radius: 50%;
+            box-shadow: 0px 0px 20px yellow;
+        }
+        div.head{
+            background: radial-gradient(#ffc000,#ff4e00);
+        }
+        div.body{
+            background: radial-gradient(#fff369,#fa791a);
+        }
+        div.food{
+            background: radial-gradient(#a7fa88,#4f8535);
+            animation: footAnimate 2s linear infinite;
+            left: 400px;
+            top: 40px;
+        }
+        @keyframes footAnimate {
+            0%{
+                box-shadow: 0px 0px 10px white;
+            }
+            50%{
+                box-shadow: 0px 0px 100px white;
+            }
+            100%{
+                box-shadow: 0px 0px 10px white;
+            }
+        }
+
+    </style>
 </head>
 <body>
-    Hello World
+    <div class="btnbox">
+        <button>开始</button>
+        <button>暂停</button>
+        <button>结束</button>
+    </div>
+    <div class="map">
+    </div>
+    <audio src="../imgs/Sing.mp3" autoplay loop></audio>
 </body>
 </html>
