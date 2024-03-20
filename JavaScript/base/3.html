@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>var-let-const的共同点</title>
+</head>
+<body>
+
+    <script>
+        var web = 'ljj';
+        function show() {
+            var web = 'ljj.com';
+            console.log(web)
+            function run() {
+                var web = 'run ... web';
+                console.log(web)
+            }
+            run();
+        }
+        show();
+        console.log(web);
+    </script>
+</body>
+</html>
