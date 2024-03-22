@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        // const hd = "houdunren.com";
+        // console.log(hd.replace("houdunren", "hdcms"));
+
+        const word = ["html","css"];
+        const str = "我喜欢在后盾人学习html与css知识";
+        word.reduce((pre,word) => {
+            pre.replace(word, `<a href=""></a>`)
+        },str);
+    </script>
+</body>
+</html>

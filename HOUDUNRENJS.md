@@ -2,10 +2,6 @@
 
 `console.log()` 方法向 Web 控制台输出一条信息。这条信息可能是单个字符串（包括可选的替代字符串），也可能是一个或多个对象。
 
-# typeof
-
-`typeof`运算符返回一个字符串，表示操作数的类型。
-
 # 变量提升
 
 解析器会先解析代码，然后把声明的变量的声明提升到最前，这就叫做变量提升。
@@ -88,3 +84,167 @@ TDZ 又称暂时性死区，指变量在作用域内已经存在，但必须在`
 ## 解构差异
 
 - 非严格模式可以不使用声明指令，严格模式下必须使用声明。所以建议使用 let 等声明。
+
+# 逻辑与
+
+使用 `&&` 符号表示逻辑与，指符号两端都为 true 时表达式结果为 true。
+
+# 逻辑或
+
+使用 `||` 符号表示逻辑或，指符号左右两端有一方为 true，表达式即成立。
+
+# if
+
+当条件为真时执行表达式代码块。
+
+# switch
+
+可以将 `switch` 理解为 `if` 的另一种结构清晰的写法。
+
+- 如果表达式等于 `case` 中的值，将执行此 `case` 代码段
+- `break` 关键字会终止 `switch` 的执行
+- 没有任何 `case`匹配时将执行`default` 代码块
+- 如果`case`执行后缺少 `break` 则接着执行后面的语句
+
+# while
+
+循环执行语句，需要设置跳出循环的条件否则会陷入死循环状态。
+
+# do/while
+
+后条件判断语句，无论条件是否为真都会先进行循环体。
+
+# for
+
+可以在循环前初始化初始计算变量。
+
+# break/continue
+
+break 用于退出当前循环，continue 用于退出当前循环返回循环起始继续执行。
+
+# label
+
+标签(label) 为程序定义位置，可以使用`continue/break`跳到该位置。
+
+# for/in
+
+用于遍历对象的所有属性，`for/in`主要用于遍历对象，不建议用来遍历数组。
+
+# for/of
+
+用来遍历 Arrays（数组）, Strings（字符串）, Maps（映射）, Sets（集合）等可迭代的数据结构。
+
+与 `for/in` 不同的是 `for/of` 每次循环取其中的值而不是索引。
+
+# typeof
+
+`typeof` 用于返回以下原始类型
+
+- 基本类型：number/string/boolean
+- function
+- object
+- undefined
+
+# instanceof
+
+`instanceof` 运算符用于检测构造函数的 `prototype` 属性是否出现在某个实例对象的原型链上。
+
+也可以理解为是否为某个对象的实例，`typeof`不能区分数组，但`instanceof`则可以。
+
+# String
+
+字符串类型是使用非常多的数据类型，也是相对简单的数据类型。
+
+# 模板字面量
+
+使用 \` ...\` 符号包裹的字符串中可以写入引入变量与表达式
+
+支持换行操作不会产生错误
+
+使用表达式
+
+模板字面量支持嵌套使用
+
+# 标签模板
+
+标签模板是提取出普通字符串与变量，交由标签函数处理
+
+# 获取长度
+
+使用 `length`属性可以获取字符串长度
+
+# 大小写转换
+
+字符串方法`toLowerCase()`和`toUpperCase()`字符串并将所有字符分别转换为小写或大写。
+
+# 移除空白
+
+使用`trim()`删除字符串左右的空白字符
+
+# 获取单字符
+
+根据从 0 开始的位置获取字符
+```
+console.log('houdunren'.charAt(3))
+```
+
+使用数字索引获取字符串
+```
+console.log('houdunren'[3])
+```
+
+# 截取字符串
+
+使用 `slice`、`substr`、`substring` 函数都可以截取字符串。
+
+- slice、substring 第二个参数为截取的结束位置
+- substr 第二个参数指定获取字符数量
+
+# 查找字符串
+
+从开始获取字符串位置，检测不到时返回 `-1`
+```
+console.log('houdunren.com'.indexOf('o')); //1
+console.log('houdunren.com'.indexOf('o', 3)); //11 从第3个字符向后搜索
+```
+
+从结尾来搜索字符串位置
+```
+console.log('houdunren.com'.lastIndexOf('o')); //11
+console.log('houdunren.com'.lastIndexOf('o', 7)); //1 从第7个字符向前搜索
+```
+
+search() 方法用于检索字符串中指定的子字符串，也可以使用正则表达式搜索
+```
+let str = "houdunren.com";
+console.log(str.search("com")); //10
+console.log(str.search(/\.com/i)); //9
+```
+
+`includes` 字符串中是否包含指定的值，第二个参数指查找开始位置
+```
+console.log('houdunren.com'.includes('o')); //true
+console.log('houdunren.com'.includes('h', 11)); //true
+```
+
+`startsWith` 是否是指定位置开始，第二个参数为查找的开始位置。
+```
+console.log('houdunren.com'.startsWith('h')); //true
+console.log('houdunren.com'.startsWith('o', 1)); //true
+```
+
+`endsWith` 是否是指定位置结束，第二个参数为查找的结束位置。
+```
+console.log('houdunren.com'.endsWith('com')); //true
+console.log('houdunren.com'.endsWith('o', 2)); //true
+```
+
+下面是查找关键词的示例
+```
+const words = ["php", "css"];
+const title = "我爱在后盾人学习php与css知识";
+const status = words.some(word => {
+  return title.includes(word);
+});
+console.log(status); //true
+```

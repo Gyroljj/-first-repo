@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        span{color: white}
+    </style>
+    <script>
+        
+        // for (let i = 0; i < 10; i++) {
+        //     for (let j = 0; j < i; j++) {
+        //         document.write("*");
+        //     }
+        //     document.write("<br/>")
+        // }
+
+        function hd(row = 5) {
+            for (let i = 1; i < row; i++) {
+                for (let j = row - i; j > 0 ; j--) {
+                    document.write(`<span>*</span>`);
+                }
+                for (let m = i * 2 -1; m > 0 ; m--) {
+                    document.write("*");
+                }
+                document.write("<br/>")
+            }
+        }
+        hd(20);
+
+        // for (let i = 1; i < 5; i++) {
+        //     for (let j = 5 - i; j > 0 ; j--) {
+        //         document.write(`<span>*</span>`);
+        //     }
+        //     for (let m = i * 2 -1; m > 0 ; m--) {
+        //         document.write("*");
+        //     }
+        //     document.write("<br/>")
+        // }
+    </script>
+</body>
+</html>

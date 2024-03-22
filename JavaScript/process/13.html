@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        // ljj: for (let i = 1; i <= 10; i++) {
+        //     if (i % 2) continue ljj;
+        //     console.log(i);
+        // }
+
+
+        // let count = 1;
+        // for (let i = 0; i < 10; i++) {
+        //     if (i % 2) {
+        //         if (count++ == 3)break;
+        //         console.log(i);
+        //     }
+        // }
+
+        ljjcom: for (let i = 1; i <= 10; i++) {
+            ljj: for (let j = 1; j <= 10 ; j++) {
+                if (j % 2 == 0){
+                    console.log(i, j);
+                }
+                if (j + i >= 10){
+
+                   break ljjcom;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        function star(row = 5) {
+            let start = 0;
+            // while (++start <= row){
+            //     let n = 0;
+            //     while (++n <= start){
+            //         document.write("*");
+            //     }
+            //     document.write("<br/>")
+            // }
+            do {
+                let n = 0;
+                do {
+                    document.write("*");
+                }while (++n <= start)
+                document.write("<br/>")
+            }while (++start <= row);
+        }
+        star(10);
+        // let start = 0;
+        //  do {
+        //      let n = 0;
+        //      do {
+        //          document.write("*");
+        //      }while (++n <= start)
+        //      document.write("<br/>")
+        //  }while (++start <= 5);
+    </script>
+</body>
+</html>
