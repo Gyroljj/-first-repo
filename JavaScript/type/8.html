@@ -15,9 +15,12 @@
 
         const word = ["html","css"];
         const str = "我喜欢在后盾人学习html与css知识";
-        word.reduce((pre,word) => {
-            pre.replace(word, `<a href=""></a>`)
+
+        const replaceString = word.reduce((pre,word) => {
+           return  pre.replace(word, `<a href="?w=${word}">${word}</a>`)
         },str);
+        console.log(replaceString);
+        document.body.innerHTML += replaceString;
     </script>
 </body>
 </html>

@@ -248,3 +248,117 @@ const status = words.some(word => {
 });
 console.log(status); //true
 ```
+
+# 替换字符串
+
+`replace` 方法用于字符串的替换操作
+```
+let name = "houdunren.com";
+web = name.replace("houdunren", "hdcms");
+console.log(web); //hdcms.com
+```
+
+使用字符串替换来生成关键词链接
+```
+const word = ["php", "css"];
+const string = "我喜欢在后盾人学习php与css知识";
+const title = word.reduce((pre, word) => {
+  return pre.replace(word, `<a href="?w=${word}">${word}</a>`);
+}, string);
+document.body.innerHTML += title;
+```
+
+# 重复生成
+
+下例是根据参数重复生成星号
+```
+function star(num = 3) {
+	return '*'.repeat(num);
+}
+console.log(star());
+```
+
+下面是模糊后三位电话号码
+```
+let phone = "98765432101";
+console.log(phone.slice(0, -3) + "*".repeat(3));
+```
+
+# 类型转换
+
+分隔字母
+```
+let name = "hdcms";
+console.log(name.split(""));
+```
+
+将字符串转换为数组
+```
+console.log("1,2,3".split(",")); //[1,2,3]
+```
+
+隐式类型转换会根据类型自动转换类型
+```
+let hd = 99 + '';
+console.log(typeof hd); //string
+```
+
+使用 `String` 构造函数可以显示转换字符串类型
+```
+let hd = 99;
+console.log(typeof String(hd));
+```
+
+js 中大部分类型都是对象，可以使用类方法 `toString`转化为字符串
+```
+let hd = 99;
+console.log(typeof hd.toString()); //string
+
+let arr = ['hdcms', '后盾人'];
+console.log(typeof arr.toString()); //string
+```
+
+# Boolean
+
+布尔类型包括 `true` 与 `false` 两个值，开发中使用较多的数据类型。
+
+## 声明定义
+
+使用对象形式创建布尔类型
+```
+console.log(new Boolean(true)); //true
+console.log(new Boolean(false)); //false
+```
+
+但建议使用字面量创建布尔类型
+```
+let hd =true;
+```
+
+## 隐式转换
+
+基本上所有类型都可以隐式转换为 Boolean 类型。
+
+|  数据类型 |       true       |       false      |
+|:---------:|:----------------:|:----------------:|
+|   String  |    非空字符串    |     空字符串     |
+|   Number  |    非 0 的数值   |      0 、NaN     |
+|   Array   | 数组不参与比较时 | 参与比较的空数组 |
+|   Object  |     所有对象     |                  |
+| undefined |        无        |     undefined    |
+|    null   |        无        |       null       |
+|    NaN    |        无        |        NaN       |
+
+当与 boolean 类型比较时，会将两边类型统一为数字 1 或 0。
+
+- 如果使用 Boolean 与数值比较时，会进行隐式类型转换 true 转为 1，false 转为 0。
+- 字符串在与 Boolean 比较时，两边都为转换为数值类型后再进行比较。
+- 数组的表现与字符串原理一样，会先转换为数值
+- 引用类型的 Boolean 值为真，如对象和数组
+
+# 显式转换
+
+使用 `!!` 转换布尔类型
+
+使用 `Boolean` 函数可以显式转换为布尔类型
+
