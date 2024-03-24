@@ -362,3 +362,84 @@ let hd =true;
 
 使用 `Boolean` 函数可以显式转换为布尔类型
 
+# Number
+
+Number 用于表示整数和浮点数，数字是 `Number`实例化的对象，可以使用对象提供的丰富方法。
+
+# NaN
+
+表示无效的数值
+
+NaN 不能使用 `==` 比较，使用以下代码来判断结果是否正确
+```
+var res = 2 / 'houdunren';
+if (Number.isNaN(res)) {
+	console.log('Error');
+}
+```
+
+也可以使用 `Object.is` 方法判断两个值是否完全相同
+```
+var res = 2 / 'houdunren';
+console.log(Object.is(res, NaN));
+```
+
+# 类型转换
+
+## Number
+
+使用 Number 函数基本上可以转换所有类型
+
+## parseInt
+
+提取字符串开始去除空白后的数字转为整数。
+
+## parseFloat
+
+转换字符串为浮点数，忽略字符串前面空白字符。
+
+> 比如从表单获取的数字是字符串类型需要类型转换才可以计算，下面使用乘法进行隐式类型转换。
+```
+<input type="text" name="num" value="66">
+<script>
+  let num = document.querySelector("[name='num']").value;
+  console.log(num + 5); //665
+
+  console.log(num * 1 + 5); //71
+</script>
+```
+
+# 舍入操作
+
+使用 `toFixed` 可对数值舍入操作，参数指定保存的小数位
+```
+console.log(1.556.toFixed(2)); //1.56
+```
+
+# Math
+
+`Math` 对象提供了众多方法用来进行数学计算,介绍常用的方法，更多方法使用请查看 [MDN 官网](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math)了解。
+
+## 取极限值
+
+使用 `min` 与 `max` 可以取得最小与最大值。
+
+使用`apply` 来从数组中取值
+
+## 舍入处理
+
+取最接近的向上整数
+```
+console.log(Math.ceil(1.111)); //2
+```
+
+得到最接近的向下整数
+```
+console.log(Math.floor(1.555)); //1
+```
+
+四舍五入处理
+```
+console.log(Math.round(1.5)); //2
+```
+
