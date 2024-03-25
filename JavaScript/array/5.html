@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        let arr = ["hdcms","houdunren"];
+        let hd = ["css","js"];
+        function sum(...args) {
+            // console.log(args);
+           return args.reduce((s,v)=>{
+                return s+=v;
+            },0)
+        }
+        console.log(sum(1,2));
+
+        // arr = [...arr,...hd];
+        // console.log(arr);
+
+        // for (const value of hd) {
+        //     arr.push(value);
+        // }
+        // console.table(arr);
+
+    </script>
+</body>
+</html>

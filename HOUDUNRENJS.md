@@ -443,3 +443,372 @@ console.log(Math.floor(1.555)); //1
 console.log(Math.round(1.5)); //2
 ```
 
+## random
+
+`random` 方法用于返回 >=0 且 <1 的随机数（包括 0 但不包括 1）。
+
+# Date
+
+网站中处理日期时间是很常用的功能，通过 `Date` 类型提供的丰富功能可以非常方便的操作。
+
+## 声明日期
+
+获取当前日期时间
+```
+let now = new Date();
+console.log(now);
+console.log(typeof date); //object
+console.log(now * 1); //获取时间戳
+
+//直接使用函数获取当前时间
+console.log(Date());
+console.log(typeof Date()); //string
+
+//获取当前时间戳单位毫秒
+console.log(Date.now());
+```
+
+计算脚本执行时间
+```
+const start = Date.now();
+for (let i = 0; i < 2000000; i++) {}
+const end = Date.now();
+console.log(end - start);
+```
+
+也可以使用控制台测试
+```
+console.time("testFor");
+for (let i = 0; i < 20000000; i++) {}
+console.timeEnd("testFor");
+```
+
+根据指定的日期与时间定义日期对象
+```
+let now = new Date('2028-02-22 03:25:02');
+console.log(now);
+
+now = new Date(2028, 4, 5, 1, 22, 16);
+console.log(now);
+```
+
+使用展示运算符处理更方便
+```
+let info = [2020, 2, 20, 10, 15, 32];
+let date = new Date(...info);
+console.dir(date);
+```
+
+## 类型转换
+
+将日期转为数值类型就是转为时间戳单位是毫秒
+```
+let hd = new Date("2020-2-22 10:33:12");
+console.log(hd * 1);
+
+console.log(Number(hd));
+
+console.log(hd.valueOf())
+
+console.log(date.getTime());
+```
+
+有时后台提供的日期为时间戳格式，下面是将时间戳转换为标准日期的方法
+```
+const param = [1990, 2, 22, 13, 22, 19];
+const date = new Date(...param);
+const timestamp = date.getTime();
+console.log(timestamp);
+console.log(new Date(timestamp));
+```
+
+## 对象方法
+
+格式化输出日期
+```
+let time = new Date();
+console.log(
+  `${time.getFullYear()}-${time.getMonth()}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`
+);
+```
+
+封装函数用于复用
+```
+function dateFormat(date, format = "YYYY-MM-DD HH:mm:ss") {
+  const config = {
+    YYYY: date.getFullYear(),
+    MM: date.getMonth() + 1,
+    DD: date.getDate(),
+    HH: date.getHours(),
+    mm: date.getMinutes(),
+    ss: date.getSeconds()
+  };
+  for (const key in config) {
+    format = format.replace(key, config[key]);
+  }
+  return format;
+}
+console.log(dateFormat(new Date(), "YYYY年MM月DD日"));
+```
+
+更多系统提供的日期时间方法请查看 [MDN 官网](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Date)
+
+## moment.js
+
+Moment.js 是一个轻量级的 JavaScript 时间库，它方便了日常开发中对时间的操作，提高了开发效率。
+
+更多使用方法请访问[中文官网](http://momentjs.cn)或 [英文官网](https://momentjs.com)
+
+# 声明数组
+
+数组是多个变量值的集合，数组是`Array` 对象的实例，所以可以像对象一样调用方法。
+
+# 创建数组
+
+使用对象方式创建数组
+```
+console.log(new Array(1, '后盾人', 'hdcms')); //[1, "后盾人", "hdcms"]
+```
+
+使用字面量创建是推荐的简单作法
+```
+const array = ["hdcms", "houdunren"];
+```
+
+多维数组定义
+```
+const array = [["hdcms"], ["houdunren"]];
+console.log(array[1][0]);
+```
+
+数组是引用类型可以使用const声明并修改它的值
+```
+const array = ["hdcms", "houdunren"];
+array.push("houdunwang");
+console.log(array);
+```
+
+使用原型的 `length`属性可以获取数组元素数量
+
+数组可以设置任何值
+
+下面直接设置 3 号数组，会将 1/2 索引的数组定义为空值
+```
+let hd = ["后盾人"];
+hd[3] = "hdcms";
+console.log(hd.length); //4
+```
+
+声明多个空元素的数组
+```
+let hd = new Array(3);
+console.log(hd.length); //3
+console.log(hd);
+```
+
+# Array.of
+
+使用`Array.of` 与 `new Array` 不同是设置一个参数时不会创建空元素数组
+```
+let hd = Array.of(3);
+console.log(hd); //[3]
+
+hd = Array.of(1, 2, 3);
+console.log(hd); //[1, 2, 3]
+```
+
+# 类型检测
+
+检测变量是否为数组类型
+```
+console.log(Array.isArray([1, "后盾人", "hdcms"])); //true
+console.log(Array.isArray(9)); //false
+```
+
+# 类型转换
+
+可以将数组转换为字符串也可以将其他类型转换为数组。
+
+# 字符串
+
+大部分数据类型都可以使用`.toString()` 函数转换为字符串。
+```
+console.log(([1, 2, 3]).toString()); // 1,2,3
+```
+
+也可以使用函数 `String` 转换为字符串。
+```
+console.log(String([1, 2, 3]));
+```
+
+或使用`join`连接为字符串
+```
+console.log([1, 2, 3].join("-"));//1-2-3
+```
+
+# Array.from
+
+使用`Array.from`可将类数组转换为数组，类数组指包含 `length` 属性或可迭代的对象。
+
+第一个参数为要转换的数据，第二个参数为类似于`map` 函数的回调方法
+```
+let str = '后盾人';
+console.log(Array.from(str)); //["后", "盾", "人"]
+```
+
+为对象设置length属性后也可以转换为数组，但要下标为数值或数值字符串
+```
+let user = {
+  0: '后盾人',
+  '1': 18,
+  length: 2
+};
+console.log(Array.from(user)); //["后盾人", 18]
+```
+
+DOM 元素转换为数组后来使用数组函数，第二个参数类似于`map` 函数的方法，可对数组元素执行函数处理。
+```
+<body>
+    <button message="后盾人">button</button>
+    <button message="hdcms">button</button>
+</body>
+
+<script>
+    let btns = document.querySelectorAll('button');
+    console.log(btns); //包含length属性
+    Array.from(btns, (item) => {
+        item.style.background = 'red';
+    });
+</script>
+```
+
+# 展开语法
+
+## 数组合并
+
+使用展开语法来合并数组相比 `concat` 要更简单，使用`...` 可将数组展开为多个值。
+```
+let a = [1, 2, 3];
+let b = ['a', '后盾人', ...a];
+console.log(b); //["a", "后盾人", 1, 2, 3]
+```
+
+## 函数参数
+
+使用展示语法可以替代 `arguments` 来接收任意数量的参数
+```
+function hd(...args) {
+  console.log(args);
+}
+hd(1, 2, 3, "后盾人"); //[1, 2, 3, "后盾人"]
+```
+
+也可以用于接收部分参数
+```
+function hd(site, ...args) {
+  console.log(site, args); //后盾人 (3) [1, 2, 3]
+}
+hd("后盾人", 1, 2, 3);
+```
+
+## 节点转换
+
+可以将 DOM 节点转为数组，下面例子不可以使用 filter 因为是节点列表
+```
+<body>
+    <button message="后盾人">button</button>
+    <button message="hdcms">button</button>
+</body>
+
+<script>
+    let btns = document.querySelectorAll('button');
+    btns.map((item) => {
+        console.log(item); //TypeError: btns.filter is not a function
+    })
+</script>
+```
+
+使用展开语法后就可以使用数据方法
+```
+<body>
+  <div>hdcms</div>
+  <div>houdunren</div>
+</body>
+
+<script>
+  let divs = document.querySelectorAll("div");
+  [...divs].map(function(div) {
+    div.addEventListener("click", function() {
+      this.classList.toggle("hide");
+    });
+  });
+</script>
+```
+
+学习后面章节后也可以使用原型处理
+```
+<body>
+    <button message="后盾人">button</button>
+    <button message="hdcms">button</button>
+</body>
+
+<script>
+    let btns = document.querySelectorAll('button');
+    Array.prototype.map.call(btns, (item) => {
+        item.style.background = 'red';
+    });
+</script>
+```
+
+# 解构赋值
+
+解构是一种更简洁的赋值特性，可以理解为分解一个数据的结构
+
+- 建设使用 `var/let/const` 声明
+
+字符串解构
+```
+const [...a] = "hdcms";
+console.log(a); //Array(5);['h', 'd', 'c', 'm', 's']
+```
+
+函数参数
+
+- 数组参数的使用
+```
+function hd([a, b]) {
+	console.log(a, b); // 后盾人 hdcms
+}
+hd(['后盾人', 'hdcms']);
+```
+
+# 管理元素
+
+使用从 0 开始的索引来改变数组
+```
+let arr = [1, "后盾人", "hdcms"];
+arr[1] = '后盾人教程';
+console.log(arr); //[1, "后盾人教程", "hdcms"]
+```
+
+向数组追加元素
+```
+let arr = [1, "后盾人", "hdcms"];
+arr[arr.length] = 'houdunren.com';
+console.log(arr); //[1, "后盾人", "hdcms", "houdunren.com"]
+```
+
+## 扩展语法
+
+使用展示语法批量添加元素
+```
+let arr = ["后盾人", "hdcms"];
+let hd = ["houdunren"];
+hd.push(...arr);
+console.log(hd); //["houdunren", "后盾人", "hdcms"]
+```
+
+push
+
+压入元素，直接改变元数组，返回值为数组元素数量
+

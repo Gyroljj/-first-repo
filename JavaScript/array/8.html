@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        // let arr = ["hdcms", "houdunren"];
+        // let hd = ["shop", "cms"];
+        // let len = arr.push("live", ...hd);
+        // console.log(arr.length);
+        // console.table(arr);
+
+        // arr.push("shop","cms");
+        // console.table(arr);
+
+        // let hd = ["shop", "cms"];
+        // arr = [...arr, ...hd];
+        // console.table(arr);
+
+        // arr[arr.length] = "cms";
+        // arr[arr.length] = "shop";
+        // console.table(arr);
+
+        function rangeArray(begin, end) {
+            const arr = [];
+            for (let i = begin; i <= end ; i++) {
+                arr.push(i);
+            }
+            return arr;
+        }
+        console.table(rangeArray(11, 15));
+    </script>
+</body>
+</html>
