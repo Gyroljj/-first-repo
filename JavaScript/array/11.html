@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    function move(arr,form,to) {
+        if (form < 0 || to >=arr.length){
+            console.error("参数错误");
+            return;
+        }
+        const newArr = [...arr];
+        let item = newArr.splice(form,1);
+        console.log(item);
+        newArr.splice(to,0,...item);
+        return newArr;
+    }
+    let arr = [1,2,3,4];
+    console.table(move(arr,0,3))
+</script>
+</html>

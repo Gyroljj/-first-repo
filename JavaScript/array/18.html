@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    let arr = [1,5,3,9,7];
+    // arr = arr.sort(function (a,b){
+    //     //-1  从小到大， 1 正数  从大到小
+    //     return a - b;
+    // })
+    // console.table(arr);
+
+    let cart = [
+        {name: "iphone", price: 12000},
+        {name: "mac", price: 18000},
+        {name: "ipad", price: 3200}
+    ];
+    cart = cart.sort(function (a, b) {
+        return a.price - b.price;
+    })
+    console.table(cart);
+</script>
+</html>

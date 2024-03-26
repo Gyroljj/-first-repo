@@ -808,7 +808,484 @@ hd.push(...arr);
 console.log(hd); //["houdunren", "后盾人", "hdcms"]
 ```
 
-push
+## push
 
 压入元素，直接改变元数组，返回值为数组元素数量
+```
+let arr = ["后盾人", "hdcms"];
+console.log(arr.push('向军大叔', 'houdunren')); //4
+console.log(arr); //["后盾人", "hdcms", "向军大叔", "houdunren"]
+```
+
+根据区间创建新数组
+```
+function rangeArray(begin, end) {
+  const array = [];
+  for (let i = begin; i <= end; i++) {
+    array.push(i);
+  }
+  return array;
+}
+console.log(rangeArray(1, 6));
+```
+
+## pop
+
+从末尾弹出元素，直接改变元数组，返回值为弹出的元素
+```
+let arr = ["后盾人", "hdcms"];
+console.log(arr.pop()); //hdcms
+console.log(arr); //["后盾人"]
+```
+
+## shift
+
+从数组前面取出一个元素
+```
+let arr = ["后盾人", "hdcms"];
+console.log(arr.shift()); //后盾人
+console.log(arr); //["hdcms"]
+```
+
+## unshift
+
+从数组前面添加元素
+```
+let arr = ["后盾人", "hdcms"];
+console.log(arr.unshift('向军大叔', 'houdunren')); //4
+console.log(arr); //["向军大叔", "houdunren", "后盾人", "hdcms"]
+```
+
+## fill
+
+使用`fill` 填充数组元素
+```
+console.dir(Array(4).fill("后盾人")); //["后盾人", "后盾人", "后盾人", "后盾人"]
+```
+
+指定填充位置
+```
+console.log([1, 2, 3, 4].fill("后盾人", 1, 2)); //[1, "后盾人", 3, 4]
+```
+
+## slice
+
+使用 `slice` 方法从数组中截取部分元素组合成新数组（并不会改变原数组），不传第二个参数时截取到数组的最后元素。
+```
+let arr = [0, 1, 2, 3, 4, 5, 6];
+console.log(arr.slice(1, 3)); // [1,2]
+```
+
+不设置参数是为获取所有元素
+```
+let arr = [0, 1, 2, 3, 4, 5, 6];
+console.log(arr.slice()); //[0, 1, 2, 3, 4, 5, 6]
+```
+
+## splice
+
+使用 `splice` 方法可以添加、删除、替换数组中的元素，会对原数组进行改变，返回值为删除的元素。
+
+删除数组元素第一个参数为从哪开始删除，第二个参数为删除的数量。
+```
+let arr = [0, 1, 2, 3, 4, 5, 6];
+console.log(arr.splice(1, 3)); //返回删除的元素 [1, 2, 3]
+console.log(arr); //删除数据后的原数组 [0, 4, 5, 6]
+```
+
+通过指定第三个参数来设置在删除位置添加的元素
+```
+let arr = [0, 1, 2, 3, 4, 5, 6];
+console.log(arr.splice(1, 3, 'hdcms', '后盾人')); //[1, 2, 3]
+console.log(arr); //[0, "hdcms", "后盾人", 4, 5, 6]
+```
+
+向末尾添加元素
+```
+let arr = [0, 1, 2, 3, 4, 5, 6];
+console.log(arr.splice(arr.length, 0, 'hdcms', '后盾人')); //[]
+console.log(arr); // [0, 1, 2, 3, 4, 5, 6, "hdcms", "后盾人"]
+```
+
+向数组前添加元素
+```
+let arr = [0, 1, 2, 3, 4, 5, 6];
+console.log(arr.splice(0, 0, 'hdcms', '后盾人')); //[]
+console.log(arr); //["hdcms", "后盾人", 0, 1, 2, 3, 4, 5, 6]
+```
+
+数组元素位置调整函数
+```
+function move(array, before, to) {
+  if (before < 0 || to >= array.length) {
+    console.error("指定位置错误");
+    return;
+  }
+  const newArray = [...array];
+  const elem = newArray.splice(before, 1);
+  newArray.splice(to, 0, ...elem);
+  return newArray;
+}
+const array = [1, 2, 3, 4];
+console.table(move(array, 0, 3)); //[2, 3, 4, 1]
+```
+
+## 清空数组
+
+将数组值修改为`[]`可以清空数组，**如果有多个引用时数组在内存中存在被其他变量引用**。
+```
+let user = [{ name: "hdcms" }, { name: "后盾人" }];
+let cms = user;
+user = [];
+console.log(user); // []
+console.log(cms); // [{ name: "hdcms" }, { name: "后盾人" }]
+```
+
+将数组`length`设置为 0 也可以清空数组
+```
+let user = [{ name: "hdcms" }, { name: "后盾人" }];
+let cms = user;
+user.length = 0;
+console.log(user); // []
+console.log(cms); // []
+```
+
+使用`splice`方法删除所有数组元素
+```
+let user = [{ name: "hdcms" }, { name: "后盾人" }];
+let cms = user;
+user.splice(0, user.length);
+console.log(user);
+console.log(user);
+```
+
+使用`pop/shift`删除所有元素，来清空数组
+```
+let user = [{ name: "hdcms" }, { name: "后盾人" }];
+let cms = user;
+while (user.pop()) {}
+console.log(user);
+console.log(user);
+```
+
+# 合并拆分
+
+## join
+
+使用`join`连接成字符串
+```
+let arr = [1, "后盾人", "hdcms"];
+console.log(arr.join('-')); //1-后盾人-hdcms 使用join可以指定转换的连接方式
+```
+
+## split
+
+`split` 方法用于将字符串分割成数组，类似`join`方法的反函数。
+```
+let price = "99,78,68";
+console.log(price.split(",")); //["99", "78", "68"]
+```
+
+## concat
+
+`concat`方法用于连接两个或多个数组，元素是值类型的是复制操作，如果是引用类型还是指向同一对象
+```
+let array = ["hdcms", "houdunren"];
+let hd = [1, 2];
+let cms = [3, 4];
+console.log(array.concat(hd, cms)); //["hdcms", "houdunren", 1, 2, 3, 4]
+```
+
+也可以使用扩展语法实现连接
+```
+console.log([...array, ...hd, ...cms]);
+```
+
+## copyWithin
+
+使用 `copyWithin` 从数组中复制一部分到同数组中的另外位置。
+
+语法说明
+```
+array.copyWithin(target, start, end)
+```
+
+参数说明
+
+| 参数   | 描述                                                                   |
+|--------|------------------------------------------------------------------------|
+| target | 必需。复制到指定目标索引位置。                                         |
+| start  | 可选。元素复制的起始位置。                                             |
+| end    | 可选。停止复制的索引位置 (默认为 array.length)。如果为负值，表示倒数。 |
+
+```
+const arr = [1, 2, 3, 4];
+console.log(arr.copyWithin(2, 0, 2)); //[1, 2, 1, 2]
+```
+
+# 查找元素
+
+## indexOf
+
+使用 `indexOf` 从前向后查找元素出现的位置，如果找不到返回 -1。
+```
+let arr = [7, 3, 2, 8, 2, 6];
+console.log(arr.indexOf(2)); // 2 从前面查找2出现的位置
+```
+
+如下面代码一下，使用 `indexOf` 查找字符串将找不到，因为`indexOf` 类似于`===`是严格类型约束。
+```
+let arr = [7, 3, 2, '8', 2, 6];
+console.log(arr.indexOf(8)); // -1
+```
+
+第二个参数用于指定查找开始位置
+```
+let arr = [7, 3, 2, 8, 2, 6];
+//从第二个元素开始向后查找
+console.log(arr.indexOf(2, 3)); //4
+```
+
+## lastIndexOf
+
+使用 `lastIndexOf` 从后向前查找元素出现的位置，如果找不到返回 -1。
+
+第二个参数用于指定查找开始位置
+
+## includes
+
+使用 `includes` 查找字符串返回值是布尔类型更方便判断
+
+我们来实现一个自已经的`includes`函数，来加深对`includes`方法的了解
+```
+function includes(array, item) {
+  for (const value of array)
+    if (item === value) return true;
+  return false;
+}
+
+console.log(includes([1, 2, 3, 4], 3)); //true
+```
+
+## find
+
+find 方法找到后会把值返回出来
+
+- 如果找不到返回值为`undefined`
+
+返回第一次找到的值，不继续查找
+```
+let arr = ["hdcms", "houdunren", "hdcms"];
+
+let find = arr.find(function(item) {
+  return item == "hdcms";
+});
+
+console.log(find); //hdcms
+```
+
+使用`includes`等不能查找引用类型，因为它们的内存地址是不相等的
+```
+const user = [{ name: "李四" }, { name: "张三" }, { name: "后盾人" }];
+const find = user.includes({ name: "后盾人" });
+console.log(find); // false
+```
+
+`find` 可以方便的查找引用类型
+```
+const user = [{ name: "李四" }, { name: "张三" }, { name: "后盾人" }];
+const find = user.find(user => (user.name = "后盾人"));
+console.log(find); //{name: "后盾人"}
+```
+
+## findIndex
+
+`findIndex` 与 `find` 的区别是返回索引值，参数也是 : 当前值，索引，操作数组。
+
+- 查找不到时返回 `-1`
+
+## find 原理
+
+下面使用自定义函数
+```
+let arr = [1, 2, 3, 4, 5];
+function find(array, callback) {
+  for (const value of array) {
+    if (callback(value) === true) return value;
+  }
+  return undefined;
+}
+let res = find(arr, function(item) {
+  return item == 2;
+});
+console.log(res); // 2
+```
+
+下面添加原型方法实现
+```
+Array.prototype.findValue = function(callback) {
+  for (const value of this) {
+    if (callback(value) === true) return value;
+  }
+  return undefined;
+};
+
+let re = arr.findValue(function(item) {
+  return item == 2;
+});
+console.log(re); // 2
+```
+
+# 数组排序
+
+## reverse
+
+反转数组顺序
+```
+let arr = [1, 4, 2, 9];
+console.log(arr.reverse()); //[9, 2, 4, 1]
+```
+
+## sort
+
+`sort`每次使用两个值进行比较 `Array.sort((a,b)=>a-b`
+
+- 返回负数 a 排在 b 前面，从小到大
+- 返回正数 b 排在 a 前面，从大到小
+- 返回 0 时不动
+
+默认从小于大排序数组元素
+```
+let arr = [1, 4, 2, 9];
+console.log(arr.sort()); //[1, 2, 4, 9]
+```
+
+使用排序函数从大到小排序，参数一与参数二比较，返回正数为降序负数为升序
+```
+let arr = [1, 4, 2, 9];
+
+console.log(arr.sort(function (v1, v2) {
+	return v2 - v1;
+})); //[9, 4, 2, 1]
+```
+
+下面是按课程点击数由高到低排序
+```
+let lessons = [
+  { title: "媒体查询响应式布局", click: 78 },
+  { title: "FLEX 弹性盒模型", click: 12 },
+  { title: "MYSQL多表查询随意操作", click: 99 }
+];
+
+let sortLessons = lessons.sort((v1, v2) => v2.click - v1.click);
+console.log(sortLessons);
+```
+
+## 排序原理
+
+```
+let arr = [1, 5, 3, 9, 7];
+function sort(array, callback) {
+  for (const n in array) {
+    for (const m in array) {
+      if (callback(array[n], array[m]) < 0) {
+        let temp = array[n];
+        array[n] = array[m];
+        array[m] = temp;
+      }
+    }
+  }
+  return array;
+}
+arr = sort(arr, function(a, b) {
+  return a - b;
+});
+console.table(arr);
+```
+
+# 循环遍历
+
+## for
+
+根据数组长度结合`for` 循环来遍历数组
+```
+let lessons = [
+	{title: '媒体查询响应式布局',category: 'css'},
+    {title: 'FLEX 弹性盒模型',category: 'css'},
+	{title: 'MYSQL多表查询随意操作',category: 'mysql'}
+];
+
+for (let i = 0; i < lessons.length; i++) {
+  lessons[i] = `后盾人: ${lessons[i].title}`;
+}
+console.log(lessons);
+```
+
+## forEach
+
+`forEach`使函数作用在每个数组元素上，但是没有返回值。
+
+下面例子是截取标签的五个字符。
+```
+let lessons = [
+	{title: '媒体查询响应式布局',category: 'css'},
+    {title: 'FLEX 弹性盒模型',category: 'css'},
+	{title: 'MYSQL多表查询随意操作',category: 'mysql'}
+];
+
+lessons.forEach((item, index, array) => {
+    item.title = item.title.substr(0, 5);
+});
+console.log(lessons);
+```
+
+## for/in
+
+遍历时的 key 值为数组的索引
+```
+let lessons = [
+	{title: '媒体查询响应式布局',category: 'css'},
+  {title: 'FLEX 弹性盒模型',category: 'css'},
+	{title: 'MYSQL多表查询随意操作',category: 'mysql'}
+];
+
+for (const key in lessons) {
+    console.log(`标题: ${lessons[key].title}`);
+}
+```
+
+## for/of
+
+与 `for/in` 不同的是 `for/of` 每次循环取其中的值而不是索引。
+```
+let lessons = [
+	{title: '媒体查询响应式布局',category: 'css'},
+  {title: 'FLEX 弹性盒模型',category: 'css'},
+	{title: 'MYSQL多表查询随意操作',category: 'mysql'}
+];
+
+for (const item of lessons) {
+  console.log(`
+    标题: ${item.title}
+    栏目: ${item.category == "css" ? "前端" : "数据库"}
+  `);
+}
+```
+
+使用数组的迭代对象遍历获取索引与值（有关迭代器知识后面章节会讲到）
+```
+const hd = ['houdunren', 'hdcms'];
+const iterator = hd.entries();
+console.log(iterator.next()); //value:{0:0,1:'houdunren'}
+console.log(iterator.next()); //value:{0:1,1:'hdcms'}
+```
+
+这样就可以使用解构特性与 `for/of` 遍历并获取索引与值了
+```
+const hd = ["hdcms", "houdunren"];
+
+for (const [key, value] of hd.entries()) {
+  console.log(key, value); //这样就可以遍历了
+}
+```
 
