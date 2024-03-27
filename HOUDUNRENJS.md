@@ -1289,3 +1289,514 @@ for (const [key, value] of hd.entries()) {
 }
 ```
 
+## 迭代器方法
+
+数组中可以使用多种迭代器方法，迭代器后面章节会详解。
+
+## keys
+
+通过迭代对象获取索引
+```
+const hd = ["houdunren", "hdcms"];
+const keys = hd.keys();
+console.log(keys.next()); // {value: 0, done: false}
+console.log(keys.next()); // {value: 1, done: false}
+console.log(keys.next()); // {value: undefined, done: true}
+```
+
+获取数组所有键
+```
+"use strict";
+const arr = ["a", "b", "c", "后盾人"];
+
+for (const key of arr.keys()) {
+  console.log(key); //0 1 2 3
+}
+```
+
+## values
+
+通过迭代对象获取值
+```
+const hd = ["houdunren", "hdcms"];
+const values = hd.values();
+console.log(values.next()); // {value: 'houdunren', done: false}
+console.log(values.next()); // {value: 'hdcms', done: false}
+console.log(values.next()); // {value: undefined, done: true}
+```
+
+获取数组的所有值
+```
+"use strict";
+const arr = ["a", "b", "c", "后盾人"];
+
+for (const value of arr.values()) {
+  console.log(value); // a b c 后盾人
+}
+```
+
+## entries
+
+返回数组所有键值对，下面使用解构语法循环
+```
+const arr = ["a", "b", "c", "后盾人"];
+for (const [key, value] of arr.entries()) {
+  console.log(key, value); // 0 'a'  1 'b'  2 'c'  3 '后盾人'
+}
+```
+
+解构获取内容（对象章节会详细讲解）
+```
+const hd = ["houdunren", "hdcms"];
+const iterator = hd.entries();
+
+let {done,value: [k, v]} = iterator.next();
+
+console.log(v); // houdunren
+```
+
+# 扩展语法
+
+## every
+
+`every` 用于递归的检测元素，要所有元素操作都要返回真结果才为真。
+
+查看班级中同学的 JS 成绩是否都及格
+```
+const user = [
+  { name: "李四", js: 89 },
+  { name: "马六", js: 55 },
+  { name: "张三", js: 78 }
+];
+const resust = user.every(user => user.js >= 60);
+console.log(resust); // false
+```
+
+标题的关键词检查
+```
+let words = ['后盾', '北京', '培训'];
+let title = '后盾人不断分享技术教程';
+
+let state = words.every(function (item, index, array) {
+  return title.indexOf(item) >= 0;
+});
+
+if (state == false) console.log('标题必须包含所有关键词'); // 标题必须包含所有关键词
+```
+
+## some
+
+使用 `some` 函数可以递归的检测元素，如果有一个返回 true，表达式结果就是真。第一个参数为元素，第二个参数为索引，第三个参数为原数组。
+
+下面是使用 `some` 检测规则关键词的示例，如果匹配到一个词就提示违规。
+```
+let words = ['后盾', '北京', '武汉'];
+let title = '后盾人不断分享技术教程'
+
+let state = words.some(function (item, index, array) {
+	return title.indexOf(item) >= 0;
+});
+
+if (state) console.log('标题含有违规关键词'); // 标题含有违规关键词
+```
+
+## filter
+
+使用 `filter` 可以过滤数据中元素，下面是获取所有在 CSS 栏目的课程。
+```
+let lessons = [
+  {title: '媒体查询响应式布局',category: 'css'},
+  {title: 'FLEX 弹性盒模型',category: 'css'},
+  {title: 'MYSQL多表查询随意操作',category: 'mysql'}
+];
+
+let cssLessons = lessons.filter(function (item, index, array) {
+  if (item.category.toLowerCase() == 'css') {
+    return true;
+  }
+});
+
+console.log(cssLessons);
+```
+
+我们来写一个过滤元素的方法来加深些技术
+```
+function except(array, excepts) {
+  const newArray = [];
+  for (const elem of array)
+    if (!excepts.includes(elem)) newArray.push(elem);
+  return newArray;
+}
+
+const array = [1, 2, 3, 4];
+console.log(except(array, [2, 3])); //[1,4]
+```
+
+## map
+
+使用 `map` 映射可以在数组的所有元素上应用函数，用于映射出新的值。
+
+获取数组所有标题组合的新数组
+```
+let lessons = [
+  {title: '媒体查询响应式布局',category: 'css'},
+  {title: 'FLEX 弹性盒模型',category: 'css'},
+  {title: 'MYSQL多表查询随意操作',category: 'mysql'}
+];
+
+console.log(lessons.map(item => item.title)); // ['媒体查询响应式布局', 'FLEX 弹性盒模型', 'MYSQL多表查询随意操作']
+```
+
+为所有标题添加上 `后盾人`
+```
+let lessons = [
+  {title: '媒体查询响应式布局',category: 'css'},
+  {title: 'FLEX 弹性盒模型',category: 'css'},
+  {title: 'MYSQL多表查询随意操作',category: 'mysql'}
+];
+
+lessons = lessons.map(function (item, index, array) {
+    item.title = `[后盾人] ${item['title']}`;
+    return item;
+});
+console.log(lessons);
+```
+
+## reduce
+
+使用 `reduce` 与 `reduceRight` 函数可以迭代数组的所有元素，`reduce` 从前开始 `reduceRight` 从后面开始。
+
+第一个参数是执行函数，第二个参数为初始值
+
+- 传入第二个参数时将所有元素循环一遍
+- 不传第二个参数时从第二个元素开始循环
+
+函数参数说明如下
+
+| 参数  | 说明                       |
+|-------|----------------------------|
+| prev  | 上次调用回调函数返回的结果 |
+| cur   | 当前的元素值               |
+| index | 当前的索引                 |
+| array | 原数组                     |
+
+统计元素出现的次数
+```
+function countArrayELem(array, elem) {
+  return array.reduce((total, cur) => (total += cur == elem ? 1 : 0), 0);
+}
+
+let numbers = [1, 2, 3, 1, 5];
+console.log(countArrayELem(numbers, 1)); //2
+```
+
+取数组中的最大值
+```
+function arrayMax(array) {
+  return array.reduce(
+  	(max, elem) => (max > elem ? max : elem), array[0]
+  );
+}
+
+console.log(arrayMax([1, 3, 2, 9])); // 9
+```
+
+取价格最高的商品
+```
+let cart = [
+  { name: "iphone", price: 12000 },
+  { name: "imac", price: 25000 },
+  { name: "ipad", price: 3600 }
+];
+
+function maxPrice(array) {
+  return array.reduce(
+    (goods, elem) => (goods.price > elem.price ? goods : elem),
+    array[0]
+  );
+}
+console.log(maxPrice(cart)); // {name: 'imac', price: 25000}
+```
+
+计算购物车中的商品总价
+```
+let cart = [
+  { name: "iphone", price: 12000 },
+  { name: "imac", price: 25000 },
+  { name: "ipad", price: 3600 }
+];
+
+const total = cart.reduce(
+	(total, goods) => total += goods.price, 0
+);
+console.log(total); //40600
+```
+
+获取价格超过 1 万的商品名称
+```
+let goods = [
+  { name: "iphone", price: 12000 },
+  { name: "imac", price: 25000 },
+  { name: "ipad", price: 3600 }
+];
+
+function getNameByPrice(array, price) {
+  return array.reduce((goods, elem) => {
+    if (elem.price > price) {
+      goods.push(elem);
+    }
+    return goods;
+  }, []).map(elem => elem.name);
+}
+console.table(getNameByPrice(goods, 10000));
+```
+
+使用 `reduce` 实现数组去重
+```
+let arr = [1, 2, 6, 2, 1];
+let filterArr = arr.reduce((pre, cur, index, array) => {
+  if (pre.includes(cur) === false) {
+      pre = [...pre, cur];
+  }
+  return pre;
+}, [])
+console.log(filterArr); // [1,2,6]
+```
+
+# Symbol
+
+Symbol用于防止属性名冲突而产生的，比如向第三方对象中添加属性时。
+
+Symbol 的值是唯一的，独一无二的不会重复的
+
+## 基础知识
+
+```
+let hd = Symbol();
+let edu = Symbol();
+console.log(hd); //symbol
+console.log(hd == edu); //false
+```
+
+Symbol 不可以添加属性
+```
+let hd = Symbol();
+hd.name = "后盾人";
+console.log(hd.name); //undefined
+```
+
+## 描述参数
+
+可传入字符串用于描述Symbol，方便在控制台分辨Symbol
+```
+let hd = Symbol("is name");
+let edu = Symbol("这是一个测试");
+
+console.log(hd); //Symbol(is name)
+console.log(edu.toString()); //Symbol(这是一个测试)
+```
+
+传入相同参数Symbol也是独立唯一的，因为参数只是描述而已，但使用 `Symbol.for`则不会
+```
+let hd = Symbol("后盾人");
+let edu = Symbol("后盾人");
+console.log(hd == edu); //false
+```
+
+使用`description`可以获取传入的描述参数
+```
+let hd = Symbol("后盾人");
+console.log(hd.description); //后盾人
+```
+
+## Symbol.for
+
+根据描述获取Symbol，如果不存在则新建一个Symbol
+
+- 使用Symbol.for会在系统中将Symbol登记
+- 使用Symbol则不会登记
+
+```
+let hd = Symbol.for("后盾人");
+let edu = Symbol.for("后盾人");
+console.log(hd == edu); //true
+```
+
+## Symbol.keyFor
+
+`Symbol.keyFor` 根据使用`Symbol.for`登记的Symbol返回描述，如果找不到返回`undefined` 。
+```
+let hd = Symbol.for("后盾人");
+console.log(Symbol.keyFor(hd)); //后盾人
+
+let edu = Symbol("houdunren");
+console.log(Symbol.keyFor(edu)); //undefined
+```
+
+## 对象属性
+
+Symbol 是独一无二的所以可以保证对象属性的唯一。
+
+- Symbol 声明和访问使用 `[]`（变量）形式操作
+- 也不能使用 `.` 语法因为 `.`语法是操作字符串属性的。
+
+下面写法是错误的，会将`symbol` 当成**字符串**`symbol`处理
+```
+let symbol = Symbol("后盾人");
+let obj = {
+  symbol: "hdcms.com"
+};
+console.log(obj); // {symbol: 'hdcms.com'}
+```
+
+正确写法是以`[]` 变量形式声明和访问
+```
+let symbol = Symbol("后盾人");
+let obj = {
+  [symbol]: "houdunren.com"
+};
+console.log(obj[symbol]); //houdunren.com
+```
+
+# 实例操作
+
+## 缓存操作
+
+使用`Symbol`可以解决在保存数据时由于名称相同造成的耦合覆盖问题。
+```
+class Cache {
+  static data = {};
+  static set(name, value) {
+    this.data[name] = value;
+  }
+  static get(name) {
+    return this.data[name];
+  }
+}
+
+let user = {
+  name: "后盾人",
+  key: Symbol("缓存")
+};
+
+let cart = {
+  name: "购物车",
+  key: Symbol("购物车")
+};
+
+Cache.set(user.key, user);
+Cache.set(cart.key, cart);
+console.log(Cache.get(user.key)); // {name: '后盾人', key: Symbol(缓存)}
+```
+
+## 遍历操作
+
+Symbol 不能使用 `for/in`、`for/of` 遍历操作
+```
+let symbol = Symbol("后盾人");
+let obj = {
+  name: "hdcms.com",
+  [symbol]: "houdunren.com"
+};
+
+for (const key in obj) {
+  console.log(key); //name
+}
+
+for (const key of Object.keys(obj)) {
+  console.log(key); //name
+}
+```
+
+可以使用 `Object.getOwnPropertySymbols` 获取所有`Symbol`属性
+```
+let symbol = Symbol("后盾人");
+let obj = {
+  name: "hdcms.com",
+  [symbol]: "houdunren.com"
+};
+for (const key of Object.getOwnPropertySymbols(obj)) {
+  console.log(key); // Symbol(后盾人)
+}
+```
+
+也可以使用 `Reflect.ownKeys(obj)` 获取所有属性包括`Symbol`
+```
+let symbol = Symbol("后盾人");
+let obj = {
+  name: "hdcms.com",
+  [symbol]: "houdunren.com"
+};
+for (const key of Reflect.ownKeys(obj)) {
+  console.log(key); // name  Symbol(后盾人)
+}
+```
+
+如果对象属性不想被遍历，可以使用`Symbol`保护
+```
+const site = Symbol("网站名称");
+class User {
+  constructor(name) {
+    this[site] = "后盾人";
+    this.name = name;
+  }
+  getName() {
+    return `${this[site]}-${this.name}`;
+  }
+}
+const hd = new User("向军大叔");
+console.log(hd.getName());
+for (const key in hd) {
+  console.log(key); // 后盾人-向军大叔  name
+}
+```
+
+# Set
+
+用于存储任何类型的唯一值，无论是基本类型还是对象引用。
+
+- 只能保存值没有键名
+- 严格类型检测如字符串数字不等于数值型数字
+- 值是唯一的
+- 遍历顺序是添加的顺序，方便保存回调函数
+
+## 基本使用
+
+对象可以属性最终都会转为字符串
+```
+let obj = { 1: "hdcms", "1": "houdunren" };
+console.table(obj); //{1:"houdunren"}
+```
+
+使用对象做为键名时，会将对象转为字符串后使用
+```
+let obj = { 1: "hdcms", "1": "houdunren" };
+console.table(obj);
+
+let hd = { [obj]: "后盾人" };
+console.table(hd);
+
+console.log(hd[obj.toString()]);
+console.log(hd["[object Object]"]); // 后盾人
+```
+
+使用数组做初始数据
+```
+let hd = new Set(['后盾人', 'hdcms']);
+console.log(hd.values()); //{"后盾人", "hdcms"}
+```
+
+Set 中是严格类型约束的，数值`1`与字符串`1`属于两个不同的值
+
+使用 `add` 添加元素，不允许重复添加值
+```
+let hd = new Set();
+
+hd.add('houdunren');
+hd.add('hdcms');
+hd.add('hdcms')
+
+console.log(hd.values()); //SetIterator {"houdunren", "hdcms"}
+```
+
+## 获取数量

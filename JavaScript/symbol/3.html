@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    class Cache{
+        static data = {};
+        static set(name, value){
+            return(this.data[name] = value);
+        }
+        static get(name){
+            return this.data[name];
+        }
+    }
+    // Cache.set("hdcms","houdunren")
+    // console.log(Cache.get("hdcms"));
+    let user = {
+        name: "apple",
+        desc: "用户资料",
+        key: Symbol("会员资料")
+    };
+    let cart = {
+        name: "apple",
+        desc: "购物车",
+        key: Symbol("购物车数据")
+    };
+    Cache.set(user.key, user);
+    Cache.set(cart.key, cart);
+    console.log(Cache.get(user.key));
+
+</script>
+</html>

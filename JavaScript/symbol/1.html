@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    // let hd = Symbol("后盾人在线教程");
+    // let edu = Symbol("网址是houdunren.com");
+    // console.log(hd == edu);
+    // hd.name = "houdunren";
+    // console.log(hd.name);   undefined
+    // console.log(hd.description)
+    let cms = Symbol.for("hdcms");
+    // let edu = Symbol.for("hdcms");
+    // console.log(cms == edu);
+    let houdunren = Symbol("houdunren");
+    let houdunren2 = Symbol("houdunren");
+    let houdunren3 = Symbol("houdunren");
+    console.log(Symbol.keyFor(houdunren));
+    console.log(Symbol.keyFor(cms));
+</script>
+</html>
