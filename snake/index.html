@@ -63,8 +63,7 @@
         div.food{
             background: radial-gradient(#a7fa88,#4f8535);
             animation: footAnimate 2s linear infinite;
-            left: 400px;
-            top: 40px;
+
         }
         @keyframes footAnimate {
             0%{
@@ -89,5 +88,13 @@
     <div class="map">
     </div>
     <audio src="../imgs/Sing.mp3" autoplay loop></audio>
+    <script src="food.js"></script>
+    <script src="snake.js"></script>
+
+    <script>
+        const food = new Food(".map");
+        const snake = new Snake(".map");
+
+    </script>
 </body>
 </html>
