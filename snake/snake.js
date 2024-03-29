@@ -8,7 +8,7 @@ class Snake{
         this.snakeList = [];
         //调用创建蛇方法
         this.createSnake();
-        this.move();
+
     }
     // 创建蛇头的函数
     createHead(){
@@ -55,6 +55,7 @@ class Snake{
         const div = document.createElement("div");
         // 定义 样式
         div.className = "head";
+        div.value= (pos.x + "px" + pos.y + "px")
         // 把蛇头存入数组
         this.snakeList.unshift(div);
         // 给蛇头定义 坐标
@@ -77,10 +78,45 @@ class Snake{
         的位置删除一个以此来实现视觉上的位移*/
         // 从数组当中移除掉了
         const body = this.snakeList.pop();
-        console.log(body);
+        // console.log(body);
         // 从页面删除
         body.remove();
         // 新增蛇头
         this.createHead();
+    }
+    // 判断蛇有没有吃到食物
+    isEat(foodX,foodY) {
+        // 判断头跟坐标是否重合
+        const head = this.snakeList[0];
+        const headX = head.offsetLeft;
+        const headY = head.offsetTop;
+
+        if (foodX === headX && foodY === headY) {
+            return true;
+        }
+        return false;
+    }
+    // 判断蛇死没死
+    // 是否撞墙
+    isDie() {
+        const head = this.snakeList[0];
+        const headX = head.offsetLeft;
+        const headY = head.offsetTop;
+
+        for (let i =1;i < this.snakeList.length;i++) {
+            if(this.snakeList[i].value == (headX + "px" + headY + "px"))
+            {
+
+
+                return true;
+            }
+        }
+
+        if(headX < 0 || headY < 0 || headX >= this.map.clientWidth || headY >= this.map.clientHeight ) {
+
+
+            return true;
+        }
+        return false;
     }
 }

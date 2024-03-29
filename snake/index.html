@@ -20,6 +20,7 @@
         .btnbox{
             width: 200px;
             height: 300px;
+            margin-top: 100px;
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
@@ -76,24 +77,130 @@
                 box-shadow: 0px 0px 10px white;
             }
         }
+        .score{
+            font-size: 25px;
+            color: white;
+
+        }
+        .score span{
+            color: red;
+            font-weight: bold;
+        }
+        .panbg{
+            width: 100%;
+            height: 100%;
+            background:  url("../imgs/gameover.png") no-repeat;
+            background-size: 500px;
+            background-position: center;
+            position: fixed;
+            z-index: 999;
+        }
 
     </style>
 </head>
 <body>
+    <div class="panbg"></div>
     <div class="btnbox">
-        <button>开始</button>
-        <button>暂停</button>
-        <button>结束</button>
+        <div class="score">得分: <span>0</span></div>
+        <button id="start">开始</button>
+        <button id="pause">暂停</button>
+        <button id="restart">结束</button>
+
     </div>
     <div class="map">
     </div>
+
     <audio src="../imgs/Sing.mp3" autoplay loop></audio>
     <script src="food.js"></script>
     <script src="snake.js"></script>
+    <script src="game.js"></script>
 
     <script>
-        const food = new Food(".map");
-        const snake = new Snake(".map");
+        const game = new Game(".map", ".score span");
+        // 拿到按钮
+        const start = document.querySelector("#start");
+        const pause = document.querySelector("#pause");
+        const restart = document.querySelector("#restart");
+
+        start.onclick = function () {
+            game.start();
+        }
+        pause.onclick = function () {
+            game.pause();
+        }
+        restart.onclick = function () {
+            game.restart();
+        }
+
+        // 键盘监听  左 37  上 38  右 39  下 40
+        document.onkeydown = function (e) {
+            // console.log(e.keyCode);
+            if(game.getKey() == "left")
+            {
+                switch(e.keyCode)
+                {
+                    case 38:
+                        game.change("top")
+                        break;
+
+                    case 40:
+                        game.change("bottom")
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            else if(game.getKey() == "top")
+            {
+                switch(e.keyCode)
+                {
+                    case 37:
+                        game.change("left")
+                        break;
+
+                    case 39:
+                        game.change("right")
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            else if(game.getKey() == "right")
+            {
+                switch(e.keyCode)
+                {
+                    case 38:
+                        game.change("top")
+                        break;
+
+                    case 40:
+                        game.change("bottom")
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                switch(e.keyCode)
+                {
+                    case 37:
+                        game.change("left")
+                        break;
+
+                    case 39:
+                        game.change("right")
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+        }
 
     </script>
 </body>
