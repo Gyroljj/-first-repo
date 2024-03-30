@@ -1,6 +1,8 @@
 // 设计游戏类
 class Game{
-    constructor(select, scoreEle) {
+    constructor(select, scoreEle, gameoverbg) {
+        this.startbtn = document.querySelector("#start");
+        this.gameoverimg = document.querySelector(gameoverbg);
         // 地图
         this.map = document.querySelector(select);
         // 计分板
@@ -16,6 +18,7 @@ class Game{
     }
     // 定义游戏开始的方法
     start(){
+        this.gameoverimg.style.display = "none";
         this.timer = setInterval(() => {
             // 让蛇动起来
             this.snake.move();
@@ -32,12 +35,17 @@ class Game{
             if (this.snake.isDie()) {
                 clearInterval(this.timer);
                 this.gameover();
+
             }
-        }, 250);
+            // 禁用开始按钮的点击
+            this.startbtn.disabled = true;
+        }, 100);
     }
     // 暂停
     pause() {
         clearInterval(this.timer);
+        // 释放开始按钮的点击
+        this.startbtn.disabled = false;
     }
     // 重新开始
     restart() {
@@ -54,7 +62,9 @@ class Game{
     }
     // 游戏结束的方法
     gameover(){
-        alert("GAMEOVER");
+        this.gameoverimg.style.display = "block";
+        // 禁用掉开始按钮的点击
+        this.startbtn.disabled = true;
     }
 
     getKey(){

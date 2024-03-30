@@ -87,13 +87,19 @@
             font-weight: bold;
         }
         .panbg{
-            width: 100%;
-            height: 100%;
-            background:  url("../imgs/gameover.png") no-repeat;
+            width: 1000px;
+            height: 600px;
+            background: white url("../imgs/gameover.png") no-repeat;
             background-size: 500px;
             background-position: center;
             position: fixed;
             z-index: 999;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            display: none;
         }
 
     </style>
@@ -104,7 +110,7 @@
         <div class="score">得分: <span>0</span></div>
         <button id="start">开始</button>
         <button id="pause">暂停</button>
-        <button id="restart">结束</button>
+        <button id="restart">重玩</button>
 
     </div>
     <div class="map">
@@ -116,7 +122,7 @@
     <script src="game.js"></script>
 
     <script>
-        const game = new Game(".map", ".score span");
+        const game = new Game(".map", ".score span", ".panbg");
         // 拿到按钮
         const start = document.querySelector("#start");
         const pause = document.querySelector("#pause");
