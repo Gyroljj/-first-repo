@@ -2000,3 +2000,410 @@ setTimeout(() => {
 }, 1000);
 ```
 
+# Map
+
+Map是一组键值对的结构，用于解决以往不能用对象做为键的问题
+
+- 具有极快的查找速度
+- 函数、对象、基本类型都可以作为键或值
+
+## 声明定义
+
+可以接受一个数组作为参数，该数组的成员是一个表示键值对的数组。
+```
+let m = new Map([
+  ['houdunren', '后盾人'],
+  ['hdcms', '开源系统']
+]);
+
+console.log(m.get('houdunren')); //后盾人
+```
+
+使用`set` 方法添加元素，支持链式操作
+```
+let map = new Map();
+let obj = {
+  name: "后盾人"
+};
+
+map.set(obj, "houdunren.com").set("name", "hdcms");
+
+console.log(map.entries()); //MapIterator {{…} => "houdunren.com", "name" => "hdcms"}
+```
+
+使用构造函数`new Map`创建的原理如下
+```
+const hd = new Map();
+const arr = [["houdunren", "后盾人"], ["hdcms", "开源系统"]];
+
+arr.forEach(([key, value]) => {
+  hd.set(key, value);
+});
+console.log(hd);
+```
+
+对于键是对象的`Map`， 键保存的是内存地址，值相同但内存地址不同的视为两个键。
+```
+let arr = ["后盾人"];
+const hd = new Map();
+hd.set(arr, "houdunren.com");
+console.log(hd.get(arr)); //houdunren.com
+console.log(hd.get(["后盾人"])); //undefined
+```
+
+## 获取数量
+
+获取数据数量
+```
+console.log(map.size);
+```
+
+## 元素检测
+
+检测元素是否存在
+```
+console.log(map.has(obj1));
+```
+
+## 读取元素
+
+```
+let map = new Map();
+
+let obj = {
+	name: '后盾人'
+}
+
+map.set(obj, 'houdunren.com');
+console.log(map.get(obj));
+```
+
+## 删除元素
+
+使用 `delete()` 方法删除单个元素
+```
+let map = new Map();
+let obj = {
+	name: '后盾人'
+}
+
+map.set(obj, 'houdunren.com');
+console.log(map.get(obj));
+
+map.delete(obj);
+console.log(map.get(obj));
+```
+
+使用`clear`方法清除Map所有元素
+
+## 遍历数据
+
+使用 `keys()/values()/entries()` 都可以返回可遍历的迭代对象。
+```
+let hd = new Map([["houdunren", "后盾人"], ["hdcms", "开源系统"]]);
+console.log(hd.keys()); //MapIterator {"houdunren", "hdcms"}
+console.log(hd.values()); //MapIterator {"后盾人", "开源系统"}
+console.log(hd.entries()); //MapIterator {"houdunren" => "后盾人", "hdcms" => "开源系统"}
+```
+
+可以使用`keys/values` 函数遍历键与值
+```
+let hd = new Map([["houdunren", "后盾人"], ["hdcms", "开源系统"]]);
+for (const key of hd.keys()) {
+  console.log(key);
+}
+for (const value of hd.values()) {
+  console.log(value);
+}
+```
+
+使用`for/of`遍历操作，直接遍历Map 等同于使用`entries()` 函数
+```
+let hd = new Map([["houdunren", "后盾人"], ["hdcms", "开源系统"]]);
+for (const [key, value] of hd) {
+  console.log(`${key}=>${value}`);  // houdunren=>后盾人   hdcms=>开源系统
+}
+```
+
+使用`forEach`遍历操作
+```
+let hd = new Map([["houdunren", "后盾人"], ["hdcms", "开源系统"]]);
+hd.forEach((value, key) => {
+  console.log(`${key}=>${value}`);  // houdunren=>后盾人   hdcms=>开源系统
+});
+```
+
+## 数组转换
+
+可以使用`展开语法` 或 `Array.form` 静态方法将Set类型转为数组，这样就可以使用数组处理函数了
+
+```
+let hd = new Map([["houdunren", "后盾人"], ["hdcms", "开源系统"]]);
+
+console.log(...hd); //(2) ["houdunren", "后盾人"] (2) ["hdcms", "开源系统"]
+console.log(...hd.entries()); //(2) ["houdunren", "后盾人"] (2) ["hdcms", "开源系统"]
+console.log(...hd.values()); //后盾人 开源系统
+console.log(...hd.keys()); //houdunren hdcms
+```
+
+检索包含`后盾人`的值组成新Map
+```
+let hd = new Map([["houdunren", "后盾人"], ["hdcms", "开源系统"]]);
+
+let newArr = [...hd].filter(function(item) {
+  return item[1].includes("后盾人");
+});
+
+hd = new Map(newArr);
+console.log(...hd.values());  // 后盾人
+```
+
+## 节点集合
+
+map的key可以为任意类型，下面使用DOM节点做为键来记录数据。
+```
+<body>
+  <div desc="后盾人">houdunren</div>
+  <div desc="开源系统">hdcms</div>
+</body>
+
+<script>
+  const divMap = new Map();
+  const divs = document.querySelectorAll("div");
+
+  divs.forEach(div => {
+    divMap.set(div, {
+      content: div.getAttribute("desc")
+    });
+  });
+  divMap.forEach((config, elem) => {
+    elem.addEventListener("click", function() {
+      alert(divMap.get(this).content);
+    });
+  });
+</script>
+```
+
+# WeakMap
+
+WeakMap 对象是一组键/值对的集
+
+- 键名必须是对象
+- WeaMap对键名是弱引用的，键值是正常引用
+- 垃圾回收不考虑WeaMap的键名，不会改变引用计数器，键在其他地方不被引用时即删除
+- 因为WeakMap 是弱引用，由于其他地方操作成员可能会不存在，所以不可以进行`forEach( )`遍历等操作
+- 也是因为弱引用，WeaMap 结构没有keys( )，values( )，entries( )等方法和 size 属性
+- 当键的外部引用删除时，希望自动删除数据时使用 `WeakMap`
+
+## 声明定义
+
+以下操作由于键不是对象类型将产生错误
+```
+new WeakSet("hdcms"); //TypeError: Invalid value used in weak set
+```
+
+将DOM节点保存到`WeakSet`
+```
+<body>
+  <div>houdunren</div>
+  <div>hdcms</div>
+</body>
+<script>
+  const hd = new WeakMap();
+  document
+    .querySelectorAll("div")
+    .forEach(item => hd.set(item, item.innerHTML));
+  console.log(hd); //WeakMap {div => "hdcms", div => "houdunren"}
+</script>
+```
+
+## 基本操作
+
+下面是WeakSet的常用指令
+```
+const hd = new WeakMap();
+const arr = ["hdcms"];
+//添加操作
+hd.set(arr, "houdunren");
+console.log(hd.has(arr)); //true
+
+//删除操作
+hd.delete(arr);
+
+//检索判断
+console.log(hd.has(arr)); //false
+```
+
+## 垃圾回收
+
+WakeMap的键名对象不会增加引用计数器，如果一个对象不被引用了会自动删除。 (我自己测试发现不会自动删除，这里打个？) 
+
+- 下例当`hd`删除时内存即清除，因为WeakMap是弱引用不会产生引用计数
+- 当垃圾回收时因为对象被删除，这时WakeMap也就没有记录了
+```
+let map = new WeakMap();
+let hd = {};
+map.set(hd, "hdcms");
+hd = null;
+console.log(map);
+
+setTimeout(() => {
+  console.log(map);
+}, 1000);
+```
+
+# 函数进阶
+
+## 基础知识
+
+函数是将复用的代码块封装起来的模块，在 JS 中函数还有其他语言所不具有的特性。
+
+## 声明定义
+
+在 JS 中函数也是对象函数是`Function`类的创建的实例，下面的例子可以方便理解函数是对象。
+```
+let hd = new Function("title", "console.log(title)");
+hd('后盾人');
+```
+
+标准语法是使用函数声明来定义函数
+```
+function hd(num) {
+	return ++num;
+}
+console.log(hd(3));
+```
+
+对象字面量属性函数简写
+```
+let user = {
+  name: null,
+  getName: function (name) {
+  	return this.name;
+  },
+  //简写形式
+  setName(value) {
+  	this.name = value;
+  }
+}
+user.setName('后盾人');
+console.log(user.getName()); // 后盾人
+```
+
+全局函数会声明在 window 对象中，这不正确建议使用后面章节的模块处理
+
+当我们定义了 `screenX` 函数后就覆盖了 window.screenX 方法
+```
+function screenX() {
+  return "后盾人";
+}
+console.log(screenX()); //后盾人
+```
+
+使用`let/const`时不会压入 window
+```
+let hd = function() {
+  console.log("后盾人");
+};
+window.hd(); //window.hd is not a function
+```
+
+## 匿名函数
+
+函数是对象所以可以通过赋值来指向到函数对象的指针，当然指针也可以传递给其他变量，注意后面要以`;`结束。下面使用函数表达式将 `匿名函数` 赋值给变量
+```
+let hd = function(num) {
+  return ++num;
+};
+
+console.log(hd instanceof Object); //true
+
+let cms = hd;
+console.log(cms(3));
+```
+
+标准声明的函数优先级更高，解析器会优先提取函数并放在代码树顶端，所以标准声明函数位置不限制，所以下面的代码可以正常执行。
+```
+console.log(hd(3));
+function hd(num) {
+	return ++num;
+};
+```
+
+程序中使用匿名函数的情况非常普遍
+```
+function sum(...args) {
+  return args.reduce(function (a, b) {
+            return a + b;
+        });
+}
+console.log(sum(1, 2, 3));  // 6
+```
+
+## 立即执行
+
+立即执行函数指函数定义时立即执行
+
+可以用来定义私有作用域防止污染全局作用域
+```
+"use strict";
+(function () {
+    var web = 'houdunren';
+})();
+console.log(web); //web is not defined
+```
+
+使用 `let/const` 有块作用域特性，所以使用以下方式也可以产生私有作用域
+```
+{
+	let web = 'houdunren';
+}
+console.log(web);
+```
+
+## 函数提升
+
+函数也会提升到前面，优先级行于`var`变量提高
+```
+console.log(hd()); //后盾人
+function hd() {
+	return '后盾人';
+}
+```
+
+变量函数定义不会被提升
+```
+console.log(hd()); //后盾人
+
+function hd() {
+	return '后盾人';
+}
+var hd = function () {
+	return 'hdcms.com';
+}
+```
+
+## 形参实参
+
+形参是在函数声明时设置的参数，实参指在调用函数时传递的值。
+
+- 形参数量大于实参时，没有传参的形参值为 undefined
+- 实参数量大于形参时，多于的实参将忽略并不会报错
+
+```
+// n1,n2 为形参
+function sum(n1, n2) {
+	return n1+n2;
+}
+// 参数 2,3 为实参
+console.log(sum(2, 3)); //5
+```
+
+当没传递参数时值为 undefined
+```
+function sum(n1, n2) {
+  return n1 + n2;
+}
+console.log(sum(2)); //NaN
+```
+

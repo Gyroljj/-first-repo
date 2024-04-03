@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div name="后盾人">houdunren.com</div>
+    <div name="开源内容管理系统">hdcms.com</div>
+</body>
+<script>
+    let map = new Map();
+    document.querySelectorAll("div").forEach(item => {
+        map.set(item,{
+            content: item.getAttribute("name")
+        });
+    });
+    console.log(map);
+    map.forEach((config, elem) => {
+        console.log(elem);
+        elem.addEventListener("click", () => {
+            alert(config.content);
+        });
+    });
+</script>
+</html>
