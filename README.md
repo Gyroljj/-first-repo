@@ -1,4 +1,4 @@
-# 记录自己学习HTML的过程
+# 记录自己学习前端开发的过程
 
 ## [Markdown的使用学习](https://github.com/Gyroljj/-first-repo/blob/main/READ.md)
 
