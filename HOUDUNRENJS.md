@@ -2407,3 +2407,351 @@ function sum(n1, n2) {
 console.log(sum(2)); //NaN
 ```
 
+## 默认参数
+
+下面通过排序来体验新版默认参数的处理方式，下例中当不传递 type 参数时使用默认值 asc。
+```
+function sortArray(arr, type = 'asc') {
+	return arr.sort((a, b) => type == 'asc' ? a - b : b - a);
+}
+console.log(sortArray([1, 3, 2, 6], 'desc'));
+```
+
+默认参数要放在最后面
+
+## 函数参数
+
+函数可以做为参数传递，这也是大多数语言都支持的语法规则。
+```
+<body>
+    <button>订阅</button>
+</body>
+<script>
+    document.querySelector('button').addEventListener('click', function () {
+        alert('感谢订阅');
+    })
+</script>
+```
+
+函数可以做为参数传递
+```
+function filterFun(item) {
+	return item <= 3;
+}
+let hd = [1, 2, 3, 4, 5].filter(filterFun);
+console.log(hd); //[1,2,3]
+```
+
+## arguments
+
+arguments 是函数获得到所有参数集合，下面是使用 `arguments` 求和的例子
+```
+function sum() {
+  return [...arguments].reduce((total, num) => {
+    return (total += num);
+  }, 0);
+}
+console.log(sum(2, 3, 4, 2, 6)); //17
+```
+
+更建议使用展示语法
+```
+function sum(...args) {
+ return args.reduce((a, b) => a + b);
+}
+console.log(sum(2, 3, 4, 2, 6)); //17
+```
+
+## 箭头函数
+
+箭头函数是函数声明的简写形式，在使用递归调用、构造函数、事件处理器时不建议使用箭头函数。
+
+## 递归调用
+
+递归指函数内部调用自身的方式。
+
+- 主要用于数量不确定的循环操作
+- 要有退出时机否则会陷入死循环
+
+下面通过阶乘来体验递归调用
+```
+function factorial(num = 3) {
+	return num == 1 ? num : num * factorial(--num);
+}
+console.log(factorial(5)); //120
+```
+
+累加计算方法
+```
+function sum(...num) {
+	return num.length == 0 ? 0 : num.pop() + sum(...num);
+}
+console.log(sum(1, 2, 3, 4, 5, 7, 9)); //31
+```
+
+递归打印倒三角
+```
+*****
+****
+***
+**
+*
+
+function star(row = 5) {
+  if (row == 0) return "";
+  document.write("*".repeat(row) + "<br/>");
+  star(--row);
+}
+star();
+```
+
+使用递归修改课程点击数
+```
+let lessons = [
+  {
+    title: "媒体查询响应式布局",
+    click: 89
+  },
+  {
+    title: "FLEX 弹性盒模型",
+    click: 45
+  },
+  {
+    title: "GRID 栅格系统",
+    click: 19
+  },
+  {
+    title: "盒子模型详解",
+    click: 29
+  }
+];
+function change(lessons, num, i = 0) {
+  if (i == lessons.length) {
+    return lessons;
+  }
+  lessons[i].click += num;
+  return change(lessons, num, ++i);
+}
+console.table(change(lessons, 100));
+```
+
+## 回调函数
+
+在某个时刻被其他函数调用的函数称为回调函数，比如处理键盘、鼠标事件的函数。
+
+使用回调函数递增计算
+```
+let hd = ([1, 2, 3]).map(item => item + 10);
+console.log(hd);  // [11, 12, 13]
+```
+
+## 展开语法
+
+展示语法或称点语法体现的就是`收/放`特性，做为值时是`放`，做为接收变量时是`收`。
+
+使用展示语法可以替代 `arguments` 来接收任意数量的参数
+```
+function hd(...args) {
+  console.log(args);
+}
+hd(1, 2, 3, "后盾人"); //[1, 2, 3, "后盾人"]
+```
+
+也可以用于接收部分参数
+```
+function hd(site, ...args) {
+  console.log(site, args); //后盾人 (3) [1, 2, 3]
+}
+hd("后盾人", 1, 2, 3);
+```
+
+使用 `...` 可以接受传入的多个参数合并为数组，多个参数时`...参数`必须放后面，下面计算购物车商品折扣。
+```
+function sum(discount = 0, ...prices) {
+  let total = prices.reduce((pre, cur) => pre + cur);
+  return total * (1 - discount);
+}
+console.log(sum(0.1, 100, 300, 299));
+```
+
+# this
+
+调用函数时 `this` 会隐式传递给函数指函数调用时的关联对象，也称之为函数的上下文。
+
+## 函数调用
+
+全局环境下`this`就是 window 对象的引用
+```
+<script>
+  console.log(this == window); //true
+</script>
+```
+
+使用严格模式时在全局函数内`this`为`undefined`
+```
+var hd = '后盾人';
+function get() {
+  "use strict"
+  return this.hd;
+}
+console.log(get());
+//严格模式将产生错误 Cannot read property 'name' of undefined
+```
+
+## 方法调用
+
+函数为对象的方法时`this` 指向该对象
+
+可以使用多种方式创建对象，下面是使用构造函数创建对象
+
+函数当被 `new` 时即为构造函数，一般构造函数中包含属性与方法。函数中的上下文指向到实例对象。
+
+- 构造函数主要用来生成对象，里面的 this 默认就是指当前对象
+```
+function User() {
+  this.name = "后盾人";
+  this.say = function() {
+    console.log(this); //User {name: "后盾人", say: ƒ}
+    return this.name;
+  };
+}
+let hd = new User();
+console.log(hd.say()); //后盾人
+```
+
+## 对象字面量
+
+- 下例中的 hd 函数不属于对象方法所以指向`window`
+- show 属于对象方法执向 `obj`对象
+```
+let obj = {
+  site: "后盾人",
+  show() {
+    console.log(this.site); //后盾人
+    console.log(`this in show method: ${this}`); //this in show method: [object Object]
+    function hd() {
+      console.log(typeof this.site); //undefined
+      console.log(`this in hd function: ${this}`); //this in hd function: [object Window]
+    }
+    hd();
+  }
+};
+obj.show();
+```
+
+在方法中使用函数时有些函数可以改变 this 如`forEach`，当然也可以使用后面介绍的`apply/call/bind`
+```
+let Lesson = {
+  site: "后盾人",
+  lists: ["js", "css", "mysql"],
+  show() {
+    return this.lists.map(function(title) {
+      return `${this.site}-${title}`;
+    }, this);
+  }
+};
+console.log(Lesson.show());
+```
+
+也可以在父作用域中定义引用`this`的变量
+```
+let Lesson = {
+    site: "后盾人",
+    lists: ["js", "css", "mysql"],
+    show() {
+      const self = this;
+      return this.lists.map(function(title) {
+        return `${self.site}-${title}`;
+      });
+    }
+  };
+  console.log(Lesson.show());
+```
+
+## 箭头函数
+
+箭头函数没有`this`, 也可以理解为箭头函数中的`this` 会继承定义函数时的上下文，可以理解为和外层函数指向同一个 `this`。
+
+- 如果想使用函数定义时的上下文中的 this，那就使用箭头函数
+
+事件中使用箭头函数结果不是我们想要的
+
+- 事件函数可理解为对象`onclick`设置值，所以函数声明时`this`为当前对象
+- 但使用箭头函数时`this`为声明函数上下文
+- 使用`handleEvent`绑定事件处理器时，`this`指向当前对象而不是 DOM 元素。
+
+# apply/call/bind
+
+改变 this 指针，也可以理解为对象借用方法，就现像生活中向邻居借东西一样的事情。
+
+## 原理分析
+
+构造函数中的`this`默认是一个空对象，然后构造函数处理后把这个空对象变得有值。
+```
+function User(name) {
+  this.name = name;
+}
+let hd = new User("后盾人");
+```
+
+可以改变构造函数中的空对象，即让构造函数 this 指向到另一个对象。
+```
+function User(name) {
+  this.name = name;
+}
+
+let hdcms = {};
+User.call(hdcms, "HDCMS");
+console.log(hdcms.name); //HDCMS
+```
+
+## apply/call
+
+call 与 apply 用于显示的设置函数的上下文，两个方法作用一样都是将对象绑定到 this，只是在传递参数上有所不同。
+
+- apply 用数组传参
+- call 需要分别传参
+- 与 bind 不同 call/apply 会立即执行函数
+
+语法使用介绍
+```
+function show(title) {
+    alert(`${title+this.name}`);
+}
+let lisi = {
+    name: '李四'
+};
+let wangwu = {
+    name: '王五'
+};
+show.call(lisi, '后盾人');
+show.apply(wangwu, ['HDCMS']);
+```
+
+使用 `call` 设置函数上下文
+```
+<body>
+    <button message="后盾人">button</button>
+    <button message="hdcms">button</button>
+</body>
+<script>
+    function show() {
+        alert(this.getAttribute('message'));
+    }
+    let bts = document.getElementsByTagName('button');
+    for (let i = 0; i < bts.length; i++) {
+        bts[i].addEventListener('click', () => show.call(bts[i]));
+    }
+</script>
+```
+
+找数组中的数值最大值
+```
+let arr = [1, 3, 2, 8];
+console.log(Math.max(arr)); //NaN
+console.log(Math.max.apply(Math, arr)); //8
+ console.log(Math.max(...arr)); //8
+```
+
+实现构造函数属性继承(function/20.html)
+

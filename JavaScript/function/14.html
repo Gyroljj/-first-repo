@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    // 收  放
+    // let hd = [1, 2, 3];
+    // let [a, b, c] = [...hd];  //放
+    // // console.log([...hd]);
+    // // console.log(a, b, c);
+    // let [d, ...edu] = [1, 2, 3, 4];  //收
+    // console.log(edu);
+
+    // function sum(...args) {
+    //     // console.log(arguments);
+    //     // console.log(args);
+    //     return args.reduce((a, b) => a + b);
+    // }
+    // console.log(sum(1, 2, 3, 4, 5, 6));
+
+    function sum(discount = 0, ...price) {
+        // console.log(price);
+        let total = price.reduce((a, b) => a + b);
+        return Math.round(total * (1 - discount));
+    }
+    console.table(sum(0.1, 199, 2999, 588));
+</script>
+</html>

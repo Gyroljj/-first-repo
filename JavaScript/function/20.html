@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    function Request() {
+        this.get = function (params) {
+            let str = Object.keys(params).map(k => `${k}=${params[k]}`).join("&");
+            let url = `https://api.houdunren.com/${this.url}?${str}`;
+            document.write(url+ "<hr/>");
+        }
+    }
+    function Article() {
+        this.url = "article/lists";
+        Request.call(this);
+        // this.get = function (params) {
+        //     // id = 1 & cat = js
+        //     console.log(Object.keys(params));
+        //     let str = Object.keys(params).map(k => `${k}=${params[k]}`).join("&");
+        //     let url = `https://houdunren.com/${this.url}?${str}`;
+        //     console.log(url);
+        // }
+    }
+    let a = new Article();
+    a.get({id: 1, cat: "js"});
+    function User() {
+        this.url = "user/lists";
+        Request.apply(this);
+        // this.get = function (params) {
+        //     console.log(Object.keys(params));
+        //     let str = Object.keys(params).map(k => `${k}=${params[k]}`).join("&");
+        //     let url = `https://houdunren.com/${this.url}?${str}`;
+        //     document.write(url);
+        // };
+    }
+    let user = new User();
+    user.get({id:2,role:"admin"});
+</script>
+</html>
