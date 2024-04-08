@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    function hd() {
+        let n = 1;
+        return function sum() {
+            // console.log(++n);
+            let m = 1;
+            return function show() {
+                console.log("m:" + ++m);
+                console.log("n:" + ++n);
+            }
+        }
+    }
+    let a = hd()();
+    a();
+    a();
+    let b = hd()();
+    b();
+</script>
+</html>

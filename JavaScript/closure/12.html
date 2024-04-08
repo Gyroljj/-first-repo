@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<style>
+    button {
+        position: absolute;
+    }
+</style>
+<button message="后盾人">houdunren</button>
+<button message="hdcms">hdcms</button>
+</body>
+<script>
+    let btns = document.querySelectorAll("button");
+    btns.forEach(function (item) {
+        // parent
+        let left = 1;
+        item.addEventListener("click", function () {
+            setInterval(function () {
+                item.style.left = left++ + "px";
+            }, 100)
+        })
+    })
+</script>
+</html>

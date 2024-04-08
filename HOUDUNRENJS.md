@@ -2750,8 +2750,222 @@ show.apply(wangwu, ['HDCMS']);
 let arr = [1, 3, 2, 8];
 console.log(Math.max(arr)); //NaN
 console.log(Math.max.apply(Math, arr)); //8
- console.log(Math.max(...arr)); //8
+console.log(Math.max(...arr)); //8
 ```
 
 实现构造函数属性继承(function/20.html)
+
+## bind
+
+bind()是将函数绑定到某个对象，比如 a.bind(hd) 可以理解为将 a 函数绑定到 hd 对象上即 hd.a()。
+
+- 与 call/apply 不同 bind 不会立即执行
+- bind 是复制函数形为会返回新函数
+
+bind 是复制函数行为
+```
+let a = function() {};
+let b = a;
+console.log(a === b); //true
+//bind是新复制函数
+let c = a.bind();
+console.log(a == c); //false
+```
+
+绑定参数注意事项
+```
+function hd(a, b) {
+  return this.f + a + b;
+}
+
+//使用bind会生成新函数
+let newFunc = hd.bind({ f: 1 }, 3);
+
+//1+3+2 参数2赋值给b即 a=3,b=2
+console.log(newFunc(2));
+```
+
+在事件中使用`bind`
+```
+<body>
+  <button>后盾人</button>
+</body>
+<script>
+  document.querySelector("button").addEventListener(
+    "click",
+    function(event) {
+      console.log(event.target.innerHTML + this.url);
+    }.bind({ url: "houdunren.com" })
+  );
+</script>
+```
+
+# 作用域
+
+全局作用域只有一个，每个函数又都有作用域（环境）。
+
+- 编译器运行时会将变量定义在所在作用域
+- 使用变量时会从当前作用域开始向上查找变量
+- 作用域就像攀亲亲一样，晚辈总是可以向上辈要些东西
+
+## 使用规范
+
+作用域链只向上查找，找到全局 window 即终止，应该尽量不要在全局作用域中添加变量。
+
+![](https://doc.houdunren.com/assets/image-20191007192620939.f6bsYURt.png)
+
+函数被执行后其环境变量将从内存中删除。下面函数在每次执行后将删除函数内部的 total 变量。
+```
+function count() {
+  let total = 0;
+}
+count();
+```
+
+函数每次调用都会创建一个新作用域
+```
+let site = '后盾人';
+
+function a() {
+  let hd = 'houdunren.com';
+
+  function b() {
+      let cms = 'hdcms.com';
+      console.log(hd);
+      console.log(site);
+  }
+  b();
+}
+a();
+```
+
+如果子函数被使用时父级环境将被保留
+```
+function hd() {
+  let n = 1;
+  return function() {
+    let b = 1;
+    return function() {
+      console.log(++n);
+      console.log(++b);
+    };
+  };
+}
+let a = hd()();
+a(); //2,2
+a(); //3,3
+```
+
+构造函数也是很好的环境例子，子函数被外部使用父级环境将被保留
+```
+function User() {
+  let a = 1;
+  this.show = function() {
+    console.log(a++);
+  };
+}
+let a = new User();
+a.show(); //1
+a.show(); //2
+let b = new User();
+b.show(); //1
+```
+
+## let/const
+
+使用 `let/const` 可以将变量声明在块作用域中（放在新的环境中，而不是全局中）
+```
+{
+	let a = 9;
+}
+console.log(a); //ReferenceError: a is not defined
+if (true) {
+	var i = 1;
+}
+console.log(i);//1
+```
+
+也可以通过下面的定时器函数来体验
+```
+for (let i = 0; i < 10; i++) {
+  setTimeout(() => {
+    console.log(i);
+  }, 500);
+}
+```
+
+在 `for` 循环中使用`let/const` 会在每一次迭代中重新生成不同的变量
+```
+let arr = [];
+for (let i = 0; i < 10; i++) {
+	arr.push(() => i);
+}
+console.log(arr[3]()); //3 如果使用var声明将是10
+```
+
+在没有`let/const` 的历史中使用以下方式产生作用域
+```
+//自行构建闭包
+var arr = [];
+for (var i = 0; i < 10; i++) {
+  (function (a) {
+      arr.push(()=>a);
+  })(i);
+}
+console.log(arr[3]()); //3
+```
+
+# 闭包使用
+
+闭包指子函数可以访问外部作用域变量的函数特性，即使在子函数作用域外也可以访问。如果没有闭包那么在处理事件绑定，异步请求时都会变得困难。
+
+- JS 中的所有函数都是闭包
+- 闭包一般在子函数本身作用域以外执行，即延伸作用域
+
+## 基本示例
+
+前面在讲作用域时已经在使用闭包特性了，下面再次重温一下闭包。
+```
+function hd() {
+  let name = '后盾人';
+  return function () {
+  	return name;
+  }
+}
+let hdcms = hd();
+console.log(hdcms()); //后盾人
+```
+
+使用闭包返回数组区间元素
+```
+let arr = [3, 2, 4, 1, 5, 6];
+function between(a, b) {
+  return function(v) {
+    return v >= a && v <= b;
+  };
+}
+console.log(arr.filter(between(3, 5)));
+```
+
+下面是在回调函数中使用闭包，当点击按钮时显示当前点击的是第几个按钮。
+```
+<body>
+  <button message="后盾人">button</button>
+  <button message="hdcms">button</button>
+</body>
+<script>
+  var btns = document.querySelectorAll("button");
+  for (let i = 0; i < btns.length; i++) {
+    btns[i].onclick = (function(i) {
+      return function() {
+        alert(`点击了第${i + 1}个按钮`);
+      };
+    })(i);
+  }
+</script>
+```
+
+## 移动动画
+
+计时器中使用闭包来获取独有变量 (JavaScript/closure/13.html)
 
