@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    let user = {
+        name: "向军",
+        "my age": 18
+    };
+    // console.log(user.name);
+    // console.log(user["name"]);
+    // console.log(user["my age"]);
+    // for (const Key in user) {
+    //     console.log(user[Key]);
+    // }
+    user.age = 19;
+    user.get = function () {
+        return `${this.name}的年龄是${this.age}岁`;
+    };
+    console.log(user.get());
+    delete user.age;
+    console.log(user.get());
+</script>
+</html>

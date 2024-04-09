@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    // let arr = [1, 2, 3];
+    // let a = [...arr, 4, 5];
+    // console.log(a);
+    // let user = {
+    //     name: "向军",
+    //     age: 22
+    // }
+    // let hd = {...user, lang: "zh"};
+    // console.log(hd);
+
+    function upload(params) {
+        let config = {
+            type:"*.jpeg,*.png",
+            size: 10000
+        };
+        config = {...config,...params};
+        console.log(config);
+    }
+    console.log(upload({size: 99,type: "*.gif"}));
+</script>
+</html>

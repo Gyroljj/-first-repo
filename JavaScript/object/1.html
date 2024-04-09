@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    // let name = "建军";
+    // let grade = [
+    //     {name : "js",score: 99},
+    //     {name : "css",score: 66}
+    // ];
+    // function average(grade,name) {
+    //     let total = grade.reduce((t,l) => (t.score+l.score)/grade.length);
+    //     return `${name}的平均成绩: ${total}`;
+    // }
+    // console.log(average(grade,name));
+
+    let user = {
+        name: "建军",
+        grade: [
+            {name : "js",score: 99},
+            {name : "css",score: 66}
+        ],
+        average() {
+            let total = this.grade.reduce((t,l) => (t.score+l.score)/this.grade.length);
+            return `${this.name}的平均成绩: ${total}`;
+        }
+    };
+    console.log(user.average());
+</script>
+</html>

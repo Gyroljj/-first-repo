@@ -2969,3 +2969,506 @@ console.log(arr.filter(between(3, 5)));
 
 计时器中使用闭包来获取独有变量 (JavaScript/closure/13.html)
 
+## 闭包排序
+
+使用闭包按指定字段排序 (JavaScript/closure/14.html)
+
+## 闭包问题
+
+### 内存泄漏
+
+闭包特性中上级作用域会为函数保存数据，从而造成的如下所示的内存泄漏问题
+```
+<body>
+  <div desc="houdunren">在线学习</div>
+  <div desc="hdcms">开源产品</div>
+</body>
+<script>
+  let divs = document.querySelectorAll("div");
+  divs.forEach(function(item) {
+    item.addEventListener("click", function() {
+      console.log(item.getAttribute("desc"));
+    });
+  });
+</script>
+```
+
+下面通过清除不需要的数据解决内存泄漏问题
+```
+let divs = document.querySelectorAll("div");
+divs.forEach(function(item) {
+  let desc = item.getAttribute("desc");
+  item.addEventListener("click", function() {
+    console.log(desc);
+  });
+  item = null;
+});
+```
+
+### this 指向
+
+this 总是指向调用该函数的对象，即函数在搜索 this 时只会搜索到当前活动对象。
+
+下面是函数因为是在全局环境下调用的，所以 this 指向 window，这不是我们想要的。
+```
+let hd = {
+  user: "后盾人",
+  get: function() {
+    return function() {
+      return this.user;
+    };
+  }
+};
+console.log(hd.get()()); //undefined
+```
+
+使用箭头函数解决这个问题
+```
+let hd = {
+  user: "后盾人",
+  get: function() {
+    return () => this.user;
+  }
+};
+console.log(hd.get()()); //后盾人
+```
+
+# 对象
+
+## 基础知识
+
+对象是包括属性与方法的数据类型，JS 中大部分类型都是对象如 `String/Number/Math/RegExp/Date` 等等。
+
+传统的函数编程会有错中复杂的依赖很容易创造意大利式面条代码。
+
+**面向过程编程**
+```
+let name = "向军";
+let grade = [
+  { lesson: "js", score: 99 },
+  { lesson: "mysql", score: 85 }
+];
+function average(grade, name) {
+  const total = grade.reduce((t, a) => t + a.score, 0);
+  return name + ":" + total / grade.length + "分";
+}
+console.log(average(grade, name));
+```
+
+**面向对象编程**
+
+下面使用对象编程的代码结构清晰，也减少了函数的参数传递，也不用担心函数名的覆盖
+```
+let user = {
+  name: "后盾人",
+  grade: [
+    { lesson: "js", score: 99 },
+    { lesson: "mysql", score: 85 }
+  ],
+  average() {
+    const total = this.grade.reduce((t, a) => t + a.score, 0);
+    return this.name + ":" + total / grade.length + "分";
+  }
+};
+console.log(user.average());
+```
+
+### OOP
+
+- 对象是属性和方法的集合即封装
+- 将复杂功能隐藏在内部，只开放给外部少量方法，更改对象内部的复杂逻辑不会对外部调用造成影响即抽象
+- 继承是通过代码复用减少冗余代码
+- 根据不同形态的对象产生不同结果即多态
+
+### 基本声明
+
+使用字面量形式声明对象是最简单的方式
+```
+let obj = {
+  name: '后盾人',
+  get:function() {
+  	return this.name;
+  }
+}
+console.log(obj.get()); //后盾人
+```
+
+属性与方法简写
+```
+let name = "后盾人";
+let obj = {
+  name,
+  get() {
+    return this.name;
+  }
+};
+console.log(obj.get()); //后盾人
+```
+
+其实字面量形式在系统内部也是使用构造函数 `new Object`创建的
+```
+let hd = {};
+let houdunren = new Object();
+console.log(hd, houdunren);
+console.log(hd.constructor);
+console.log(houdunren.constructor);
+```
+
+### 操作属性
+
+使用点语法获取
+```
+let user = {
+  name: "向军"
+};
+console.log(user.name);
+```
+
+使用`[]` 获取
+```
+console.log(user["name"]);
+```
+
+可以看出使用`.`操作属性更简洁，`[]`主要用于通过变量定义属性的场景
+```
+let user = {
+  name: "向军"
+};
+let property = "name";
+console.log(user[property]);
+```
+
+如果属性名不是合法变量名就必须使用扩号的形式了
+```
+let user = {};
+user["my-age"] = 28;
+console.log(user["my-age"]);
+```
+
+对象和方法的属性可以动态的添加或删除。
+```
+const hd = {
+  name: "后盾人"
+};
+hd.age = "10";
+hd.show = function() {
+  return `${this.name}已经${this.age}岁了`;
+};
+console.log(hd.show());
+console.log(hd);
+
+delete hd.show;
+delete hd.age;
+
+console.log(hd);
+console.log(hd.age); //undefined
+```
+
+### 对象方法
+
+定义在对象中的函数我们称为方法
+
+### 引用特性
+
+对象和函数、数组一样是引用类型，即复制只会复制引用地址。
+```
+let hd = { name: "后盾人" };
+let cms = hd;
+cms.name = "hdcms";
+console.log(hd.name); //hdcms
+```
+
+对象做为函数参数使用时也不会产生完全赋值，内外共用一个对象
+```
+let user = { age: 22 };
+function hd(user) {
+  user.age += 10;
+}
+hd(user);
+console.log(user.age); //32
+```
+
+对多的比较是对内存地址的比较所以使用 `==` 或 `===` 一样
+```
+let hd = {};
+let xj = hd;
+let cms = {};
+console.log(hd == xj); //true
+console.log(hd === xj); //true
+console.log(hd === cms); //false
+```
+
+### this
+
+`this` 指当前对象的引用，始终建议在代码内部使用`this` 而不要使用对象名，不同对象的 `this` 只指向当前对象。
+
+### 展开语法
+
+使用`...`可以展示对象的结构，下面是实现对象合并的示例
+```
+let hd = { name: "后盾人", web: "houdurnen.com" };
+let info = { ...hd, site: "hdcms" };
+console.log(info);
+```
+
+下面是函数参数合并的示例
+```
+function upload(params) {
+  let config = {
+    type: "*.jpeg,*.png",
+    size: 10000
+  };
+  params = { ...config, ...params };
+  console.log(params);
+}
+upload({ size: 999 });
+```
+
+## 对象转换
+
+对象直接参与计算时，系统会根据计算的场景在 `string/number/default` 间转换。
+
+- 如果声明需要字符串类型，调用顺序为 `toString > valueOf`
+- 如果场景需要数值类型，调用顺序为 `valueOf > toString`
+- 声明不确定时使用 `default` ，大部分对象的 `default` 会当数值使用
+
+### Symbol.toPrimitive
+
+内部自定义`Symbol.toPrimitive`方法用来处理所有的转换场景
+```
+let hd = {
+  num: 1,
+  [Symbol.toPrimitive]: function() {
+    return this.num;
+  }
+};
+console.log(hd + 3); //4
+```
+
+### valueOf/toString
+
+可以自定义`valueOf` 与 `toString` 方法用来转换，转换并不限制返回类型。
+```
+let hd = {
+  name: "后盾人",
+  num: 1,
+  valueOf: function() {
+    console.log("valueOf");
+    return this.num;
+  },
+  toString: function() {
+    console.log("toString");
+    return this.name;
+  }
+};
+console.log(hd + 3); //valueOf 4
+console.log(`${hd}向军`); //toString 后盾人向军
+```
+
+## 解构赋值
+
+解构是一种更简洁的赋值特性，可以理解为分解一个数据的结构，在数组章节已经介绍过。
+
+- 使用 `var/let/const` 声明
+
+下面是基本使用语法
+```
+//对象使用
+let info = {name:'后盾人',url:'houdunren.com'};
+let {name:n,url:u} = info
+console.log(n); // 后盾人
+
+//如果属性名与变量相同可以省略属性定义
+let {name,url} = {name:'后盾人',url:'houdunren.com'};
+console.log(name); // 后盾人
+```
+
+函数返回值直接解构到变量
+```
+function hd() {
+  return {
+    name: '后盾人',
+    url: 'houdunren.com'
+  };
+}
+let {name: n,url: u} = hd();
+console.log(n); // 后盾人
+```
+
+函数传参
+```
+"use strict";
+function hd({ name, age }) {
+  console.log(name, age); //向军大叔 18
+}
+hd({ name: "向军", age: 18 });
+```
+
+系统函数解构练习
+```
+const {random} =Math;
+console.log(random());
+```
+
+### 严格模式
+
+非严格模式可以不使用声明指令，严格模式下必须使用声明。所以建议使用 `let` 等声明。
+```
+// "use strict";
+({name,url} = {name:'后盾人',url:'houdunren.com'});
+console.log(name, url);
+```
+
+### 简洁定义
+
+如果属性名与赋值的变量名相同可以更简洁
+```
+let web = { name: "后盾人",url: "houdunren.com" };
+let { name, url } = web;
+console.log(name); //后盾人
+```
+
+只赋值部分变量
+```
+let [,url]=['后盾人','houdunren.com'];
+console.log(url);//houdunren.com
+
+let {name}= {name:'后盾人',url:'houdunren.com'};
+console.log(name); //后盾人
+```
+
+可以直接使用变量赋值对象属性
+```
+let name = "后盾人",url = "houdunren.com";
+//标准写法如下
+let hd = { name: name, url: url };
+console.log(hd);  //{name: "后盾人", url: "houdunren.com"}
+
+//如果属性和值变量同名可以写成以下简写形式
+let opt = { name, url };
+console.log(opt); //{name: "后盾人", url: "houdunren.com"}
+```
+
+### 嵌套解构
+
+可以操作多层复杂数据结构
+```
+const hd = {
+  name:'后盾人',
+  lessons:{
+    title:'JS'
+  }
+}
+const {name,lessons:{title}}  = hd;
+console.log(name,title); //后盾人 JS
+```
+
+### 默认值
+
+为变量设置默认值
+```
+let [name, site = 'hdcms'] = ['后盾人'];
+console.log(site); //hdcms
+
+let {name,url,user='向军大叔'}= {name:'后盾人',url:'houdunren.com'};
+console.log(name,user);//向军大叔
+```
+
+使用默认值特性可以方便的对参数预设
+```
+function createElement(options) {
+  let {
+    width = '200px',
+    height = '100px',
+    backgroundColor = 'red'
+  } = options;
+
+  const h2 = document.createElement('h2');
+  h2.style.width = width;
+  h2.style.height = height;
+  h2.style.backgroundColor = backgroundColor;
+  document.body.appendChild(h2);
+}
+createElement({
+	backgroundColor: 'green'
+});
+```
+
+### 函数参数
+
+数组参数的使用
+```
+function hd([a, b]) {
+	console.log(a, b);
+}
+hd(['后盾人', 'hdcms']);
+```
+
+对象参数使用方法
+```
+function hd({name,url,user='向军大叔'}) {
+	console.log(name,url,user);
+}
+hd({name:'后盾人','url':'houdunren.com'}); //后盾人 houdunren.com 向军大叔
+```
+
+对象解构传参
+```
+function user(name, { sex, age } = {}) {
+  console.log(name, sex, age); //向军大叔 男 18
+}
+user("向军大叔", { sex: "男", age: 18 });
+```
+
+## 属性管理
+
+### 添加属性
+
+可以为对象添加属性
+```
+let obj = {name: "后盾人"};
+obj.site = "houdunren.com";
+console.log(obj);
+```
+
+### 删除属性
+
+使用`delete` 可以删除属性（后面介绍的属性特性章节可以保护属性不被删除）
+```
+let obj = { name: "后盾人" };
+delete obj.name;
+console.log(obj.name); //undefined
+```
+
+### 检测属性
+
+`hasOwnProperty`检测对象自身是否包含指定的属性，不检测原型链上继承的属性。
+```
+let obj = { name: '后盾人'};
+console.log(obj.hasOwnProperty('name')); //true
+```
+
+下面通过数组查看
+```
+let arr = ["后盾人"];
+console.log(arr);
+console.log(arr.hasOwnProperty("length")); //true
+console.log(arr.hasOwnProperty("concat")); //false
+console.log("concat" in arr); //true
+```
+
+使用 `in` 可以在原型对象上检测
+```
+let obj = {name: "后盾人"};
+let hd = {
+  web: "houdunren.com"
+};
+
+//设置hd为obj的新原型
+Object.setPrototypeOf(obj, hd);
+console.log(obj);
+
+console.log("web" in obj); //true
+console.log(obj.hasOwnProperty("web")); //false
+```
+

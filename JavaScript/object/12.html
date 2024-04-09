@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    // let hd = {name:"后盾人"};
+    // let arr = ["houdunren.com","hdcms"];
+    // console.log(arr);
+    // console.log(arr.hasOwnProperty("length"));
+    // console.log(arr.hasOwnProperty("concat"));
+
+    // console.log("length" in arr);
+    // console.log("concat" in arr);
+
+    let a = {name:"后盾人"};
+    let b = {url:"houdunren.com"};
+    Object.setPrototypeOf(a,b);
+    console.log(a);
+    console.log(a.hasOwnProperty("url"));
+    console.log("url" in a);
+
+    function oss(options) {
+        if (!options.hasOwnProperty("host")){
+            throw new Error("必须设置主机地址");
+        }
+    }
+    oss({user:"admin"});
+</script>
+</html>

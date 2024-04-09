@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    let hd = {
+        name:"后盾人",
+        lesson: {
+            title: "javascript",
+            age:20
+        }
+    };
+    let {name,lesson:{title,age}} = hd;
+    console.log(name,title,age);
+    // let {title} = {
+    //     title:"javascript"
+    // }
+    // console.log(title);
+</script>
+</html>
