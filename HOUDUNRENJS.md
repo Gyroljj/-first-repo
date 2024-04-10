@@ -3472,3 +3472,567 @@ console.log("web" in obj); //true
 console.log(obj.hasOwnProperty("web")); //false
 ```
 
+### 获取属性名
+
+使用 `Object.getOwnPropertyNames` 可以获取对象的属性名集合
+```
+let hd = { name: '后盾人', year: 2010 }
+const names = Object.getOwnPropertyNames(hd)
+console.log(names)
+// ["name", "year"]
+```
+
+### assign
+
+以往我们使用类似`jQuery.extend` 等方法设置属性，现在可以使用 `Object.assign` 静态方法
+
+从一个或多个对象复制属性
+```
+"use strict";
+let hd = { a: 1, b: 2 };
+hd = Object.assign(hd, { f: 1 }, { m: 9 });
+console.log(hd); //{a: 1, b: 2, f: 1, m: 9}
+```
+
+### 计算属性
+
+对象属性可以通过表达式计算定义，这在动态设置属性或执行属性方法时很好用。
+```
+let id = 0;
+const user = {
+  [`id-${id++}`]: id,
+  [`id-${id++}`]: id,
+  [`id-${id++}`]: id
+};
+console.log(user); // {id-0: 1, id-1: 2, id-2: 3}
+```
+
+使用计算属性为文章定义键名 (JavaScript/object/13.html)
+
+### 传值操作
+
+对象是引用类型赋值是传址操作，后面会介绍对象的深、浅拷贝操作
+```
+let user = {
+	name: '后盾人'
+};
+let hd = {
+	stu: user
+};
+hd.stu.name = 'hdcms';
+console.log(user.name);//hdcms
+```
+
+## 遍历对象
+
+### 获取内容
+
+使用系统提供的 API 可以方便获取对象属性与值
+```
+const hd = {
+  name: "后盾人",
+  age: 10
+};
+console.log(Object.keys(hd)); //["name", "age"]
+console.log(Object.values(hd)); //["后盾人", 10]
+console.table(Object.entries(hd)); //[["name","后盾人"],["age",10]]
+```
+
+### for/in
+
+使用 `for/in`遍历对象属性
+```
+const hd = {
+  name: "后盾人",
+  age: 10
+};
+for (let key in hd) {
+  console.log(key, hd[key]);
+}
+```
+
+### for/of
+
+`for/of`用于遍历迭代对象，不能直接操作对象。但`Object`对象的`keys/values/entries`方法返回的是迭代对象。 (JavaScript/object/14.html)
+```
+const hd = {
+  name: "后盾人",
+  age: 10
+};
+for (const key of Object.keys(hd)) {
+  console.log(key);
+}
+```
+
+## 对象拷贝
+
+对象赋值时复制的内存地址，所以一个对象的改变直接影响另一个
+```
+let obj = {
+  name: '后盾人',
+  user: {
+  	name: 'hdcms'
+  }
+}
+let a = obj;
+let b = obj;
+a.name = 'lisi';
+console.log(b.name); //lisi
+```
+
+### 浅拷贝
+
+使用`for/in`执行对象拷贝
+```
+let obj = {name: "后盾人"};
+
+let hd = {};
+for (const key in obj) {
+  hd[key] = obj[key];
+}
+
+hd.name = "hdcms";
+console.log(hd); // {name: 'hdcms'}
+console.log(obj); // {name: '后盾人'}
+```
+
+`Object.assign` 函数可简单的实现浅拷贝，它是将两个对象的属性叠加后面对象属性会覆盖前面对象同名属性。
+```
+let user = {
+	name: '后盾人'
+};
+let hd = {
+	stu: Object.assign({}, user)
+};
+hd.stu.name = 'hdcms';
+console.log(user.name);//后盾人
+```
+
+使用展示语法也可以实现浅拷贝
+```
+let obj = {
+  name: "后盾人"
+};
+let hd = { ...obj };
+hd.name = "hdcms";
+console.log(hd); // {name: 'hdcms'}
+console.log(obj); // {name: '后盾人'}
+```
+
+### 深拷贝
+
+浅拷贝不会将深层的数据复制
+```
+let obj = {
+    name: '后盾人',
+    user: {
+        name: 'hdcms'
+    }
+}
+let a = obj;
+let b = obj;
+
+function copy(object) {
+    let obj = {}
+    for (const key in object) {
+        obj[key] = object[key];
+    }
+    return obj;
+}
+let newObj = copy(obj);
+newObj.name = 'hdcms';
+newObj.user.name = 'houdunren.com';
+console.log(newObj);
+console.log(obj);
+```
+
+深拷贝完全的复制一个对象，两个对象是完全独立的对象
+```
+let obj = {
+  name: "后盾人",
+  user: {
+    name: "hdcms"
+  },
+  data: []
+};
+
+function copy(object) {
+  let obj = object instanceof Array ? [] : {};
+  for (const [k, v] of Object.entries(object)) {
+    obj[k] = typeof v == "object" ? copy(v) : v;
+  }
+  return obj;
+}
+
+let hd = copy(obj);
+hd.data.push("向军");
+console.log(JSON.stringify(hd, null, 2));
+console.log(JSON.stringify(obj, null, 2));
+```
+
+## 构建函数
+
+对象可以通过内置或自定义的构造函数创建。
+
+### 工厂函数
+
+在函数中返回对象的函数称为工厂函数，工厂函数有以下优点
+
+- 减少重复创建相同类型对象的代码
+- 修改工厂函数的方法影响所有同类对象
+
+使用字面量创建对象需要复制属性与方法结构
+```
+const xj = {
+  name: "向军",
+  show() {
+    console.log(this.name);
+  }
+};
+const hd = {
+  name: "后盾人",
+  show() {
+    console.log(this.name);
+  }
+};
+```
+
+使用工厂函数可以简化这个过程
+```
+function stu(name) {
+  return {
+    name,
+    show() {
+      console.log(this.name);
+    }
+  };
+}
+const lisi = stu("李四");
+lisi.show(); //李四
+const xj = stu("向军");
+xj.show();  //向军
+```
+
+### 构造函数
+
+和工厂函数相似构造函数也用于创建对象，它的上下文为新的对象实例。
+
+- 构造函数名每个单词首字母大写即`Pascal` 命名规范
+- `this`指当前创建的对象
+- 不需要返回`this`系统会自动完成
+- 需要使用`new`关键词生成对象
+```
+function Student(name) {
+  this.name = name;
+  this.show = function() {
+    console.log(this.name);
+  };
+  //不需要返回，系统会自动返回
+  // return this;
+}
+const lisi = new Student("李四");
+lisi.show();  // 李四
+const xj = new Student("向军");
+xj.show();  // 向军
+```
+
+如果构造函数返回对象，实例化后的对象将是此对象
+```
+function ArrayObject(...values) {
+  const arr = new Array();
+  arr.push.apply(arr, values);
+  arr.string = function(sym = "|") {
+    return this.join(sym);
+  };
+  return arr;
+}
+const array = new ArrayObject(1, 2, 3);
+console.log(array);
+console.log(array.string("-"));
+```
+
+### 严格模式
+
+在严格模式下方法中的`this`值为 undefined，这是为了防止无意的修改 window 对象
+```
+"use strict";
+function User() {
+  this.show = function() {
+    console.log(this);
+  };
+}
+let hd = new User();
+hd.show(); //User  {show: ƒ}
+
+let xj = hd.show;
+xj(); //undefined
+```
+
+### 内置构造
+
+JS 中大部分数据类型都是通过构造函数创建的。
+```
+const num = new Number(99);
+console.log(num.valueOf());
+
+const string = new String("后盾人");
+console.log(string.valueOf());
+
+const boolean = new Boolean(true);
+console.log(boolean.valueOf());
+
+const date = new Date();
+console.log(date.valueOf() * 1);
+
+const regexp = new RegExp("\\d+");
+console.log(regexp.test(99));
+
+let hd = new Object();
+hd.name = "后盾人";
+console.log(hd);
+```
+
+字面量创建的对象，内部也是调用了`Object`构造函数
+```
+const hd = {
+  name: "后盾人"
+};
+console.log(hd.constructor); //ƒ Object() { [native code] }
+
+//下面是使用构造函数创建对象
+const hdcms = new Object();
+hdcms.title = "开源内容管理系统";
+console.log(hdcms);  // {title: '开源内容管理系统'}
+```
+
+### 对象函数
+
+在`JS`中函数也是一个对象
+```
+function hd(name) {}
+
+console.log(hd.toString());
+console.log(hd.length);
+```
+
+函数是由系统内置的 `Function` 构造函数创建的
+```
+function hd(name) {}
+
+console.log(hd.constructor); // ƒ Function() { [native code] }
+```
+
+下面是使用内置构造函数创建的函数
+```
+const User = new Function(`name`,`
+  this.name = name;
+  this.show = function() {
+    return this.name;
+  };
+`
+);
+
+const lisi = new User("李四");
+console.log(lisi.show());  // 李四青年
+```
+
+## 抽象特性
+
+将复杂功能隐藏在内部，只开放给外部少量方法，更改对象内部的复杂逻辑不会对外部调用造成影响即抽象。
+
+将复杂功能隐藏在内部，只开放给外部少量方法，更改对象内部的复杂逻辑不会对外部调用造成影响即抽象。
+
+### 问题分析
+
+下例将对象属性封装到构造函数内部
+```
+function User(name, age) {
+  this.name = name;
+  this.age = age;
+  this.info = function() {
+    return this.age > 50 ? "中年人" : "年轻人";
+  };
+  this.about = function() {
+    return `${this.name}是${this.info()}`;
+  };
+}
+let lisi = new User("李四", 22);
+console.log(lisi.about());  // 李四是年轻人
+```
+
+### 抽象封装
+
+上例中的方法和属性仍然可以在外部访问到，比如 `info`方法只是在内部使用，不需要被外部访问到这会破坏程序的内部逻辑。
+
+下面使用闭包特性将对象进行抽象处理
+```
+function User(name, age) {
+  let data = { name, age };
+  let info = function() {
+    return data.age > 50 ? "中年人" : "年轻人";
+  };
+  this.message = function() {
+    return `${data.name}是${info()}`;
+  };
+}
+let lisi = new User("后盾人", 22);
+console.log(lisi.message());
+```
+
+## 属性特征
+
+JS 中可以对属性的访问特性进行控制。
+
+### 查看特征
+
+使用 `Object.getOwnPropertyDescriptor`查看对象属性的描述。
+```
+"use strict";
+const user = {
+  name: "向军",
+  age: 18
+};
+let desc = Object.getOwnPropertyDescriptor(user, "name"`);
+console.log(JSON.stringify(desc, null, 2));
+```
+
+使用 `Object.getOwnPropertyDescriptors`查看对象所有属性的描述
+```
+let desc = Object.getOwnPropertyDescriptors(user);
+```
+
+属性包括以下四种特性
+
+| 特性         | 说明                                                    | 默认值    |
+|--------------|---------------------------------------------------------|-----------|
+| configurable | 能否使用 delete、能否需改属性特性、或能否修改访问器属性 | true      |
+| enumerable   | 对象属性是否可通过 for-in 循环，或 Object.keys() 读取   | true      |
+| writable     | 对象属性是否可修改                                      | true      |
+| value        | 对象属性的默认值                                        | undefined |
+
+### 设置特征
+
+使用`Object.defineProperty` 方法修改属性特性，通过下面的设置属性 name 将不能被遍历、删除、修改。
+```
+"use strict";
+const user = {
+  name: "向军"
+};
+Object.defineProperty(user, "name", {
+  value: "后盾人",
+  writable: false,
+  enumerable: false,
+  configurable: false
+});
+```
+
+通过执行以下代码对上面配置进行测试，请分别打开注释进行测试
+```
+// 不允许修改
+// user.name = "向军"; //Error
+
+// 不能遍历
+// console.log(Object.keys(user));
+
+//不允许删除
+// delete user.name;
+// console.log(user);
+
+//不允许配置
+// Object.defineProperty(user, "name", {
+//   value: "后盾人",
+//   writable: true,
+//   enumerable: false,
+//   configurable: false
+// });
+```
+
+使用 `Object.defineProperties` 可以一次设置多个属性，具体参数和上面介绍的一样。
+```
+"use strict";
+let user = {};
+Object.defineProperties(user, {
+  name: { value: "向军", writable: false },
+  age: { value: 18 }
+});
+console.log(user);
+user.name = "后盾人"; //TypeError
+```
+
+### 禁止添加
+
+`Object.preventExtensions` 禁止向对象添加属性
+```
+"use strict";
+const user = {
+  name: "向军"
+};
+Object.preventExtensions(user);
+user.age = 18; //Error
+```
+
+`Object.isExtensible` 判断是否能向对象中添加属性
+```
+"use strict";
+const user = {
+  name: "向军"
+};
+Object.preventExtensions(user);
+console.log(Object.isExtensible(user)); //false
+```
+
+### 封闭对象
+
+`Object.seal()`方法封闭一个对象，阻止添加新属性并将所有现有属性标记为 `configurable: false`
+```
+"use strict";
+const user = {
+  name: "后盾人",
+  age: 18
+};
+
+Object.seal(user);
+console.log(
+  JSON.stringify(Object.getOwnPropertyDescriptors(user), null, 2)
+);
+
+Object.seal(user);
+console.log(Object.isSealed(user));
+delete user.name; //Error
+```
+
+`Object.isSealed` 如果对象是密封的则返回 `true`，属性都具有 `configurable: false`。
+```
+"use strict";
+const user = {
+  name: "向军"
+};
+Object.seal(user);
+console.log(Object.isSealed(user)); //true
+```
+
+### 冻结对象
+
+`Object.freeze` 冻结对象后不允许添加、删除、修改属性，writable、configurable 都标记为`false`
+```
+"use strict";
+const user = {
+  name: "向军"
+};
+Object.freeze(user);
+user.name = "后盾人"; //Error
+```
+
+`Object.isFrozen()`方法判断一个对象是否被冻结
+```
+"use strict";
+const user = {
+  name: "向军"
+};
+Object.freeze(user);
+console.log(Object.isFrozen(user)); // true
+```
+
+## 属性访问器
+
+getter 方法用于获得属性值，setter 方法用于设置属性，这是 JS 提供的存取器特性即使用函数来管理属性。

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    "use strict";
+
+    const user = {
+        // data: {name: "后盾人", age: 23},
+        name: "后盾人", age: 23,
+        set age(value) {
+            console.log("run..");
+            if (typeof value != "number" || value < 10 || value > 100) {
+                throw new Error("年龄格式错误");
+            }
+            this.data.age = value;
+        },
+        get age() {
+            console.log("get...")
+            return this.data.age + "岁";
+        },
+
+        // set_name(name){
+        //     this.name = name;
+        // },
+        //
+        // get_name(){
+        //     return this.name
+        // }
+    };
+    // user.setAge(995);
+    user.age = 89;
+    // user.age = 19999;
+    console.log(user.age);
+    // console.log(user.set_name("set name"));
+    // console.log(user.get_name());
+</script>
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    "use strict";
+
+    const user = {
+        name: "后盾人",
+        age: 23
+    };
+    console.log(JSON.stringify(Object.getOwnPropertyDescriptor(user,"age"),null,2));
+    Object.defineProperties(user,{
+        name:{
+            value:"后盾人",
+            writable:true,
+            enumerable:false,
+            configurable:true
+        },
+        age:{
+            value:"后盾人",
+            writable:true,
+            enumerable:true,
+            configurable:true
+        }
+    });
+    console.log(Object.keys(user));
+    // Object.defineProperty(user,"name",{
+    //     value:"后盾人",
+    //     writable:true,
+    //     enumerable:false,
+    //     configurable:true
+    // });
+    // console.log(user);
+    // console.log(user.name);
+    // user.name = "向军";
+    // delete user.name;
+    // console.log(user);
+    // console.log(user.name);
+    // console.log(Object.keys(user));
+    // for (const Key in user) {
+    //     console.log(Key);
+    // }
+</script>
+</html>

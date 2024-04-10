@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    let hd = {
+        name:"后盾人",
+        year:"2010"
+    };
+    // console.log(Object.keys(hd));
+    // console.log(Object.values(hd));
+    // console.log(JSON.stringify(Object.entries(hd),null,2));
+
+    // for (const Key in hd) {
+    //     console.log(hd[Key]);
+    // }
+    // for (const iterator of hd) {
+    //     console.log(iterator);
+    // }
+    // let lessons = [
+    //     {name:"js",click:99},99
+    // ]
+    // for (const [key,value] of Object.entries(hd)) {
+    //     console.log(value);
+    // }
+
+    let lessons = [
+        {name:"js",click:99},
+        {name:"node",click:999}
+    ];
+    let ul = document.createElement("ul");
+    for (const lesson of lessons) {
+        let li = document.createElement("li");
+        li.innerHTML = `课程:${lesson.name},点击数:${lesson.click}`;
+        ul.appendChild(li);
+    }
+    document.body.appendChild(ul);
+</script>
+</html>
