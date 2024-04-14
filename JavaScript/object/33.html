@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    function factorial(num) {
+        return num == 1 ? 1 : num * factorial(num - 1);
+    }
+
+    let proxy = new Proxy(factorial, {
+        apply(func, obj, args) {
+            console.time("run");
+            func.apply(this, args);
+            console.timeEnd("run");
+            // console.log(args);
+        }
+    });
+    proxy.apply({}, [1, 2, 3]);
+    // console.log(factorial(4));
+</script>
+</html>

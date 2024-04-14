@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    "use strict";
+
+    const hd = {name: "后盾人"};
+    const proxy = new Proxy(hd, {
+        get(obj, property) {
+            // console.log(obj);
+            return obj[property];
+        },
+        set(obj, property, value) {
+            obj[property] = value;
+            return true;
+        }
+    });
+    console.log(proxy.name);
+    proxy.name = "向军";
+    console.log(proxy.name);
+    console.log(proxy);
+</script>
+</html>

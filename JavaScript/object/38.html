@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        padding: 50px;
+        background: #34495e;
+    }
+
+    input {
+        border: solid 10px #ddd;
+        height: 30px;
+    }
+
+    .error {
+        border: solid 10px red;
+    }
+</style>
+<body>
+<input type="text" validate rule="max:12,min:3"/>
+<input type="text" validate rule="max:3,isNumber"/>
+</body>
+<script>
+    "use strict";
+
+    class Validate {
+        max(value, len) {
+            return value.length < len;
+        }
+
+        min(value, len) {
+            return value.length > len;
+        }
+
+        isNumber(value) {
+            return /^\d+$/.test(value);
+        }
+    }
+
+    function ProxyFactory(target) {
+        return new Proxy(target, {
+            get(target, p) {
+                return target[p];
+            },
+            set(target, p, newValue) {
+                // console.log(p);
+                console.log(newValue);
+                return true;
+            }
+        });
+    }
+
+    const proxy = ProxyFactory(document.querySelectorAll("[validate]"));
+    proxy.forEach((item, i) => {
+        item.addEventListener("keyup", function () {
+            proxy[i] = this;
+        })
+    })
+    // console.log(proxy);
+    // let validate = new Validate();
+    // console.log(validate.isNumber("3455"))
+</script>
+</html>

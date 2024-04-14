@@ -184,11 +184,13 @@ break 用于退出当前循环，continue 用于退出当前循环返回循环�
 # 获取单字符
 
 根据从 0 开始的位置获取字符
+
 ```
 console.log('houdunren'.charAt(3))
 ```
 
 使用数字索引获取字符串
+
 ```
 console.log('houdunren'[3])
 ```
@@ -203,18 +205,21 @@ console.log('houdunren'[3])
 # 查找字符串
 
 从开始获取字符串位置，检测不到时返回 `-1`
+
 ```
 console.log('houdunren.com'.indexOf('o')); //1
 console.log('houdunren.com'.indexOf('o', 3)); //11 从第3个字符向后搜索
 ```
 
 从结尾来搜索字符串位置
+
 ```
 console.log('houdunren.com'.lastIndexOf('o')); //11
 console.log('houdunren.com'.lastIndexOf('o', 7)); //1 从第7个字符向前搜索
 ```
 
 search() 方法用于检索字符串中指定的子字符串，也可以使用正则表达式搜索
+
 ```
 let str = "houdunren.com";
 console.log(str.search("com")); //10
@@ -222,24 +227,28 @@ console.log(str.search(/\.com/i)); //9
 ```
 
 `includes` 字符串中是否包含指定的值，第二个参数指查找开始位置
+
 ```
 console.log('houdunren.com'.includes('o')); //true
 console.log('houdunren.com'.includes('h', 11)); //true
 ```
 
 `startsWith` 是否是指定位置开始，第二个参数为查找的开始位置。
+
 ```
 console.log('houdunren.com'.startsWith('h')); //true
 console.log('houdunren.com'.startsWith('o', 1)); //true
 ```
 
 `endsWith` 是否是指定位置结束，第二个参数为查找的结束位置。
+
 ```
 console.log('houdunren.com'.endsWith('com')); //true
 console.log('houdunren.com'.endsWith('o', 2)); //true
 ```
 
 下面是查找关键词的示例
+
 ```
 const words = ["php", "css"];
 const title = "我爱在后盾人学习php与css知识";
@@ -252,6 +261,7 @@ console.log(status); //true
 # 替换字符串
 
 `replace` 方法用于字符串的替换操作
+
 ```
 let name = "houdunren.com";
 web = name.replace("houdunren", "hdcms");
@@ -259,6 +269,7 @@ console.log(web); //hdcms.com
 ```
 
 使用字符串替换来生成关键词链接
+
 ```
 const word = ["php", "css"];
 const string = "我喜欢在后盾人学习php与css知识";
@@ -271,6 +282,7 @@ document.body.innerHTML += title;
 # 重复生成
 
 下例是根据参数重复生成星号
+
 ```
 function star(num = 3) {
 	return '*'.repeat(num);
@@ -279,6 +291,7 @@ console.log(star());
 ```
 
 下面是模糊后三位电话号码
+
 ```
 let phone = "98765432101";
 console.log(phone.slice(0, -3) + "*".repeat(3));
@@ -287,29 +300,34 @@ console.log(phone.slice(0, -3) + "*".repeat(3));
 # 类型转换
 
 分隔字母
+
 ```
 let name = "hdcms";
 console.log(name.split(""));
 ```
 
 将字符串转换为数组
+
 ```
 console.log("1,2,3".split(",")); //[1,2,3]
 ```
 
 隐式类型转换会根据类型自动转换类型
+
 ```
 let hd = 99 + '';
 console.log(typeof hd); //string
 ```
 
 使用 `String` 构造函数可以显示转换字符串类型
+
 ```
 let hd = 99;
 console.log(typeof String(hd));
 ```
 
 js 中大部分类型都是对象，可以使用类方法 `toString`转化为字符串
+
 ```
 let hd = 99;
 console.log(typeof hd.toString()); //string
@@ -325,12 +343,14 @@ console.log(typeof arr.toString()); //string
 ## 声明定义
 
 使用对象形式创建布尔类型
+
 ```
 console.log(new Boolean(true)); //true
 console.log(new Boolean(false)); //false
 ```
 
 但建议使用字面量创建布尔类型
+
 ```
 let hd =true;
 ```
@@ -339,15 +359,15 @@ let hd =true;
 
 基本上所有类型都可以隐式转换为 Boolean 类型。
 
-|  数据类型 |       true       |       false      |
-|:---------:|:----------------:|:----------------:|
-|   String  |    非空字符串    |     空字符串     |
-|   Number  |    非 0 的数值   |      0 、NaN     |
-|   Array   | 数组不参与比较时 | 参与比较的空数组 |
-|   Object  |     所有对象     |                  |
-| undefined |        无        |     undefined    |
-|    null   |        无        |       null       |
-|    NaN    |        无        |        NaN       |
+|   数据类型    |   true   |   false   |
+|:---------:|:--------:|:---------:|
+|  String   |  非空字符串   |   空字符串    |
+|  Number   | 非 0 的数值  |  0 、NaN   |
+|   Array   | 数组不参与比较时 | 参与比较的空数组  |
+|  Object   |   所有对象   |           |
+| undefined |    无     | undefined |
+|   null    |    无     |   null    |
+|    NaN    |    无     |    NaN    |
 
 当与 boolean 类型比较时，会将两边类型统一为数字 1 或 0。
 
@@ -371,6 +391,7 @@ Number 用于表示整数和浮点数，数字是 `Number`实例化的对象，�
 表示无效的数值
 
 NaN 不能使用 `==` 比较，使用以下代码来判断结果是否正确
+
 ```
 var res = 2 / 'houdunren';
 if (Number.isNaN(res)) {
@@ -379,6 +400,7 @@ if (Number.isNaN(res)) {
 ```
 
 也可以使用 `Object.is` 方法判断两个值是否完全相同
+
 ```
 var res = 2 / 'houdunren';
 console.log(Object.is(res, NaN));
@@ -399,6 +421,7 @@ console.log(Object.is(res, NaN));
 转换字符串为浮点数，忽略字符串前面空白字符。
 
 > 比如从表单获取的数字是字符串类型需要类型转换才可以计算，下面使用乘法进行隐式类型转换。
+
 ```
 <input type="text" name="num" value="66">
 <script>
@@ -412,13 +435,16 @@ console.log(Object.is(res, NaN));
 # 舍入操作
 
 使用 `toFixed` 可对数值舍入操作，参数指定保存的小数位
+
 ```
 console.log(1.556.toFixed(2)); //1.56
 ```
 
 # Math
 
-`Math` 对象提供了众多方法用来进行数学计算,介绍常用的方法，更多方法使用请查看 [MDN 官网](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math)了解。
+`Math`
+对象提供了众多方法用来进行数学计算,介绍常用的方法，更多方法使用请查看 [MDN 官网](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math)
+了解。
 
 ## 取极限值
 
@@ -429,16 +455,19 @@ console.log(1.556.toFixed(2)); //1.56
 ## 舍入处理
 
 取最接近的向上整数
+
 ```
 console.log(Math.ceil(1.111)); //2
 ```
 
 得到最接近的向下整数
+
 ```
 console.log(Math.floor(1.555)); //1
 ```
 
 四舍五入处理
+
 ```
 console.log(Math.round(1.5)); //2
 ```
@@ -454,6 +483,7 @@ console.log(Math.round(1.5)); //2
 ## 声明日期
 
 获取当前日期时间
+
 ```
 let now = new Date();
 console.log(now);
@@ -469,6 +499,7 @@ console.log(Date.now());
 ```
 
 计算脚本执行时间
+
 ```
 const start = Date.now();
 for (let i = 0; i < 2000000; i++) {}
@@ -477,6 +508,7 @@ console.log(end - start);
 ```
 
 也可以使用控制台测试
+
 ```
 console.time("testFor");
 for (let i = 0; i < 20000000; i++) {}
@@ -484,6 +516,7 @@ console.timeEnd("testFor");
 ```
 
 根据指定的日期与时间定义日期对象
+
 ```
 let now = new Date('2028-02-22 03:25:02');
 console.log(now);
@@ -493,6 +526,7 @@ console.log(now);
 ```
 
 使用展示运算符处理更方便
+
 ```
 let info = [2020, 2, 20, 10, 15, 32];
 let date = new Date(...info);
@@ -502,6 +536,7 @@ console.dir(date);
 ## 类型转换
 
 将日期转为数值类型就是转为时间戳单位是毫秒
+
 ```
 let hd = new Date("2020-2-22 10:33:12");
 console.log(hd * 1);
@@ -514,6 +549,7 @@ console.log(date.getTime());
 ```
 
 有时后台提供的日期为时间戳格式，下面是将时间戳转换为标准日期的方法
+
 ```
 const param = [1990, 2, 22, 13, 22, 19];
 const date = new Date(...param);
@@ -525,6 +561,7 @@ console.log(new Date(timestamp));
 ## 对象方法
 
 格式化输出日期
+
 ```
 let time = new Date();
 console.log(
@@ -533,6 +570,7 @@ console.log(
 ```
 
 封装函数用于复用
+
 ```
 function dateFormat(date, format = "YYYY-MM-DD HH:mm:ss") {
   const config = {
@@ -566,22 +604,26 @@ Moment.js 是一个轻量级的 JavaScript 时间库，它方便了日常开发�
 # 创建数组
 
 使用对象方式创建数组
+
 ```
 console.log(new Array(1, '后盾人', 'hdcms')); //[1, "后盾人", "hdcms"]
 ```
 
 使用字面量创建是推荐的简单作法
+
 ```
 const array = ["hdcms", "houdunren"];
 ```
 
 多维数组定义
+
 ```
 const array = [["hdcms"], ["houdunren"]];
 console.log(array[1][0]);
 ```
 
 数组是引用类型可以使用const声明并修改它的值
+
 ```
 const array = ["hdcms", "houdunren"];
 array.push("houdunwang");
@@ -593,6 +635,7 @@ console.log(array);
 数组可以设置任何值
 
 下面直接设置 3 号数组，会将 1/2 索引的数组定义为空值
+
 ```
 let hd = ["后盾人"];
 hd[3] = "hdcms";
@@ -600,6 +643,7 @@ console.log(hd.length); //4
 ```
 
 声明多个空元素的数组
+
 ```
 let hd = new Array(3);
 console.log(hd.length); //3
@@ -609,6 +653,7 @@ console.log(hd);
 # Array.of
 
 使用`Array.of` 与 `new Array` 不同是设置一个参数时不会创建空元素数组
+
 ```
 let hd = Array.of(3);
 console.log(hd); //[3]
@@ -620,6 +665,7 @@ console.log(hd); //[1, 2, 3]
 # 类型检测
 
 检测变量是否为数组类型
+
 ```
 console.log(Array.isArray([1, "后盾人", "hdcms"])); //true
 console.log(Array.isArray(9)); //false
@@ -632,16 +678,19 @@ console.log(Array.isArray(9)); //false
 # 字符串
 
 大部分数据类型都可以使用`.toString()` 函数转换为字符串。
+
 ```
 console.log(([1, 2, 3]).toString()); // 1,2,3
 ```
 
 也可以使用函数 `String` 转换为字符串。
+
 ```
 console.log(String([1, 2, 3]));
 ```
 
 或使用`join`连接为字符串
+
 ```
 console.log([1, 2, 3].join("-"));//1-2-3
 ```
@@ -651,12 +700,14 @@ console.log([1, 2, 3].join("-"));//1-2-3
 使用`Array.from`可将类数组转换为数组，类数组指包含 `length` 属性或可迭代的对象。
 
 第一个参数为要转换的数据，第二个参数为类似于`map` 函数的回调方法
+
 ```
 let str = '后盾人';
 console.log(Array.from(str)); //["后", "盾", "人"]
 ```
 
 为对象设置length属性后也可以转换为数组，但要下标为数值或数值字符串
+
 ```
 let user = {
   0: '后盾人',
@@ -667,6 +718,7 @@ console.log(Array.from(user)); //["后盾人", 18]
 ```
 
 DOM 元素转换为数组后来使用数组函数，第二个参数类似于`map` 函数的方法，可对数组元素执行函数处理。
+
 ```
 <body>
     <button message="后盾人">button</button>
@@ -687,6 +739,7 @@ DOM 元素转换为数组后来使用数组函数，第二个参数类似于`map
 ## 数组合并
 
 使用展开语法来合并数组相比 `concat` 要更简单，使用`...` 可将数组展开为多个值。
+
 ```
 let a = [1, 2, 3];
 let b = ['a', '后盾人', ...a];
@@ -696,6 +749,7 @@ console.log(b); //["a", "后盾人", 1, 2, 3]
 ## 函数参数
 
 使用展示语法可以替代 `arguments` 来接收任意数量的参数
+
 ```
 function hd(...args) {
   console.log(args);
@@ -704,6 +758,7 @@ hd(1, 2, 3, "后盾人"); //[1, 2, 3, "后盾人"]
 ```
 
 也可以用于接收部分参数
+
 ```
 function hd(site, ...args) {
   console.log(site, args); //后盾人 (3) [1, 2, 3]
@@ -714,6 +769,7 @@ hd("后盾人", 1, 2, 3);
 ## 节点转换
 
 可以将 DOM 节点转为数组，下面例子不可以使用 filter 因为是节点列表
+
 ```
 <body>
     <button message="后盾人">button</button>
@@ -729,6 +785,7 @@ hd("后盾人", 1, 2, 3);
 ```
 
 使用展开语法后就可以使用数据方法
+
 ```
 <body>
   <div>hdcms</div>
@@ -746,6 +803,7 @@ hd("后盾人", 1, 2, 3);
 ```
 
 学习后面章节后也可以使用原型处理
+
 ```
 <body>
     <button message="后盾人">button</button>
@@ -767,6 +825,7 @@ hd("后盾人", 1, 2, 3);
 - 建设使用 `var/let/const` 声明
 
 字符串解构
+
 ```
 const [...a] = "hdcms";
 console.log(a); //Array(5);['h', 'd', 'c', 'm', 's']
@@ -775,6 +834,7 @@ console.log(a); //Array(5);['h', 'd', 'c', 'm', 's']
 函数参数
 
 - 数组参数的使用
+
 ```
 function hd([a, b]) {
 	console.log(a, b); // 后盾人 hdcms
@@ -785,6 +845,7 @@ hd(['后盾人', 'hdcms']);
 # 管理元素
 
 使用从 0 开始的索引来改变数组
+
 ```
 let arr = [1, "后盾人", "hdcms"];
 arr[1] = '后盾人教程';
@@ -792,6 +853,7 @@ console.log(arr); //[1, "后盾人教程", "hdcms"]
 ```
 
 向数组追加元素
+
 ```
 let arr = [1, "后盾人", "hdcms"];
 arr[arr.length] = 'houdunren.com';
@@ -801,6 +863,7 @@ console.log(arr); //[1, "后盾人", "hdcms", "houdunren.com"]
 ## 扩展语法
 
 使用展示语法批量添加元素
+
 ```
 let arr = ["后盾人", "hdcms"];
 let hd = ["houdunren"];
@@ -811,6 +874,7 @@ console.log(hd); //["houdunren", "后盾人", "hdcms"]
 ## push
 
 压入元素，直接改变元数组，返回值为数组元素数量
+
 ```
 let arr = ["后盾人", "hdcms"];
 console.log(arr.push('向军大叔', 'houdunren')); //4
@@ -818,6 +882,7 @@ console.log(arr); //["后盾人", "hdcms", "向军大叔", "houdunren"]
 ```
 
 根据区间创建新数组
+
 ```
 function rangeArray(begin, end) {
   const array = [];
@@ -832,6 +897,7 @@ console.log(rangeArray(1, 6));
 ## pop
 
 从末尾弹出元素，直接改变元数组，返回值为弹出的元素
+
 ```
 let arr = ["后盾人", "hdcms"];
 console.log(arr.pop()); //hdcms
@@ -841,6 +907,7 @@ console.log(arr); //["后盾人"]
 ## shift
 
 从数组前面取出一个元素
+
 ```
 let arr = ["后盾人", "hdcms"];
 console.log(arr.shift()); //后盾人
@@ -850,6 +917,7 @@ console.log(arr); //["hdcms"]
 ## unshift
 
 从数组前面添加元素
+
 ```
 let arr = ["后盾人", "hdcms"];
 console.log(arr.unshift('向军大叔', 'houdunren')); //4
@@ -859,11 +927,13 @@ console.log(arr); //["向军大叔", "houdunren", "后盾人", "hdcms"]
 ## fill
 
 使用`fill` 填充数组元素
+
 ```
 console.dir(Array(4).fill("后盾人")); //["后盾人", "后盾人", "后盾人", "后盾人"]
 ```
 
 指定填充位置
+
 ```
 console.log([1, 2, 3, 4].fill("后盾人", 1, 2)); //[1, "后盾人", 3, 4]
 ```
@@ -871,12 +941,14 @@ console.log([1, 2, 3, 4].fill("后盾人", 1, 2)); //[1, "后盾人", 3, 4]
 ## slice
 
 使用 `slice` 方法从数组中截取部分元素组合成新数组（并不会改变原数组），不传第二个参数时截取到数组的最后元素。
+
 ```
 let arr = [0, 1, 2, 3, 4, 5, 6];
 console.log(arr.slice(1, 3)); // [1,2]
 ```
 
 不设置参数是为获取所有元素
+
 ```
 let arr = [0, 1, 2, 3, 4, 5, 6];
 console.log(arr.slice()); //[0, 1, 2, 3, 4, 5, 6]
@@ -887,6 +959,7 @@ console.log(arr.slice()); //[0, 1, 2, 3, 4, 5, 6]
 使用 `splice` 方法可以添加、删除、替换数组中的元素，会对原数组进行改变，返回值为删除的元素。
 
 删除数组元素第一个参数为从哪开始删除，第二个参数为删除的数量。
+
 ```
 let arr = [0, 1, 2, 3, 4, 5, 6];
 console.log(arr.splice(1, 3)); //返回删除的元素 [1, 2, 3]
@@ -894,6 +967,7 @@ console.log(arr); //删除数据后的原数组 [0, 4, 5, 6]
 ```
 
 通过指定第三个参数来设置在删除位置添加的元素
+
 ```
 let arr = [0, 1, 2, 3, 4, 5, 6];
 console.log(arr.splice(1, 3, 'hdcms', '后盾人')); //[1, 2, 3]
@@ -901,6 +975,7 @@ console.log(arr); //[0, "hdcms", "后盾人", 4, 5, 6]
 ```
 
 向末尾添加元素
+
 ```
 let arr = [0, 1, 2, 3, 4, 5, 6];
 console.log(arr.splice(arr.length, 0, 'hdcms', '后盾人')); //[]
@@ -908,6 +983,7 @@ console.log(arr); // [0, 1, 2, 3, 4, 5, 6, "hdcms", "后盾人"]
 ```
 
 向数组前添加元素
+
 ```
 let arr = [0, 1, 2, 3, 4, 5, 6];
 console.log(arr.splice(0, 0, 'hdcms', '后盾人')); //[]
@@ -915,6 +991,7 @@ console.log(arr); //["hdcms", "后盾人", 0, 1, 2, 3, 4, 5, 6]
 ```
 
 数组元素位置调整函数
+
 ```
 function move(array, before, to) {
   if (before < 0 || to >= array.length) {
@@ -933,6 +1010,7 @@ console.table(move(array, 0, 3)); //[2, 3, 4, 1]
 ## 清空数组
 
 将数组值修改为`[]`可以清空数组，**如果有多个引用时数组在内存中存在被其他变量引用**。
+
 ```
 let user = [{ name: "hdcms" }, { name: "后盾人" }];
 let cms = user;
@@ -942,6 +1020,7 @@ console.log(cms); // [{ name: "hdcms" }, { name: "后盾人" }]
 ```
 
 将数组`length`设置为 0 也可以清空数组
+
 ```
 let user = [{ name: "hdcms" }, { name: "后盾人" }];
 let cms = user;
@@ -951,6 +1030,7 @@ console.log(cms); // []
 ```
 
 使用`splice`方法删除所有数组元素
+
 ```
 let user = [{ name: "hdcms" }, { name: "后盾人" }];
 let cms = user;
@@ -960,6 +1040,7 @@ console.log(user);
 ```
 
 使用`pop/shift`删除所有元素，来清空数组
+
 ```
 let user = [{ name: "hdcms" }, { name: "后盾人" }];
 let cms = user;
@@ -973,6 +1054,7 @@ console.log(user);
 ## join
 
 使用`join`连接成字符串
+
 ```
 let arr = [1, "后盾人", "hdcms"];
 console.log(arr.join('-')); //1-后盾人-hdcms 使用join可以指定转换的连接方式
@@ -981,6 +1063,7 @@ console.log(arr.join('-')); //1-后盾人-hdcms 使用join可以指定转换的�
 ## split
 
 `split` 方法用于将字符串分割成数组，类似`join`方法的反函数。
+
 ```
 let price = "99,78,68";
 console.log(price.split(",")); //["99", "78", "68"]
@@ -989,6 +1072,7 @@ console.log(price.split(",")); //["99", "78", "68"]
 ## concat
 
 `concat`方法用于连接两个或多个数组，元素是值类型的是复制操作，如果是引用类型还是指向同一对象
+
 ```
 let array = ["hdcms", "houdunren"];
 let hd = [1, 2];
@@ -997,6 +1081,7 @@ console.log(array.concat(hd, cms)); //["hdcms", "houdunren", 1, 2, 3, 4]
 ```
 
 也可以使用扩展语法实现连接
+
 ```
 console.log([...array, ...hd, ...cms]);
 ```
@@ -1006,16 +1091,17 @@ console.log([...array, ...hd, ...cms]);
 使用 `copyWithin` 从数组中复制一部分到同数组中的另外位置。
 
 语法说明
+
 ```
 array.copyWithin(target, start, end)
 ```
 
 参数说明
 
-| 参数   | 描述                                                                   |
-|--------|------------------------------------------------------------------------|
-| target | 必需。复制到指定目标索引位置。                                         |
-| start  | 可选。元素复制的起始位置。                                             |
+| 参数     | 描述                                          |
+|--------|---------------------------------------------|
+| target | 必需。复制到指定目标索引位置。                             |
+| start  | 可选。元素复制的起始位置。                               |
 | end    | 可选。停止复制的索引位置 (默认为 array.length)。如果为负值，表示倒数。 |
 
 ```
@@ -1028,18 +1114,21 @@ console.log(arr.copyWithin(2, 0, 2)); //[1, 2, 1, 2]
 ## indexOf
 
 使用 `indexOf` 从前向后查找元素出现的位置，如果找不到返回 -1。
+
 ```
 let arr = [7, 3, 2, 8, 2, 6];
 console.log(arr.indexOf(2)); // 2 从前面查找2出现的位置
 ```
 
 如下面代码一下，使用 `indexOf` 查找字符串将找不到，因为`indexOf` 类似于`===`是严格类型约束。
+
 ```
 let arr = [7, 3, 2, '8', 2, 6];
 console.log(arr.indexOf(8)); // -1
 ```
 
 第二个参数用于指定查找开始位置
+
 ```
 let arr = [7, 3, 2, 8, 2, 6];
 //从第二个元素开始向后查找
@@ -1057,6 +1146,7 @@ console.log(arr.indexOf(2, 3)); //4
 使用 `includes` 查找字符串返回值是布尔类型更方便判断
 
 我们来实现一个自已经的`includes`函数，来加深对`includes`方法的了解
+
 ```
 function includes(array, item) {
   for (const value of array)
@@ -1074,6 +1164,7 @@ find 方法找到后会把值返回出来
 - 如果找不到返回值为`undefined`
 
 返回第一次找到的值，不继续查找
+
 ```
 let arr = ["hdcms", "houdunren", "hdcms"];
 
@@ -1085,6 +1176,7 @@ console.log(find); //hdcms
 ```
 
 使用`includes`等不能查找引用类型，因为它们的内存地址是不相等的
+
 ```
 const user = [{ name: "李四" }, { name: "张三" }, { name: "后盾人" }];
 const find = user.includes({ name: "后盾人" });
@@ -1092,6 +1184,7 @@ console.log(find); // false
 ```
 
 `find` 可以方便的查找引用类型
+
 ```
 const user = [{ name: "李四" }, { name: "张三" }, { name: "后盾人" }];
 const find = user.find(user => (user.name = "后盾人"));
@@ -1107,6 +1200,7 @@ console.log(find); //{name: "后盾人"}
 ## find 原理
 
 下面使用自定义函数
+
 ```
 let arr = [1, 2, 3, 4, 5];
 function find(array, callback) {
@@ -1122,6 +1216,7 @@ console.log(res); // 2
 ```
 
 下面添加原型方法实现
+
 ```
 Array.prototype.findValue = function(callback) {
   for (const value of this) {
@@ -1141,6 +1236,7 @@ console.log(re); // 2
 ## reverse
 
 反转数组顺序
+
 ```
 let arr = [1, 4, 2, 9];
 console.log(arr.reverse()); //[9, 2, 4, 1]
@@ -1155,12 +1251,14 @@ console.log(arr.reverse()); //[9, 2, 4, 1]
 - 返回 0 时不动
 
 默认从小于大排序数组元素
+
 ```
 let arr = [1, 4, 2, 9];
 console.log(arr.sort()); //[1, 2, 4, 9]
 ```
 
 使用排序函数从大到小排序，参数一与参数二比较，返回正数为降序负数为升序
+
 ```
 let arr = [1, 4, 2, 9];
 
@@ -1170,6 +1268,7 @@ console.log(arr.sort(function (v1, v2) {
 ```
 
 下面是按课程点击数由高到低排序
+
 ```
 let lessons = [
   { title: "媒体查询响应式布局", click: 78 },
@@ -1208,6 +1307,7 @@ console.table(arr);
 ## for
 
 根据数组长度结合`for` 循环来遍历数组
+
 ```
 let lessons = [
 	{title: '媒体查询响应式布局',category: 'css'},
@@ -1226,6 +1326,7 @@ console.log(lessons);
 `forEach`使函数作用在每个数组元素上，但是没有返回值。
 
 下面例子是截取标签的五个字符。
+
 ```
 let lessons = [
 	{title: '媒体查询响应式布局',category: 'css'},
@@ -1242,6 +1343,7 @@ console.log(lessons);
 ## for/in
 
 遍历时的 key 值为数组的索引
+
 ```
 let lessons = [
 	{title: '媒体查询响应式布局',category: 'css'},
@@ -1257,6 +1359,7 @@ for (const key in lessons) {
 ## for/of
 
 与 `for/in` 不同的是 `for/of` 每次循环取其中的值而不是索引。
+
 ```
 let lessons = [
 	{title: '媒体查询响应式布局',category: 'css'},
@@ -1273,6 +1376,7 @@ for (const item of lessons) {
 ```
 
 使用数组的迭代对象遍历获取索引与值（有关迭代器知识后面章节会讲到）
+
 ```
 const hd = ['houdunren', 'hdcms'];
 const iterator = hd.entries();
@@ -1281,6 +1385,7 @@ console.log(iterator.next()); //value:{0:1,1:'hdcms'}
 ```
 
 这样就可以使用解构特性与 `for/of` 遍历并获取索引与值了
+
 ```
 const hd = ["hdcms", "houdunren"];
 
@@ -1296,6 +1401,7 @@ for (const [key, value] of hd.entries()) {
 ## keys
 
 通过迭代对象获取索引
+
 ```
 const hd = ["houdunren", "hdcms"];
 const keys = hd.keys();
@@ -1305,6 +1411,7 @@ console.log(keys.next()); // {value: undefined, done: true}
 ```
 
 获取数组所有键
+
 ```
 "use strict";
 const arr = ["a", "b", "c", "后盾人"];
@@ -1317,6 +1424,7 @@ for (const key of arr.keys()) {
 ## values
 
 通过迭代对象获取值
+
 ```
 const hd = ["houdunren", "hdcms"];
 const values = hd.values();
@@ -1326,6 +1434,7 @@ console.log(values.next()); // {value: undefined, done: true}
 ```
 
 获取数组的所有值
+
 ```
 "use strict";
 const arr = ["a", "b", "c", "后盾人"];
@@ -1338,6 +1447,7 @@ for (const value of arr.values()) {
 ## entries
 
 返回数组所有键值对，下面使用解构语法循环
+
 ```
 const arr = ["a", "b", "c", "后盾人"];
 for (const [key, value] of arr.entries()) {
@@ -1346,6 +1456,7 @@ for (const [key, value] of arr.entries()) {
 ```
 
 解构获取内容（对象章节会详细讲解）
+
 ```
 const hd = ["houdunren", "hdcms"];
 const iterator = hd.entries();
@@ -1362,6 +1473,7 @@ console.log(v); // houdunren
 `every` 用于递归的检测元素，要所有元素操作都要返回真结果才为真。
 
 查看班级中同学的 JS 成绩是否都及格
+
 ```
 const user = [
   { name: "李四", js: 89 },
@@ -1373,6 +1485,7 @@ console.log(resust); // false
 ```
 
 标题的关键词检查
+
 ```
 let words = ['后盾', '北京', '培训'];
 let title = '后盾人不断分享技术教程';
@@ -1389,6 +1502,7 @@ if (state == false) console.log('标题必须包含所有关键词'); // 标题�
 使用 `some` 函数可以递归的检测元素，如果有一个返回 true，表达式结果就是真。第一个参数为元素，第二个参数为索引，第三个参数为原数组。
 
 下面是使用 `some` 检测规则关键词的示例，如果匹配到一个词就提示违规。
+
 ```
 let words = ['后盾', '北京', '武汉'];
 let title = '后盾人不断分享技术教程'
@@ -1403,6 +1517,7 @@ if (state) console.log('标题含有违规关键词'); // 标题含有违规关�
 ## filter
 
 使用 `filter` 可以过滤数据中元素，下面是获取所有在 CSS 栏目的课程。
+
 ```
 let lessons = [
   {title: '媒体查询响应式布局',category: 'css'},
@@ -1420,6 +1535,7 @@ console.log(cssLessons);
 ```
 
 我们来写一个过滤元素的方法来加深些技术
+
 ```
 function except(array, excepts) {
   const newArray = [];
@@ -1437,6 +1553,7 @@ console.log(except(array, [2, 3])); //[1,4]
 使用 `map` 映射可以在数组的所有元素上应用函数，用于映射出新的值。
 
 获取数组所有标题组合的新数组
+
 ```
 let lessons = [
   {title: '媒体查询响应式布局',category: 'css'},
@@ -1448,6 +1565,7 @@ console.log(lessons.map(item => item.title)); // ['媒体查询响应式布局',
 ```
 
 为所有标题添加上 `后盾人`
+
 ```
 let lessons = [
   {title: '媒体查询响应式布局',category: 'css'},
@@ -1473,14 +1591,15 @@ console.log(lessons);
 
 函数参数说明如下
 
-| 参数  | 说明                       |
-|-------|----------------------------|
+| 参数    | 说明            |
+|-------|---------------|
 | prev  | 上次调用回调函数返回的结果 |
-| cur   | 当前的元素值               |
-| index | 当前的索引                 |
-| array | 原数组                     |
+| cur   | 当前的元素值        |
+| index | 当前的索引         |
+| array | 原数组           |
 
 统计元素出现的次数
+
 ```
 function countArrayELem(array, elem) {
   return array.reduce((total, cur) => (total += cur == elem ? 1 : 0), 0);
@@ -1491,6 +1610,7 @@ console.log(countArrayELem(numbers, 1)); //2
 ```
 
 取数组中的最大值
+
 ```
 function arrayMax(array) {
   return array.reduce(
@@ -1502,6 +1622,7 @@ console.log(arrayMax([1, 3, 2, 9])); // 9
 ```
 
 取价格最高的商品
+
 ```
 let cart = [
   { name: "iphone", price: 12000 },
@@ -1519,6 +1640,7 @@ console.log(maxPrice(cart)); // {name: 'imac', price: 25000}
 ```
 
 计算购物车中的商品总价
+
 ```
 let cart = [
   { name: "iphone", price: 12000 },
@@ -1533,6 +1655,7 @@ console.log(total); //40600
 ```
 
 获取价格超过 1 万的商品名称
+
 ```
 let goods = [
   { name: "iphone", price: 12000 },
@@ -1552,6 +1675,7 @@ console.table(getNameByPrice(goods, 10000));
 ```
 
 使用 `reduce` 实现数组去重
+
 ```
 let arr = [1, 2, 6, 2, 1];
 let filterArr = arr.reduce((pre, cur, index, array) => {
@@ -1579,6 +1703,7 @@ console.log(hd == edu); //false
 ```
 
 Symbol 不可以添加属性
+
 ```
 let hd = Symbol();
 hd.name = "后盾人";
@@ -1588,6 +1713,7 @@ console.log(hd.name); //undefined
 ## 描述参数
 
 可传入字符串用于描述Symbol，方便在控制台分辨Symbol
+
 ```
 let hd = Symbol("is name");
 let edu = Symbol("这是一个测试");
@@ -1597,6 +1723,7 @@ console.log(edu.toString()); //Symbol(这是一个测试)
 ```
 
 传入相同参数Symbol也是独立唯一的，因为参数只是描述而已，但使用 `Symbol.for`则不会
+
 ```
 let hd = Symbol("后盾人");
 let edu = Symbol("后盾人");
@@ -1604,6 +1731,7 @@ console.log(hd == edu); //false
 ```
 
 使用`description`可以获取传入的描述参数
+
 ```
 let hd = Symbol("后盾人");
 console.log(hd.description); //后盾人
@@ -1625,6 +1753,7 @@ console.log(hd == edu); //true
 ## Symbol.keyFor
 
 `Symbol.keyFor` 根据使用`Symbol.for`登记的Symbol返回描述，如果找不到返回`undefined` 。
+
 ```
 let hd = Symbol.for("后盾人");
 console.log(Symbol.keyFor(hd)); //后盾人
@@ -1641,6 +1770,7 @@ Symbol 是独一无二的所以可以保证对象属性的唯一。
 - 也不能使用 `.` 语法因为 `.`语法是操作字符串属性的。
 
 下面写法是错误的，会将`symbol` 当成**字符串**`symbol`处理
+
 ```
 let symbol = Symbol("后盾人");
 let obj = {
@@ -1650,6 +1780,7 @@ console.log(obj); // {symbol: 'hdcms.com'}
 ```
 
 正确写法是以`[]` 变量形式声明和访问
+
 ```
 let symbol = Symbol("后盾人");
 let obj = {
@@ -1663,6 +1794,7 @@ console.log(obj[symbol]); //houdunren.com
 ## 缓存操作
 
 使用`Symbol`可以解决在保存数据时由于名称相同造成的耦合覆盖问题。
+
 ```
 class Cache {
   static data = {};
@@ -1692,6 +1824,7 @@ console.log(Cache.get(user.key)); // {name: '后盾人', key: Symbol(缓存)}
 ## 遍历操作
 
 Symbol 不能使用 `for/in`、`for/of` 遍历操作
+
 ```
 let symbol = Symbol("后盾人");
 let obj = {
@@ -1709,6 +1842,7 @@ for (const key of Object.keys(obj)) {
 ```
 
 可以使用 `Object.getOwnPropertySymbols` 获取所有`Symbol`属性
+
 ```
 let symbol = Symbol("后盾人");
 let obj = {
@@ -1721,6 +1855,7 @@ for (const key of Object.getOwnPropertySymbols(obj)) {
 ```
 
 也可以使用 `Reflect.ownKeys(obj)` 获取所有属性包括`Symbol`
+
 ```
 let symbol = Symbol("后盾人");
 let obj = {
@@ -1733,6 +1868,7 @@ for (const key of Reflect.ownKeys(obj)) {
 ```
 
 如果对象属性不想被遍历，可以使用`Symbol`保护
+
 ```
 const site = Symbol("网站名称");
 class User {
@@ -1763,12 +1899,14 @@ for (const key in hd) {
 ## 基本使用
 
 对象可以属性最终都会转为字符串
+
 ```
 let obj = { 1: "hdcms", "1": "houdunren" };
 console.table(obj); //{1:"houdunren"}
 ```
 
 使用对象做为键名时，会将对象转为字符串后使用
+
 ```
 let obj = { 1: "hdcms", "1": "houdunren" };
 console.table(obj);
@@ -1781,6 +1919,7 @@ console.log(hd["[object Object]"]); // 后盾人
 ```
 
 使用数组做初始数据
+
 ```
 let hd = new Set(['后盾人', 'hdcms']);
 console.log(hd.values()); //{"后盾人", "hdcms"}
@@ -1789,6 +1928,7 @@ console.log(hd.values()); //{"后盾人", "hdcms"}
 Set 中是严格类型约束的，数值`1`与字符串`1`属于两个不同的值
 
 使用 `add` 添加元素，不允许重复添加值
+
 ```
 let hd = new Set();
 
@@ -1802,6 +1942,7 @@ console.log(hd.values()); //SetIterator {"houdunren", "hdcms"}
 ## 获取数量
 
 获取元素数量
+
 ```
 let hd = new Set(['后盾人', 'hdcms']);
 console.log(hd.size); //2
@@ -1810,6 +1951,7 @@ console.log(hd.size); //2
 ## 元素检测
 
 检测元素是否存在
+
 ```
 let hd = new Set();
 hd.add('hdcms');
@@ -1819,6 +1961,7 @@ console.log(hd.has('hdcms'));//true
 ## 删除元素
 
 使用 `delete` 方法删除单个元素，返回值为`boolean`类型
+
 ```
 let hd = new Set();
 hd.add("hdcms");
@@ -1831,6 +1974,7 @@ console.log(hd.has("hdcms")); //false
 ```
 
 使用 `clear` 删除所有元素
+
 ```
 let hd = new Set();
 hd.add('hdcms');
@@ -1842,6 +1986,7 @@ console.log(hd.values());
 ## 数组转换
 
 可以使用`点语法` 或 `Array.form` 静态方法将Set类型转为数组，这样就可以使用数组处理函数了
+
 ```
 const set = new Set(["hdcms", "houdunren"]);
 console.log([...set]); //["hdcms", "houdunren"]
@@ -1849,6 +1994,7 @@ console.log(Array.from(set)); //["hdcms", "houdunren"]
 ```
 
 移除Set中大于5的数值
+
 ```
 let hd = new Set("123456789");
 hd = new Set([...hd].filter(item => item < 5));
@@ -1858,11 +2004,13 @@ console.log(hd);  // {'1', '2', '3', '4'}
 ## 去除重复
 
 去除字符串重复
+
 ```
 console.log([...new Set("houdunren")].join(""));//houdnre
 ```
 
 去除数组重复
+
 ```
 const arr = [1, 2, 3, 5, 2, 3];
 console.log(...new Set(arr)); // 1,2,4,5
@@ -1871,6 +2019,7 @@ console.log(...new Set(arr)); // 1,2,4,5
 ## 遍历数据
 
 使用 `keys()/values()/entries()` 都可以返回迭代对象，因为`set`类型只有值所以 `keys`与`values` 方法结果一致。
+
 ```
 const hd = new Set(["hdcms", "houdunren"]);
 console.log(hd.values()); //SetIterator {"hdcms", "houdunren"}
@@ -1881,6 +2030,7 @@ console.log(hd.entries()); //SetIterator {"hdcms" => "hdcms", "houdunren" => "h
 可以使用 `forEach` 遍历Set数据，默认使用 `values` 方法创建迭代器。
 
 为了保持和遍历数组参数统一，函数中的item与key是一样的。
+
 ```
 let arr = [7, 6, 2, 8, 2, 6];
 let set = new Set(arr);
@@ -1889,6 +2039,7 @@ set.forEach((item,key) => console.log(item,key));
 ```
 
 也可以使用 `forof` 遍历Set数据，默认使用 `values` 方法创建迭代器
+
 ```
 //使用for/of遍历
 let set = new Set([7, 6, 2, 8, 2, 6]);
@@ -1901,6 +2052,7 @@ for (const iterator of set) {
 ## 交集
 
 获取两个集合中共同存在的元素
+
 ```
 let hd = new Set(['hdcms', 'houdunren']);
 let cms = new Set(['后盾人', 'hdcms']);
@@ -1913,6 +2065,7 @@ console.log(newSet); //{"hdcms"}
 ## 差集
 
 在集合a中出现但不在集合b中出现元素集合
+
 ```
 let hd = new Set(['hdcms', 'houdunren']);
 let cms = new Set(['后盾人', 'hdcms']);
@@ -1925,6 +2078,7 @@ console.log(newSet); //{"houdunren"}
 ## 并集
 
 将两个集合合并成一个新的集合，由于Set特性当然也不会产生重复元素。
+
 ```
 let hd = new Set(['hdcms', 'houdunren']);
 let cms = new Set(['后盾人', 'hdcms']);
@@ -1944,6 +2098,7 @@ WeakSet结构同样不会存储重复的值，它的成员必须只能是对象�
 ## 声明定义
 
 以下操作由于数据不是对象类型将产生错误
+
 ```
 new WeakSet(["hdcms", "houdunren"]); //Invalid value used in weak set
 
@@ -1951,11 +2106,13 @@ new WeakSet("hdcms"); //Invalid value used in weak set
 ```
 
 WeakSet的值必须为对象类型
+
 ```
 new WeakSet([["hdcms"], ["houdunren"]]);
 ```
 
 将DOM节点保存到`WeakSet`
+
 ```
 document.querySelectorAll("button").forEach(item => Wset.add(item));
 ```
@@ -1963,6 +2120,7 @@ document.querySelectorAll("button").forEach(item => Wset.add(item));
 ## 基本操作
 
 下面是WeakSet的常用指令
+
 ```
 const hd = new WeakSet();
 const arr = ["hdcms"];
@@ -2010,6 +2168,7 @@ Map是一组键值对的结构，用于解决以往不能用对象做为键的�
 ## 声明定义
 
 可以接受一个数组作为参数，该数组的成员是一个表示键值对的数组。
+
 ```
 let m = new Map([
   ['houdunren', '后盾人'],
@@ -2020,6 +2179,7 @@ console.log(m.get('houdunren')); //后盾人
 ```
 
 使用`set` 方法添加元素，支持链式操作
+
 ```
 let map = new Map();
 let obj = {
@@ -2032,6 +2192,7 @@ console.log(map.entries()); //MapIterator {{…} => "houdunren.com", "name" => 
 ```
 
 使用构造函数`new Map`创建的原理如下
+
 ```
 const hd = new Map();
 const arr = [["houdunren", "后盾人"], ["hdcms", "开源系统"]];
@@ -2043,6 +2204,7 @@ console.log(hd);
 ```
 
 对于键是对象的`Map`， 键保存的是内存地址，值相同但内存地址不同的视为两个键。
+
 ```
 let arr = ["后盾人"];
 const hd = new Map();
@@ -2054,6 +2216,7 @@ console.log(hd.get(["后盾人"])); //undefined
 ## 获取数量
 
 获取数据数量
+
 ```
 console.log(map.size);
 ```
@@ -2061,6 +2224,7 @@ console.log(map.size);
 ## 元素检测
 
 检测元素是否存在
+
 ```
 console.log(map.has(obj1));
 ```
@@ -2081,6 +2245,7 @@ console.log(map.get(obj));
 ## 删除元素
 
 使用 `delete()` 方法删除单个元素
+
 ```
 let map = new Map();
 let obj = {
@@ -2099,6 +2264,7 @@ console.log(map.get(obj));
 ## 遍历数据
 
 使用 `keys()/values()/entries()` 都可以返回可遍历的迭代对象。
+
 ```
 let hd = new Map([["houdunren", "后盾人"], ["hdcms", "开源系统"]]);
 console.log(hd.keys()); //MapIterator {"houdunren", "hdcms"}
@@ -2107,6 +2273,7 @@ console.log(hd.entries()); //MapIterator {"houdunren" => "后盾人", "hdcms" =
 ```
 
 可以使用`keys/values` 函数遍历键与值
+
 ```
 let hd = new Map([["houdunren", "后盾人"], ["hdcms", "开源系统"]]);
 for (const key of hd.keys()) {
@@ -2118,6 +2285,7 @@ for (const value of hd.values()) {
 ```
 
 使用`for/of`遍历操作，直接遍历Map 等同于使用`entries()` 函数
+
 ```
 let hd = new Map([["houdunren", "后盾人"], ["hdcms", "开源系统"]]);
 for (const [key, value] of hd) {
@@ -2126,6 +2294,7 @@ for (const [key, value] of hd) {
 ```
 
 使用`forEach`遍历操作
+
 ```
 let hd = new Map([["houdunren", "后盾人"], ["hdcms", "开源系统"]]);
 hd.forEach((value, key) => {
@@ -2147,6 +2316,7 @@ console.log(...hd.keys()); //houdunren hdcms
 ```
 
 检索包含`后盾人`的值组成新Map
+
 ```
 let hd = new Map([["houdunren", "后盾人"], ["hdcms", "开源系统"]]);
 
@@ -2161,6 +2331,7 @@ console.log(...hd.values());  // 后盾人
 ## 节点集合
 
 map的key可以为任意类型，下面使用DOM节点做为键来记录数据。
+
 ```
 <body>
   <div desc="后盾人">houdunren</div>
@@ -2198,11 +2369,13 @@ WeakMap 对象是一组键/值对的集
 ## 声明定义
 
 以下操作由于键不是对象类型将产生错误
+
 ```
 new WeakSet("hdcms"); //TypeError: Invalid value used in weak set
 ```
 
 将DOM节点保存到`WeakSet`
+
 ```
 <body>
   <div>houdunren</div>
@@ -2220,6 +2393,7 @@ new WeakSet("hdcms"); //TypeError: Invalid value used in weak set
 ## 基本操作
 
 下面是WeakSet的常用指令
+
 ```
 const hd = new WeakMap();
 const arr = ["hdcms"];
@@ -2236,10 +2410,11 @@ console.log(hd.has(arr)); //false
 
 ## 垃圾回收
 
-WakeMap的键名对象不会增加引用计数器，如果一个对象不被引用了会自动删除。 (我自己测试发现不会自动删除，这里打个？) 
+WakeMap的键名对象不会增加引用计数器，如果一个对象不被引用了会自动删除。 (我自己测试发现不会自动删除，这里打个？)
 
 - 下例当`hd`删除时内存即清除，因为WeakMap是弱引用不会产生引用计数
 - 当垃圾回收时因为对象被删除，这时WakeMap也就没有记录了
+
 ```
 let map = new WeakMap();
 let hd = {};
@@ -2261,12 +2436,14 @@ setTimeout(() => {
 ## 声明定义
 
 在 JS 中函数也是对象函数是`Function`类的创建的实例，下面的例子可以方便理解函数是对象。
+
 ```
 let hd = new Function("title", "console.log(title)");
 hd('后盾人');
 ```
 
 标准语法是使用函数声明来定义函数
+
 ```
 function hd(num) {
 	return ++num;
@@ -2275,6 +2452,7 @@ console.log(hd(3));
 ```
 
 对象字面量属性函数简写
+
 ```
 let user = {
   name: null,
@@ -2293,6 +2471,7 @@ console.log(user.getName()); // 后盾人
 全局函数会声明在 window 对象中，这不正确建议使用后面章节的模块处理
 
 当我们定义了 `screenX` 函数后就覆盖了 window.screenX 方法
+
 ```
 function screenX() {
   return "后盾人";
@@ -2301,6 +2480,7 @@ console.log(screenX()); //后盾人
 ```
 
 使用`let/const`时不会压入 window
+
 ```
 let hd = function() {
   console.log("后盾人");
@@ -2310,7 +2490,9 @@ window.hd(); //window.hd is not a function
 
 ## 匿名函数
 
-函数是对象所以可以通过赋值来指向到函数对象的指针，当然指针也可以传递给其他变量，注意后面要以`;`结束。下面使用函数表达式将 `匿名函数` 赋值给变量
+函数是对象所以可以通过赋值来指向到函数对象的指针，当然指针也可以传递给其他变量，注意后面要以`;`
+结束。下面使用函数表达式将 `匿名函数` 赋值给变量
+
 ```
 let hd = function(num) {
   return ++num;
@@ -2323,6 +2505,7 @@ console.log(cms(3));
 ```
 
 标准声明的函数优先级更高，解析器会优先提取函数并放在代码树顶端，所以标准声明函数位置不限制，所以下面的代码可以正常执行。
+
 ```
 console.log(hd(3));
 function hd(num) {
@@ -2331,6 +2514,7 @@ function hd(num) {
 ```
 
 程序中使用匿名函数的情况非常普遍
+
 ```
 function sum(...args) {
   return args.reduce(function (a, b) {
@@ -2345,6 +2529,7 @@ console.log(sum(1, 2, 3));  // 6
 立即执行函数指函数定义时立即执行
 
 可以用来定义私有作用域防止污染全局作用域
+
 ```
 "use strict";
 (function () {
@@ -2354,6 +2539,7 @@ console.log(web); //web is not defined
 ```
 
 使用 `let/const` 有块作用域特性，所以使用以下方式也可以产生私有作用域
+
 ```
 {
 	let web = 'houdunren';
@@ -2364,6 +2550,7 @@ console.log(web);
 ## 函数提升
 
 函数也会提升到前面，优先级行于`var`变量提高
+
 ```
 console.log(hd()); //后盾人
 function hd() {
@@ -2372,6 +2559,7 @@ function hd() {
 ```
 
 变量函数定义不会被提升
+
 ```
 console.log(hd()); //后盾人
 
@@ -2400,6 +2588,7 @@ console.log(sum(2, 3)); //5
 ```
 
 当没传递参数时值为 undefined
+
 ```
 function sum(n1, n2) {
   return n1 + n2;
@@ -2410,6 +2599,7 @@ console.log(sum(2)); //NaN
 ## 默认参数
 
 下面通过排序来体验新版默认参数的处理方式，下例中当不传递 type 参数时使用默认值 asc。
+
 ```
 function sortArray(arr, type = 'asc') {
 	return arr.sort((a, b) => type == 'asc' ? a - b : b - a);
@@ -2422,6 +2612,7 @@ console.log(sortArray([1, 3, 2, 6], 'desc'));
 ## 函数参数
 
 函数可以做为参数传递，这也是大多数语言都支持的语法规则。
+
 ```
 <body>
     <button>订阅</button>
@@ -2434,6 +2625,7 @@ console.log(sortArray([1, 3, 2, 6], 'desc'));
 ```
 
 函数可以做为参数传递
+
 ```
 function filterFun(item) {
 	return item <= 3;
@@ -2445,6 +2637,7 @@ console.log(hd); //[1,2,3]
 ## arguments
 
 arguments 是函数获得到所有参数集合，下面是使用 `arguments` 求和的例子
+
 ```
 function sum() {
   return [...arguments].reduce((total, num) => {
@@ -2455,6 +2648,7 @@ console.log(sum(2, 3, 4, 2, 6)); //17
 ```
 
 更建议使用展示语法
+
 ```
 function sum(...args) {
  return args.reduce((a, b) => a + b);
@@ -2474,6 +2668,7 @@ console.log(sum(2, 3, 4, 2, 6)); //17
 - 要有退出时机否则会陷入死循环
 
 下面通过阶乘来体验递归调用
+
 ```
 function factorial(num = 3) {
 	return num == 1 ? num : num * factorial(--num);
@@ -2482,6 +2677,7 @@ console.log(factorial(5)); //120
 ```
 
 累加计算方法
+
 ```
 function sum(...num) {
 	return num.length == 0 ? 0 : num.pop() + sum(...num);
@@ -2490,6 +2686,7 @@ console.log(sum(1, 2, 3, 4, 5, 7, 9)); //31
 ```
 
 递归打印倒三角
+
 ```
 *****
 ****
@@ -2506,6 +2703,7 @@ star();
 ```
 
 使用递归修改课程点击数
+
 ```
 let lessons = [
   {
@@ -2540,6 +2738,7 @@ console.table(change(lessons, 100));
 在某个时刻被其他函数调用的函数称为回调函数，比如处理键盘、鼠标事件的函数。
 
 使用回调函数递增计算
+
 ```
 let hd = ([1, 2, 3]).map(item => item + 10);
 console.log(hd);  // [11, 12, 13]
@@ -2550,6 +2749,7 @@ console.log(hd);  // [11, 12, 13]
 展示语法或称点语法体现的就是`收/放`特性，做为值时是`放`，做为接收变量时是`收`。
 
 使用展示语法可以替代 `arguments` 来接收任意数量的参数
+
 ```
 function hd(...args) {
   console.log(args);
@@ -2558,6 +2758,7 @@ hd(1, 2, 3, "后盾人"); //[1, 2, 3, "后盾人"]
 ```
 
 也可以用于接收部分参数
+
 ```
 function hd(site, ...args) {
   console.log(site, args); //后盾人 (3) [1, 2, 3]
@@ -2566,6 +2767,7 @@ hd("后盾人", 1, 2, 3);
 ```
 
 使用 `...` 可以接受传入的多个参数合并为数组，多个参数时`...参数`必须放后面，下面计算购物车商品折扣。
+
 ```
 function sum(discount = 0, ...prices) {
   let total = prices.reduce((pre, cur) => pre + cur);
@@ -2581,6 +2783,7 @@ console.log(sum(0.1, 100, 300, 299));
 ## 函数调用
 
 全局环境下`this`就是 window 对象的引用
+
 ```
 <script>
   console.log(this == window); //true
@@ -2588,6 +2791,7 @@ console.log(sum(0.1, 100, 300, 299));
 ```
 
 使用严格模式时在全局函数内`this`为`undefined`
+
 ```
 var hd = '后盾人';
 function get() {
@@ -2607,6 +2811,7 @@ console.log(get());
 函数当被 `new` 时即为构造函数，一般构造函数中包含属性与方法。函数中的上下文指向到实例对象。
 
 - 构造函数主要用来生成对象，里面的 this 默认就是指当前对象
+
 ```
 function User() {
   this.name = "后盾人";
@@ -2623,6 +2828,7 @@ console.log(hd.say()); //后盾人
 
 - 下例中的 hd 函数不属于对象方法所以指向`window`
 - show 属于对象方法执向 `obj`对象
+
 ```
 let obj = {
   site: "后盾人",
@@ -2640,6 +2846,7 @@ obj.show();
 ```
 
 在方法中使用函数时有些函数可以改变 this 如`forEach`，当然也可以使用后面介绍的`apply/call/bind`
+
 ```
 let Lesson = {
   site: "后盾人",
@@ -2654,6 +2861,7 @@ console.log(Lesson.show());
 ```
 
 也可以在父作用域中定义引用`this`的变量
+
 ```
 let Lesson = {
     site: "后盾人",
@@ -2687,6 +2895,7 @@ let Lesson = {
 ## 原理分析
 
 构造函数中的`this`默认是一个空对象，然后构造函数处理后把这个空对象变得有值。
+
 ```
 function User(name) {
   this.name = name;
@@ -2695,6 +2904,7 @@ let hd = new User("后盾人");
 ```
 
 可以改变构造函数中的空对象，即让构造函数 this 指向到另一个对象。
+
 ```
 function User(name) {
   this.name = name;
@@ -2714,6 +2924,7 @@ call 与 apply 用于显示的设置函数的上下文，两个方法作用一�
 - 与 bind 不同 call/apply 会立即执行函数
 
 语法使用介绍
+
 ```
 function show(title) {
     alert(`${title+this.name}`);
@@ -2729,6 +2940,7 @@ show.apply(wangwu, ['HDCMS']);
 ```
 
 使用 `call` 设置函数上下文
+
 ```
 <body>
     <button message="后盾人">button</button>
@@ -2746,6 +2958,7 @@ show.apply(wangwu, ['HDCMS']);
 ```
 
 找数组中的数值最大值
+
 ```
 let arr = [1, 3, 2, 8];
 console.log(Math.max(arr)); //NaN
@@ -2763,6 +2976,7 @@ bind()是将函数绑定到某个对象，比如 a.bind(hd) 可以理解为将 a
 - bind 是复制函数形为会返回新函数
 
 bind 是复制函数行为
+
 ```
 let a = function() {};
 let b = a;
@@ -2773,6 +2987,7 @@ console.log(a == c); //false
 ```
 
 绑定参数注意事项
+
 ```
 function hd(a, b) {
   return this.f + a + b;
@@ -2786,6 +3001,7 @@ console.log(newFunc(2));
 ```
 
 在事件中使用`bind`
+
 ```
 <body>
   <button>后盾人</button>
@@ -2815,6 +3031,7 @@ console.log(newFunc(2));
 ![](https://doc.houdunren.com/assets/image-20191007192620939.f6bsYURt.png)
 
 函数被执行后其环境变量将从内存中删除。下面函数在每次执行后将删除函数内部的 total 变量。
+
 ```
 function count() {
   let total = 0;
@@ -2823,6 +3040,7 @@ count();
 ```
 
 函数每次调用都会创建一个新作用域
+
 ```
 let site = '后盾人';
 
@@ -2840,6 +3058,7 @@ a();
 ```
 
 如果子函数被使用时父级环境将被保留
+
 ```
 function hd() {
   let n = 1;
@@ -2857,6 +3076,7 @@ a(); //3,3
 ```
 
 构造函数也是很好的环境例子，子函数被外部使用父级环境将被保留
+
 ```
 function User() {
   let a = 1;
@@ -2874,6 +3094,7 @@ b.show(); //1
 ## let/const
 
 使用 `let/const` 可以将变量声明在块作用域中（放在新的环境中，而不是全局中）
+
 ```
 {
 	let a = 9;
@@ -2886,6 +3107,7 @@ console.log(i);//1
 ```
 
 也可以通过下面的定时器函数来体验
+
 ```
 for (let i = 0; i < 10; i++) {
   setTimeout(() => {
@@ -2895,6 +3117,7 @@ for (let i = 0; i < 10; i++) {
 ```
 
 在 `for` 循环中使用`let/const` 会在每一次迭代中重新生成不同的变量
+
 ```
 let arr = [];
 for (let i = 0; i < 10; i++) {
@@ -2904,6 +3127,7 @@ console.log(arr[3]()); //3 如果使用var声明将是10
 ```
 
 在没有`let/const` 的历史中使用以下方式产生作用域
+
 ```
 //自行构建闭包
 var arr = [];
@@ -2925,6 +3149,7 @@ console.log(arr[3]()); //3
 ## 基本示例
 
 前面在讲作用域时已经在使用闭包特性了，下面再次重温一下闭包。
+
 ```
 function hd() {
   let name = '后盾人';
@@ -2937,6 +3162,7 @@ console.log(hdcms()); //后盾人
 ```
 
 使用闭包返回数组区间元素
+
 ```
 let arr = [3, 2, 4, 1, 5, 6];
 function between(a, b) {
@@ -2948,6 +3174,7 @@ console.log(arr.filter(between(3, 5)));
 ```
 
 下面是在回调函数中使用闭包，当点击按钮时显示当前点击的是第几个按钮。
+
 ```
 <body>
   <button message="后盾人">button</button>
@@ -2978,6 +3205,7 @@ console.log(arr.filter(between(3, 5)));
 ### 内存泄漏
 
 闭包特性中上级作用域会为函数保存数据，从而造成的如下所示的内存泄漏问题
+
 ```
 <body>
   <div desc="houdunren">在线学习</div>
@@ -2994,6 +3222,7 @@ console.log(arr.filter(between(3, 5)));
 ```
 
 下面通过清除不需要的数据解决内存泄漏问题
+
 ```
 let divs = document.querySelectorAll("div");
 divs.forEach(function(item) {
@@ -3010,6 +3239,7 @@ divs.forEach(function(item) {
 this 总是指向调用该函数的对象，即函数在搜索 this 时只会搜索到当前活动对象。
 
 下面是函数因为是在全局环境下调用的，所以 this 指向 window，这不是我们想要的。
+
 ```
 let hd = {
   user: "后盾人",
@@ -3023,6 +3253,7 @@ console.log(hd.get()()); //undefined
 ```
 
 使用箭头函数解决这个问题
+
 ```
 let hd = {
   user: "后盾人",
@@ -3042,6 +3273,7 @@ console.log(hd.get()()); //后盾人
 传统的函数编程会有错中复杂的依赖很容易创造意大利式面条代码。
 
 **面向过程编程**
+
 ```
 let name = "向军";
 let grade = [
@@ -3058,6 +3290,7 @@ console.log(average(grade, name));
 **面向对象编程**
 
 下面使用对象编程的代码结构清晰，也减少了函数的参数传递，也不用担心函数名的覆盖
+
 ```
 let user = {
   name: "后盾人",
@@ -3083,6 +3316,7 @@ console.log(user.average());
 ### 基本声明
 
 使用字面量形式声明对象是最简单的方式
+
 ```
 let obj = {
   name: '后盾人',
@@ -3094,6 +3328,7 @@ console.log(obj.get()); //后盾人
 ```
 
 属性与方法简写
+
 ```
 let name = "后盾人";
 let obj = {
@@ -3106,6 +3341,7 @@ console.log(obj.get()); //后盾人
 ```
 
 其实字面量形式在系统内部也是使用构造函数 `new Object`创建的
+
 ```
 let hd = {};
 let houdunren = new Object();
@@ -3117,6 +3353,7 @@ console.log(houdunren.constructor);
 ### 操作属性
 
 使用点语法获取
+
 ```
 let user = {
   name: "向军"
@@ -3125,11 +3362,13 @@ console.log(user.name);
 ```
 
 使用`[]` 获取
+
 ```
 console.log(user["name"]);
 ```
 
 可以看出使用`.`操作属性更简洁，`[]`主要用于通过变量定义属性的场景
+
 ```
 let user = {
   name: "向军"
@@ -3139,6 +3378,7 @@ console.log(user[property]);
 ```
 
 如果属性名不是合法变量名就必须使用扩号的形式了
+
 ```
 let user = {};
 user["my-age"] = 28;
@@ -3146,6 +3386,7 @@ console.log(user["my-age"]);
 ```
 
 对象和方法的属性可以动态的添加或删除。
+
 ```
 const hd = {
   name: "后盾人"
@@ -3171,6 +3412,7 @@ console.log(hd.age); //undefined
 ### 引用特性
 
 对象和函数、数组一样是引用类型，即复制只会复制引用地址。
+
 ```
 let hd = { name: "后盾人" };
 let cms = hd;
@@ -3179,6 +3421,7 @@ console.log(hd.name); //hdcms
 ```
 
 对象做为函数参数使用时也不会产生完全赋值，内外共用一个对象
+
 ```
 let user = { age: 22 };
 function hd(user) {
@@ -3189,6 +3432,7 @@ console.log(user.age); //32
 ```
 
 对多的比较是对内存地址的比较所以使用 `==` 或 `===` 一样
+
 ```
 let hd = {};
 let xj = hd;
@@ -3205,6 +3449,7 @@ console.log(hd === cms); //false
 ### 展开语法
 
 使用`...`可以展示对象的结构，下面是实现对象合并的示例
+
 ```
 let hd = { name: "后盾人", web: "houdurnen.com" };
 let info = { ...hd, site: "hdcms" };
@@ -3212,6 +3457,7 @@ console.log(info);
 ```
 
 下面是函数参数合并的示例
+
 ```
 function upload(params) {
   let config = {
@@ -3235,6 +3481,7 @@ upload({ size: 999 });
 ### Symbol.toPrimitive
 
 内部自定义`Symbol.toPrimitive`方法用来处理所有的转换场景
+
 ```
 let hd = {
   num: 1,
@@ -3248,6 +3495,7 @@ console.log(hd + 3); //4
 ### valueOf/toString
 
 可以自定义`valueOf` 与 `toString` 方法用来转换，转换并不限制返回类型。
+
 ```
 let hd = {
   name: "后盾人",
@@ -3272,6 +3520,7 @@ console.log(`${hd}向军`); //toString 后盾人向军
 - 使用 `var/let/const` 声明
 
 下面是基本使用语法
+
 ```
 //对象使用
 let info = {name:'后盾人',url:'houdunren.com'};
@@ -3284,6 +3533,7 @@ console.log(name); // 后盾人
 ```
 
 函数返回值直接解构到变量
+
 ```
 function hd() {
   return {
@@ -3296,6 +3546,7 @@ console.log(n); // 后盾人
 ```
 
 函数传参
+
 ```
 "use strict";
 function hd({ name, age }) {
@@ -3305,6 +3556,7 @@ hd({ name: "向军", age: 18 });
 ```
 
 系统函数解构练习
+
 ```
 const {random} =Math;
 console.log(random());
@@ -3313,6 +3565,7 @@ console.log(random());
 ### 严格模式
 
 非严格模式可以不使用声明指令，严格模式下必须使用声明。所以建议使用 `let` 等声明。
+
 ```
 // "use strict";
 ({name,url} = {name:'后盾人',url:'houdunren.com'});
@@ -3322,6 +3575,7 @@ console.log(name, url);
 ### 简洁定义
 
 如果属性名与赋值的变量名相同可以更简洁
+
 ```
 let web = { name: "后盾人",url: "houdunren.com" };
 let { name, url } = web;
@@ -3329,6 +3583,7 @@ console.log(name); //后盾人
 ```
 
 只赋值部分变量
+
 ```
 let [,url]=['后盾人','houdunren.com'];
 console.log(url);//houdunren.com
@@ -3338,6 +3593,7 @@ console.log(name); //后盾人
 ```
 
 可以直接使用变量赋值对象属性
+
 ```
 let name = "后盾人",url = "houdunren.com";
 //标准写法如下
@@ -3352,6 +3608,7 @@ console.log(opt); //{name: "后盾人", url: "houdunren.com"}
 ### 嵌套解构
 
 可以操作多层复杂数据结构
+
 ```
 const hd = {
   name:'后盾人',
@@ -3366,6 +3623,7 @@ console.log(name,title); //后盾人 JS
 ### 默认值
 
 为变量设置默认值
+
 ```
 let [name, site = 'hdcms'] = ['后盾人'];
 console.log(site); //hdcms
@@ -3375,6 +3633,7 @@ console.log(name,user);//向军大叔
 ```
 
 使用默认值特性可以方便的对参数预设
+
 ```
 function createElement(options) {
   let {
@@ -3397,6 +3656,7 @@ createElement({
 ### 函数参数
 
 数组参数的使用
+
 ```
 function hd([a, b]) {
 	console.log(a, b);
@@ -3405,6 +3665,7 @@ hd(['后盾人', 'hdcms']);
 ```
 
 对象参数使用方法
+
 ```
 function hd({name,url,user='向军大叔'}) {
 	console.log(name,url,user);
@@ -3413,6 +3674,7 @@ hd({name:'后盾人','url':'houdunren.com'}); //后盾人 houdunren.com 向军�
 ```
 
 对象解构传参
+
 ```
 function user(name, { sex, age } = {}) {
   console.log(name, sex, age); //向军大叔 男 18
@@ -3425,6 +3687,7 @@ user("向军大叔", { sex: "男", age: 18 });
 ### 添加属性
 
 可以为对象添加属性
+
 ```
 let obj = {name: "后盾人"};
 obj.site = "houdunren.com";
@@ -3434,6 +3697,7 @@ console.log(obj);
 ### 删除属性
 
 使用`delete` 可以删除属性（后面介绍的属性特性章节可以保护属性不被删除）
+
 ```
 let obj = { name: "后盾人" };
 delete obj.name;
@@ -3443,12 +3707,14 @@ console.log(obj.name); //undefined
 ### 检测属性
 
 `hasOwnProperty`检测对象自身是否包含指定的属性，不检测原型链上继承的属性。
+
 ```
 let obj = { name: '后盾人'};
 console.log(obj.hasOwnProperty('name')); //true
 ```
 
 下面通过数组查看
+
 ```
 let arr = ["后盾人"];
 console.log(arr);
@@ -3458,6 +3724,7 @@ console.log("concat" in arr); //true
 ```
 
 使用 `in` 可以在原型对象上检测
+
 ```
 let obj = {name: "后盾人"};
 let hd = {
@@ -3475,6 +3742,7 @@ console.log(obj.hasOwnProperty("web")); //false
 ### 获取属性名
 
 使用 `Object.getOwnPropertyNames` 可以获取对象的属性名集合
+
 ```
 let hd = { name: '后盾人', year: 2010 }
 const names = Object.getOwnPropertyNames(hd)
@@ -3487,6 +3755,7 @@ console.log(names)
 以往我们使用类似`jQuery.extend` 等方法设置属性，现在可以使用 `Object.assign` 静态方法
 
 从一个或多个对象复制属性
+
 ```
 "use strict";
 let hd = { a: 1, b: 2 };
@@ -3497,6 +3766,7 @@ console.log(hd); //{a: 1, b: 2, f: 1, m: 9}
 ### 计算属性
 
 对象属性可以通过表达式计算定义，这在动态设置属性或执行属性方法时很好用。
+
 ```
 let id = 0;
 const user = {
@@ -3512,6 +3782,7 @@ console.log(user); // {id-0: 1, id-1: 2, id-2: 3}
 ### 传值操作
 
 对象是引用类型赋值是传址操作，后面会介绍对象的深、浅拷贝操作
+
 ```
 let user = {
 	name: '后盾人'
@@ -3528,6 +3799,7 @@ console.log(user.name);//hdcms
 ### 获取内容
 
 使用系统提供的 API 可以方便获取对象属性与值
+
 ```
 const hd = {
   name: "后盾人",
@@ -3541,6 +3813,7 @@ console.table(Object.entries(hd)); //[["name","后盾人"],["age",10]]
 ### for/in
 
 使用 `for/in`遍历对象属性
+
 ```
 const hd = {
   name: "后盾人",
@@ -3553,7 +3826,9 @@ for (let key in hd) {
 
 ### for/of
 
-`for/of`用于遍历迭代对象，不能直接操作对象。但`Object`对象的`keys/values/entries`方法返回的是迭代对象。 (JavaScript/object/14.html)
+`for/of`用于遍历迭代对象，不能直接操作对象。但`Object`对象的`keys/values/entries`方法返回的是迭代对象。 (
+JavaScript/object/14.html)
+
 ```
 const hd = {
   name: "后盾人",
@@ -3567,6 +3842,7 @@ for (const key of Object.keys(hd)) {
 ## 对象拷贝
 
 对象赋值时复制的内存地址，所以一个对象的改变直接影响另一个
+
 ```
 let obj = {
   name: '后盾人',
@@ -3583,6 +3859,7 @@ console.log(b.name); //lisi
 ### 浅拷贝
 
 使用`for/in`执行对象拷贝
+
 ```
 let obj = {name: "后盾人"};
 
@@ -3597,6 +3874,7 @@ console.log(obj); // {name: '后盾人'}
 ```
 
 `Object.assign` 函数可简单的实现浅拷贝，它是将两个对象的属性叠加后面对象属性会覆盖前面对象同名属性。
+
 ```
 let user = {
 	name: '后盾人'
@@ -3609,6 +3887,7 @@ console.log(user.name);//后盾人
 ```
 
 使用展示语法也可以实现浅拷贝
+
 ```
 let obj = {
   name: "后盾人"
@@ -3622,6 +3901,7 @@ console.log(obj); // {name: '后盾人'}
 ### 深拷贝
 
 浅拷贝不会将深层的数据复制
+
 ```
 let obj = {
     name: '后盾人',
@@ -3647,6 +3927,7 @@ console.log(obj);
 ```
 
 深拷贝完全的复制一个对象，两个对象是完全独立的对象
+
 ```
 let obj = {
   name: "后盾人",
@@ -3682,6 +3963,7 @@ console.log(JSON.stringify(obj, null, 2));
 - 修改工厂函数的方法影响所有同类对象
 
 使用字面量创建对象需要复制属性与方法结构
+
 ```
 const xj = {
   name: "向军",
@@ -3698,6 +3980,7 @@ const hd = {
 ```
 
 使用工厂函数可以简化这个过程
+
 ```
 function stu(name) {
   return {
@@ -3721,6 +4004,7 @@ xj.show();  //向军
 - `this`指当前创建的对象
 - 不需要返回`this`系统会自动完成
 - 需要使用`new`关键词生成对象
+
 ```
 function Student(name) {
   this.name = name;
@@ -3737,6 +4021,7 @@ xj.show();  // 向军
 ```
 
 如果构造函数返回对象，实例化后的对象将是此对象
+
 ```
 function ArrayObject(...values) {
   const arr = new Array();
@@ -3754,6 +4039,7 @@ console.log(array.string("-"));
 ### 严格模式
 
 在严格模式下方法中的`this`值为 undefined，这是为了防止无意的修改 window 对象
+
 ```
 "use strict";
 function User() {
@@ -3771,6 +4057,7 @@ xj(); //undefined
 ### 内置构造
 
 JS 中大部分数据类型都是通过构造函数创建的。
+
 ```
 const num = new Number(99);
 console.log(num.valueOf());
@@ -3793,6 +4080,7 @@ console.log(hd);
 ```
 
 字面量创建的对象，内部也是调用了`Object`构造函数
+
 ```
 const hd = {
   name: "后盾人"
@@ -3808,6 +4096,7 @@ console.log(hdcms);  // {title: '开源内容管理系统'}
 ### 对象函数
 
 在`JS`中函数也是一个对象
+
 ```
 function hd(name) {}
 
@@ -3816,6 +4105,7 @@ console.log(hd.length);
 ```
 
 函数是由系统内置的 `Function` 构造函数创建的
+
 ```
 function hd(name) {}
 
@@ -3823,6 +4113,7 @@ console.log(hd.constructor); // ƒ Function() { [native code] }
 ```
 
 下面是使用内置构造函数创建的函数
+
 ```
 const User = new Function(`name`,`
   this.name = name;
@@ -3845,6 +4136,7 @@ console.log(lisi.show());  // 李四青年
 ### 问题分析
 
 下例将对象属性封装到构造函数内部
+
 ```
 function User(name, age) {
   this.name = name;
@@ -3865,6 +4157,7 @@ console.log(lisi.about());  // 李四是年轻人
 上例中的方法和属性仍然可以在外部访问到，比如 `info`方法只是在内部使用，不需要被外部访问到这会破坏程序的内部逻辑。
 
 下面使用闭包特性将对象进行抽象处理
+
 ```
 function User(name, age) {
   let data = { name, age };
@@ -3886,6 +4179,7 @@ JS 中可以对属性的访问特性进行控制。
 ### 查看特征
 
 使用 `Object.getOwnPropertyDescriptor`查看对象属性的描述。
+
 ```
 "use strict";
 const user = {
@@ -3897,22 +4191,24 @@ console.log(JSON.stringify(desc, null, 2));
 ```
 
 使用 `Object.getOwnPropertyDescriptors`查看对象所有属性的描述
+
 ```
 let desc = Object.getOwnPropertyDescriptors(user);
 ```
 
 属性包括以下四种特性
 
-| 特性         | 说明                                                    | 默认值    |
-|--------------|---------------------------------------------------------|-----------|
-| configurable | 能否使用 delete、能否需改属性特性、或能否修改访问器属性 | true      |
-| enumerable   | 对象属性是否可通过 for-in 循环，或 Object.keys() 读取   | true      |
-| writable     | 对象属性是否可修改                                      | true      |
-| value        | 对象属性的默认值                                        | undefined |
+| 特性           | 说明                                     | 默认值       |
+|--------------|----------------------------------------|-----------|
+| configurable | 能否使用 delete、能否需改属性特性、或能否修改访问器属性        | true      |
+| enumerable   | 对象属性是否可通过 for-in 循环，或 Object.keys() 读取 | true      |
+| writable     | 对象属性是否可修改                              | true      |
+| value        | 对象属性的默认值                               | undefined |
 
 ### 设置特征
 
 使用`Object.defineProperty` 方法修改属性特性，通过下面的设置属性 name 将不能被遍历、删除、修改。
+
 ```
 "use strict";
 const user = {
@@ -3927,6 +4223,7 @@ Object.defineProperty(user, "name", {
 ```
 
 通过执行以下代码对上面配置进行测试，请分别打开注释进行测试
+
 ```
 // 不允许修改
 // user.name = "向军"; //Error
@@ -3948,6 +4245,7 @@ Object.defineProperty(user, "name", {
 ```
 
 使用 `Object.defineProperties` 可以一次设置多个属性，具体参数和上面介绍的一样。
+
 ```
 "use strict";
 let user = {};
@@ -3962,6 +4260,7 @@ user.name = "后盾人"; //TypeError
 ### 禁止添加
 
 `Object.preventExtensions` 禁止向对象添加属性
+
 ```
 "use strict";
 const user = {
@@ -3972,6 +4271,7 @@ user.age = 18; //Error
 ```
 
 `Object.isExtensible` 判断是否能向对象中添加属性
+
 ```
 "use strict";
 const user = {
@@ -3984,6 +4284,7 @@ console.log(Object.isExtensible(user)); //false
 ### 封闭对象
 
 `Object.seal()`方法封闭一个对象，阻止添加新属性并将所有现有属性标记为 `configurable: false`
+
 ```
 "use strict";
 const user = {
@@ -4002,6 +4303,7 @@ delete user.name; //Error
 ```
 
 `Object.isSealed` 如果对象是密封的则返回 `true`，属性都具有 `configurable: false`。
+
 ```
 "use strict";
 const user = {
@@ -4014,6 +4316,7 @@ console.log(Object.isSealed(user)); //true
 ### 冻结对象
 
 `Object.freeze` 冻结对象后不允许添加、删除、修改属性，writable、configurable 都标记为`false`
+
 ```
 "use strict";
 const user = {
@@ -4024,6 +4327,7 @@ user.name = "后盾人"; //Error
 ```
 
 `Object.isFrozen()`方法判断一个对象是否被冻结
+
 ```
 "use strict";
 const user = {
@@ -4036,3 +4340,224 @@ console.log(Object.isFrozen(user)); // true
 ## 属性访问器
 
 getter 方法用于获得属性值，setter 方法用于设置属性，这是 JS 提供的存取器特性即使用函数来管理属性。
+
+- 用于避免错误的赋值
+- 需要动态监测值的改变
+- 属性只能在访问器和普通属性任选其一，不能共同存在
+
+### getter/setter
+
+向对是地用户的年龄数据使用访问器监控控制
+
+```
+"use strict";
+const user = {
+  data: { name: '后盾人', age: null },
+  set age(value) {
+    if (typeof value != "number" || value > 100 || value < 10) {
+      throw new Error("年龄格式错误");
+    }
+    this.data.age = value;
+  },
+  get age() {
+    return `年龄是: ${this.data.age}`;
+  }
+};
+user.age = 99;
+console.log(user.age);
+```
+
+下面使用 getter 设置只读的课程总价
+
+```
+let Lesson = {
+  lists: [
+    { name: "js", price: 100 },
+    { name: "mysql", price: 212 },
+    { name: "vue.js", price: 98 }
+  ],
+  get total() {
+    return this.lists.reduce((t, b) => t + b.price, 0);
+  }
+};
+console.log(Lesson.total); //410
+Lesson.total = 30; //无效
+console.log(Lesson.total); //410
+```
+
+下面通过设置站网站名称与网址体验`getter/setter`批量设置属性的使用
+
+```
+const web = {
+  name: "后盾人",
+  url: "houdunren.com",
+  get site() {
+    return `${this.name} ${this.url}`;
+  },
+  set site(value) {
+    [this.name, this.url] = value.split(",");
+  }
+};
+web.site = "后盾人,hdcms.com";
+console.log(web.site);
+```
+
+下面是设置 token 储取的示例，将业务逻辑使用`getter/setter`处理更方便，也方便其他业务的复用。
+
+```
+let Request = {
+  get token() {
+    let con = localStorage.getItem('token');
+    if (!con) {
+    	alert('请登录后获取token')
+    } else {
+    	return con;
+    }
+  },
+  set token(con) {
+  	localStorage.setItem('token', con);
+  }
+};
+// Request.token = 'houdunren'
+console.log(Request.token);
+```
+
+定义内部私有属性
+
+```
+"use strict";
+const user = {
+  get name() {
+    return this._name;
+  },
+  set name(value) {
+    if (value.length <= 3) {
+      throw new Error("用户名不能小于三位");
+    }
+    this._name = value;
+  }
+};
+user.name = "后盾人教程";
+console.log(user.name);
+```
+
+### 访问器描述符
+
+使用 `defineProperty` 可以模拟定义私有属性，从而使用面向对象的抽象特性。 (JavaScript/object/31.html)
+
+上面的代码也可以使用语法糖 `class`定义。 (JavaScript/object/31.html)
+
+### 闭包访问器
+
+下面结合闭包特性对属性进行访问控制
+
+- 下例中访问器定义在函数中，并接收参数 v
+- 在 get() 中通过闭包返回 v
+- 在 set() 中修改了 v，这会影响 get()访问的闭包数据 v
+
+```
+let data = {
+  name: 'houdunren.com',
+}
+for (const [key, value] of Object.entries(data)) {
+  observer(data, key, value)
+}
+
+function observer(data, key, v) {
+  Object.defineProperty(data, key, {
+    get() {
+      return v
+    },
+    set(newValue) {
+      v = newValue
+    },
+  })
+}
+data.name = '后盾人'
+console.dir(data.name) //后盾人
+```
+
+## 代理拦截
+
+代理（拦截器）是对象的访问控制，`setter/getter` 是对单个对象属性的控制，而代理是对整个对象的控制。
+
+- 读写属性时代码更简洁
+- 对象的多个属性控制统一交给代理完成
+- 严格模式下 `set` 必须返回布尔值
+
+### 使用方法
+
+```
+"use strict";
+const hd = { name: "后盾人" };
+const proxy = new Proxy(hd, {
+  get(obj, property) {
+    return obj[property];
+  },
+  set(obj, property, value) {
+    obj[property] = value;
+    return true;
+  }
+});
+proxy.age = 10;
+console.log(hd);  // {name: '后盾人', age: 10}
+```
+
+### 代理函数
+
+如果代理以函数方式执行时，会执行代理中定义 `apply` 方法。
+
+- 参数说明：函数，上下文对象，参数
+
+下面使用 `apply` 计算函数执行时间
+
+```
+function factorial(num) {
+  return num == 1 ? 1 : num * factorial(num - 1);
+}
+let proxy = new Proxy(factorial, {
+  apply(func, obj, args) {
+    console.time("run");
+    func.apply(obj, args);
+    console.timeEnd("run");
+  }
+});
+proxy.apply(this, [1, 2, 3]);
+```
+
+### 截取字符
+
+下例中对数组进行代理，用于截取标题操作
+
+```
+const stringDot = {
+  get(target, key) {
+    const title = target[key].title;
+    const len = 5;
+    return title.length > len
+      ? title.substr(0, len) + ".".repeat(3)
+      : title;
+  }
+};
+const lessons = [
+  {
+    title: "媒体查询响应式布局",
+    category: "css"
+  },
+  {
+    title: "FLEX 弹性盒模型",
+    category: "css"
+  },
+  {
+    title: "MYSQL多表查询随意操作",
+    category: "mysql"
+  }
+];
+const stringDotProxy = new Proxy(lessons, stringDot);
+console.log(stringDotProxy[0]);
+```
+
+### 双向绑定
+
+通过代理实现`vue` 等前端框架的数据绑定特性特性。 (JavaScript/object/36.html)
+
