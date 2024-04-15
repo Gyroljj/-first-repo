@@ -4561,3 +4561,272 @@ console.log(stringDotProxy[0]);
 
 通过代理实现`vue` 等前端框架的数据绑定特性特性。 (JavaScript/object/36.html)
 
+### 表单验证
+
+(JavaScript/object/38.html)
+
+## JSON
+
+- json 是一种轻量级的数据交换格式，易于人阅读和编写。
+- 使用`json` 数据格式是替换 `xml` 的最佳方式，主流语言都很好的支持`json` 格式。所以 `json` 也是前后台传输数据的主要格式。
+- json 标准中要求使用双引号包裹属性，虽然有些语言不强制，但使用双引号可避免多程序间传输发生错误语言错误的发生。
+
+### 声明定义
+
+基本结构
+
+```
+let hd = {
+  "title": "后盾人",
+  "url": "houdunren.com",
+  "teacher": {
+  	"name": "向军大叔",
+  }
+}
+console.log(hd.teacher.name);
+```
+
+数组结构
+
+```
+let lessons = [
+  {
+    "title": '媒体查询响应式布局',
+    "category": 'css',
+    "click": 199
+  },
+  {
+    "title": 'FLEX 弹性盒模型',
+    "category": 'css',
+    "click": 12
+  },
+  {
+    "title": 'MYSQL多表查询随意操作',
+    "category": 'mysql',
+    "click": 89
+  }
+];
+
+console.log(lessons[0].title);  // 媒体查询响应式布局
+```
+
+### 序列化
+
+序列化是将 `json` 转换为字符串，一般用来向其他语言传输使用。
+
+```
+let hd = {
+  "title": "后盾人",
+  "url": "houdunren.com",
+  "teacher": {
+  	"name": "向军大叔",
+  }
+}
+console.log(JSON.stringify(hd));
+//{"title":"后盾人","url":"houdunren.com","teacher":{"name":"向军大叔"}}
+```
+
+根据第二个参数指定保存的属性
+
+```
+console.log(JSON.stringify(hd, ['title', 'url']));
+//{"title":"后盾人","url":"houdunren.com"}
+```
+
+第三个是参数用来控制 TAB 数量，如果字符串则为前导字符。
+
+```
+let hd = {
+  "title": "后盾人",
+  "url": "houdunren.com",
+  "teacher": {
+  	"name": "向军大叔",
+  }
+}
+console.log(JSON.stringify(hd, null, 4));
+```
+
+为数据添加 `toJSON` 方法来自定义返回格式
+
+```
+let hd = {
+    "title": "后盾人",
+    "url": "houdunren.com",
+    "teacher": {
+        "name": "向军大叔",
+    },
+    "toJSON": function () {
+        return {
+            "title": this.url,
+            "name": this.teacher.name
+        };
+    }
+}
+console.log(JSON.stringify(hd)); //{"title":"houdunren.com","name":"向军大叔"}
+```
+
+### 反序列化
+
+使用 `JSON.parse` 将字符串 `json` 解析成对象
+
+```
+let hd = {
+  "title": "后盾人",
+  "url": "houdunren.com",
+  "teacher": {
+  	"name": "向军大叔",
+  }
+}
+let jsonStr = JSON.stringify(hd);
+console.log(JSON.parse(jsonStr));
+```
+
+使用第二个参数函数来对返回的数据二次处理
+
+```
+let hd = {
+  title: "后盾人",
+  url: "houdunren.com",
+  teacher: {
+    name: "向军大叔"
+  }
+};
+let jsonStr = JSON.stringify(hd);
+console.log(
+  JSON.parse(jsonStr, (key, value) => {
+    if (key == "title") {
+      return `[推荐] ${value}`;
+    }
+    return value;
+  })
+);
+```
+
+## Reflect
+
+Reflect 是一个内置的对象，它提供拦截 JavaScript 操作的方法
+
+- `Reflect`并非一个构造函数，所以不能通过 new 运算符对其进行调用
+
+# 原型与继承
+
+## 原型基础
+
+### 原型对象
+
+每个对象都有一个原型`prototype`对象，通过函数创建的对象也将拥有这个原型对象。原型是一个指向对象的指针。
+
+- 可以将原型理解为对象的父亲，对象从原型对象继承来属性
+- 原型就是对象除了是某个对象的父母外没有什么特别之处
+- 所有函数的原型默认是 `Object`的实例，所以可以使用`toString/toValues/isPrototypeOf` 等方法的原因
+- 使用原型对象为多个对象共享属性或方法
+- 如果对象本身不存在属性或方法将到原型上查找
+- 使用原型可以解决，通过构建函数创建对象时复制多个函数造成的内存占用问题
+- 原型包含 `constructor` 属性，指向构造函数
+- 对象包含 `__proto__` 指向他的原型对象
+
+下例使用的就是数组原型对象的 `concat` 方法完成的连接操作
+
+```
+let hd = ["a"];
+console.log(hd.concat("b"));
+console.log(hd);
+```
+
+默认情况下创建的对象都有原型![](https://doc.houdunren.com/assets/image-20191205163626698.CTAxdJbd.png)
+
+```
+let hd = { name: "后盾人" };
+console.log(hd);
+```
+
+以下 x、y 的原型都为元对象 Object，即 JS 中的根对象
+
+```
+let x = {};
+let y = {};
+console.log(Object.getPrototypeOf(x) == Object.getPrototypeOf(y)); //true
+```
+
+也可以创建一个极简对象（纯数据字典对象）没有原型（原型为null)  ![](https://doc.houdunren.com/assets/image-20191205163809670.BXd25Sh9.png)
+
+```
+let hd = { name: 3 };
+console.log(hd.hasOwnProperty("name"));
+
+let xj = Object.create(null, {
+  name: {
+    value: "向军"
+  }
+});
+console.log(xj.hasOwnProperty("name")); //Error
+
+//Object.keys是静态方法，不是原型方法所以是可以使用的
+console.log(Object.keys(xj));
+```
+
+函数拥有多个原型，`prototype` 用于实例对象使用，`__proto__`用于函数对象使用
+
+```
+function User() {}
+User.__proto__.view = function() {
+  console.log("User function view method");
+};
+User.view();  // User function view method
+
+User.prototype.show = function() {
+  console.log("后盾人");
+};
+let hd = new User();
+hd.show();  // 后盾人
+console.log(User.prototype == hd.__proto__);  // true
+```
+
+下面是原型关系分析，与方法继承的示例 ![](./imgs/1713183580374.png)
+
+```
+let hd = new Object();
+hd.name = "后盾人";
+Object.prototype.show = function() {
+  console.log("hodunren.com");
+};
+hd.show();
+
+function User() {}
+let xj = new User();  // hodunren.com
+xj.show();  // hodunren.com
+User.show();  // hodunren.com
+```
+
+下面是使用构造函数创建对象的原型体现 ![](./imgs/1713185599659.png)
+
+- 构造函数拥有原型
+- 创建对象时构造函数把原型赋予对象
+
+```
+function User() {}
+let xj = new User();
+console.log(xj.__proto__ == User.prototype);  // true
+```
+
+下面使用数组会产生多级继承即原型链 ![](./imgs/1713186597287.png)
+
+```
+let hd = [];
+console.log(hd);
+console.log(hd.__proto__ == Array.prototype);
+
+let str = "";
+console.log(str.__proto__ == String.prototype);
+```
+
+下面使用 `setPrototypeOf` 与 `getPrototypeOf` 获取与设置原型
+
+```
+let hd = {};
+let parent = { name: "parent" };
+Object.setPrototypeOf(hd, parent);
+console.log(hd);
+console.log(Object.getPrototypeOf(hd));
+```
+

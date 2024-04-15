@@ -31,11 +31,11 @@
 
     class Validate {
         max(value, len) {
-            return value.length < len;
+            return value.length <= len;
         }
 
         min(value, len) {
-            return value.length > len;
+            return value.length >= len;
         }
 
         isNumber(value) {
@@ -50,7 +50,20 @@
             },
             set(target, p, newValue) {
                 // console.log(p);
-                console.log(newValue);
+                // console.log(newValue);
+                const rule = newValue.getAttribute("rule");
+                const validate = new Validate;
+                // console.log(rule);
+                // console.log(rule.split(","));
+                let state = rule.split(",").every(rule => {
+                    // console.log(rule);
+                    const info = rule.split(":");
+                    // console.log(info);
+                    return validate[info[0]](newValue.value, info[1]);
+                    // return true;
+                });
+                // console.log(state);
+                newValue.classList[state ? "remove" : "add"]("error");
                 return true;
             }
         });
