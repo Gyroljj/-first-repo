@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    let hd = {
+        data: [1, 2, 3, 4, 5, 6]
+    };
+    Object.setPrototypeOf(hd, {
+        max(data) {
+            return data.sort((a, b) => b - a)[0];
+        }
+    })
+    console.log(hd.max(hd.data));
+
+    let xj = {
+        lessons: {js: 78, php: 63, node: 99, linux: 88},
+        // getter
+        // get data() {
+        //     return Object.values(this.lessons);
+        // }
+    };
+    console.log(hd.max.call(null, Object.values(xj.lessons)));
+</script>
+</html>

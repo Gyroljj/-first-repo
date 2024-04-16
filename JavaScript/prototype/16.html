@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    // console.log(Math.max(3, 64, 77, 45, 100, 86));
+    let arr = [1, 2, 4, 6, 67];
+    console.log(Math.max(...arr));
+    let hd = {
+        data: [1, 2, 3, 4, 5, 6]
+    };
+    console.log(Math.max.call(null, ...hd.data))
+
+
+    let xj = {
+        lessons: {js: 78, php: 63, node: 99, linux: 88},
+
+    };
+    console.log(Math.max.apply(null, Object.values(xj.lessons)));
+</script>
+</html>

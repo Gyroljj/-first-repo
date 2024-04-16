@@ -4830,3 +4830,303 @@ console.log(hd);
 console.log(Object.getPrototypeOf(hd));
 ```
 
+使用自定义构造函数创建的对象的原型体现 ![](./imgs/1713237210200.png)
+
+```
+function User() {}
+let hd = new User();
+console.log(hd);
+```
+
+`constructor` 存在于 `prototype` 原型中，用于指向构建函数的引用。
+
+```
+function hd() {
+  this.show = function() {
+    return "show method";
+  };
+}
+const obj = new hd(); //true
+console.log(obj instanceof hd);
+
+const obj2 = new obj.constructor();
+console.dir(obj2.show()); //show method
+```
+
+使用对象的 `constructor` 创建对象
+
+```
+function User(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+function createByObject(obj, ...args) {
+  const constructor = Object.getPrototypeOf(obj).constructor;
+  return new constructor(...args);
+}
+
+let hd = new User("后盾人");
+let xj = createByObject(hd, "向军", 12);
+console.log(xj);  // User {name: '向军', age: 12}
+```
+
+## 原型链
+
+通过引用类型的原型，继承另一个引用类型的属性与方法，这就是实现继承的步骤。 ![](./imgs/1713239045431.png)
+
+```
+let obj = {
+  name: "后盾人"
+};
+let hd = {
+  web: "houdunren"
+};
+let cms = {
+  soft: "hdcms"
+};
+//让obj继承hd，即设置obj的原型为hd
+Object.setPrototypeOf(obj, hd);
+Object.setPrototypeOf(hd, cms);
+console.log(obj.web);
+console.log(Object.getPrototypeOf(hd) == cms); //true
+```
+
+## 原型检测
+
+instanceof 检测构造函数的 `prototype` 属性是否出现在某个实例对象的原型链上
+
+```
+function A() {}
+function B() {}
+function C() {}
+
+const c = new C();
+B.prototype = c;
+const b = new B();
+A.prototype = b;
+const a = new A();
+
+console.dir(a instanceof A); //true
+console.dir(a instanceof B); //true
+console.dir(a instanceof C); //true
+console.dir(b instanceof C); //true
+console.dir(c instanceof B); //false
+```
+
+使用`isPrototypeOf`检测一个对象是否是另一个对象的原型链中
+
+```
+const a = {};
+const b = {};
+const c = {};
+
+Object.setPrototypeOf(a, b);
+Object.setPrototypeOf(b, c);
+
+console.log(b.isPrototypeOf(a)); //true
+console.log(c.isPrototypeOf(a)); //true
+console.log(c.isPrototypeOf(b)); //true
+```
+
+## 属性遍历
+
+使用`in` 检测原型链上是否存在属性，使用 `hasOwnProperty` 只检测当前对象
+
+```
+let a = { url: "houdunren" };
+let b = { name: "后盾人" };
+Object.setPrototypeOf(a, b);
+console.log("name" in a);  // true
+console.log(a.hasOwnProperty("name"));  // false
+console.log(a.hasOwnProperty("url"));  // true
+```
+
+使用 `for/in` 遍历时同时会遍历原型上的属性如下例
+
+```
+let hd = { name: "后盾人" };
+let xj = Object.create(hd, {
+  url: {
+    value: "houdunren.com",
+    enumerable: true
+  }
+});
+for (const key in xj) {
+  console.log(key);  // url name
+}
+```
+
+`hasOwnProperty` 方法判断对象是否存在属性，而不会查找原型。所以如果只想遍历对象属性使用以下代码
+
+```
+let hd = { name: "后盾人" };
+let xj = Object.create(hd, {
+  url: {
+    value: "houdunren.com",
+    enumerable: true
+  }
+});
+for (const key in xj) {
+  if (xj.hasOwnProperty(key)) {
+    console.log(key);  // url
+  }
+}
+```
+
+### 借用原型
+
+使用 `call` 或 `apply` 可以借用其他原型方法完成功能。
+
+下面的 xj 对象不能使用`max`方法，但可以借用 hd 对象的原型方法
+
+```
+let hd = {
+  data: [1, 2, 3, 4, 5]
+};
+Object.setPrototypeOf(hd, {
+  max: function() {
+    return this.data.sort((a, b) => b - a)[0];
+  }
+});
+console.log(hd.max());  // 5
+
+let xj = {
+  lessons: { js: 100, php: 78, node: 78, linux: 125 },
+  get data() {
+    return Object.values(this.lessons);
+  }
+};
+console.log(hd.__proto__.max.apply(xj));  // 125
+```
+
+上例中如果方法可以传参，那就可以不在 `xj` 对象中定义 `getter` 方法了
+
+```
+let hd = {
+  data: [1, 2, 3, 4, 5]
+};
+Object.setPrototypeOf(hd, {
+  max: function(data) {
+    return data.sort((a, b) => b - a)[0];
+  }
+});
+console.log(hd.max(hd.data));  //5
+
+let xj = {
+  lessons: { js: 100, php: 78, node: 78, linux: 125 }
+};
+console.log(hd.__proto__.max.call(xj, Object.values(xj.lessons)));  //125
+```
+
+因为 `Math.max` 就是获取最大值的方法，所以代码可以再次优化
+
+```
+let hd = {
+  data: [1, 2, 3, 4, 5]
+};
+console.log(Math.max.apply(null, Object.values(hd.data)));  // 5
+
+let xj = {
+  lessons: { js: 100, php: 78, node: 78, linux: 125 }
+};
+console.log(Math.max.apply(xj, Object.values(xj.lessons)));  // 125
+```
+
+下面是获取设置了 `class` 属性的按钮，但 DOM 节点不能直接使用数组的`filter` 等方法，但借用数组的原型方法就可以操作了。
+
+```
+<body>
+  <button message="后盾人" class="red">后盾人</button>
+  <button message="hdcms">hdcms</button>
+</body>
+<script>
+  let btns = document.querySelectorAll("button");
+  btns = Array.prototype.filter.call(btns, item => {
+    return item.hasAttribute("class");
+  });
+</script>
+```
+
+### this
+
+`this` 不受原型继承影响，`this` 指向调用属性时使用的对象。
+
+```
+let hd = {
+  name: "后盾人"
+};
+let houdunren = {
+  name: "向军",
+  show() {
+    return this.name;
+  }
+};
+hd.__proto__ = houdunren;
+console.log(hd.show()); //后盾人
+```
+
+## 原型总结
+
+### prototype
+
+函数也是对象也有原型，函数有 `prototype` 属性指向他的原型
+
+为构造函数设置的原型指，当使用构造函数创建对象时把这个原型赋予给这个对象
+
+```
+function User(name) {
+  this.name = name;
+}
+User.prototype = {
+  show() {
+    return this.name;
+  }
+};
+let xj = new User("向军");
+console.log(xj.show()); //向军
+```
+
+函数默认`prototype` 指包含一个属性 `constructor` 的对象，`constructor` 指向当前构造函数
+
+```
+function User(name) {
+  this.name = name;
+}
+let xj = new User("向军");
+console.log(xj);  // User {name: '向军'}
+console.log(User.prototype.constructor == User); //true
+console.log(xj.__proto__ == User.prototype); //true
+
+let lisi = new xj.constructor("李四");
+console.log(lisi.__proto__ == xj.__proto__); //true
+```
+
+原型中保存引用类型会造成对象共享属性，所以一般只会在原型中定义方法。
+
+```
+function User() {}
+User.prototype = {
+  lessons: ["JS", "VUE"]
+};
+const lisi = new User();
+const wangwu = new User();
+
+lisi.lessons.push("CSS");
+
+console.log(lisi.lessons); //["JS", "VUE", "CSS"]
+console.log(wangwu.lessons); //["JS", "VUE", "CSS"]
+```
+
+为 Object 原型对象添加方法，将影响所有函数 (JavaScript/prototype/20.html)
+
+了解了原型后可以为系统对象添加方法，比如为字符串添加了一截断函数。
+
+- 不能将系统对象的原型直接赋值
+
+```
+String.prototype.truncate = function (len = 5) {
+	return this.length <= len ? this : this.substr(0, len) + '...';
+}
+console.log('后盾人每天不断视频教程'.truncate(3)); //后盾人...
+```
