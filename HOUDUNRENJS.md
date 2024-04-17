@@ -5130,3 +5130,389 @@ String.prototype.truncate = function (len = 5) {
 }
 console.log('后盾人每天不断视频教程'.truncate(3)); //后盾人...
 ```
+
+### Object.create
+
+使用`Object.create`创建一个新对象时使用现有对象做为新对象的原型对象 ![](./imgs/1713323706677.png)
+
+```
+let user = {
+  show() {
+    return this.name;
+  }
+};
+
+let hd = Object.create(user);
+hd.name = "向军";
+console.log(hd.show()); // 向军
+```
+
+强以在设置时使用第二个参数设置新对象的属性
+
+```
+let user = {
+  show() {
+    return this.name;
+  }
+};
+let hd = Object.create(user, {
+  name: {
+    value: "后盾人"
+  }
+});
+console.log(hd);  // {name: '后盾人'}
+```
+
+### __proto__
+
+在实例化对象上存在 __proto__ 记录了原型，所以可以通过对象访问到原型的属性或方法。
+
+- `__proto__` 不是对象属性，理解为`prototype` 的 `getter/setter` 实现，他是一个非标准定义
+- `__proto__` 内部使用`getter/setter` 控制值，所以只允许对象或 `null`
+- 建议使用 `Object.setPrototypeOf` 与`Object.getProttoeypOf` 替代 `__proto__`
+
+下面修改对象的 `__proto__` 是不会成功的，因为`__proto__` 内部使用`getter/setter` 控制值，所以只允许对象或 `null`
+
+```
+let xj = {};
+xj.__proto__ = "向军";
+console.log(xj);
+```
+
+下面定义的`__proto__` 就会成功，因为这是一个极简对象，没有原型对象所以不会影响`__proto__`赋值。
+
+```
+let hd = Object.create(null);
+hd.__proto__ = "向军";
+console.log(hd); //{__proto__: "向军"}
+```
+
+### 使用建议
+
+通过前介绍我们知道可以使用多种方式设置原型，下面是按时间顺序的排列
+
+1. `prototype` 构造函数的原型属性
+2. `Object.create` 创建对象时指定原型
+3. `__proto__` 声明自定义的非标准属性设置原型，解决之前通过 `Object.create` 定义原型，而没提供获取方法
+4. `Object.setPrototypeOf` 设置对象原型
+
+这几种方式都可以管理原型，一般以我个人情况来讲使用 `prototype` 更改构造函数原型，使用 `Object.setPrototypeOf`
+与 `Object.getPrototypeOf` 获取或设置原型。
+
+## 构造函数
+
+### 原型属性
+
+构造函数在被`new` 时把构造函数的原型（prototype）赋值给新对象。如果对象中存在属性将使用对象属性，不再原型上查找方法。
+
+- 构造函数只会产生一个原型对象
+
+```
+function hd() {
+  this.show = function() {
+    return "show in object";
+  };
+}
+hd.prototype.show = function() {
+  return "show in prototype";
+};
+const obj = new hd();
+console.log(obj.show());  // show in object
+```
+
+对象的原型引用构造函数的原型对象，是在创建对象时确定的，当构造函数原型对象改变时会影响后面的实例对象。
+
+```
+function hd() {}
+hd.prototype.name = "hdcms";
+const obj1 = new hd();
+console.log(obj1.name); //hdcms
+
+hd.prototype = {
+  name: "后盾人"
+};
+const obj2 = new hd();
+console.dir(obj2.name); //后盾人
+```
+
+### constructor
+
+构造函数的原型中包含属性 `constructor` 指向该构造函数，以下代码说明了这一点
+
+```
+function User(name) {
+  this.name = name;
+}
+let hd = new User("后盾人");
+let xj = new hd.constructor("向军");
+console.log(xj);  // User {name: '向军'}
+```
+
+以下代码直接设置了构造函数的原型将造成 `constructor` 丢失
+
+```
+function User(name) {
+  this.name = name;
+}
+User.prototype = {
+  show: function() {}
+};
+
+let hd = new User("后盾人");
+let xj = new hd.constructor("向军");
+console.log(xj); //String {"向军"}
+```
+
+正确的做法是要保证原型中的 `constructor`指向构造函数
+
+```
+function User(name) {
+  this.name = name;
+}
+User.prototype = {
+  constructor: User,
+  show: function() {}
+};
+
+let hd = new User("后盾人");
+let xj = new hd.constructor("向军");
+console.log(xj);
+```
+
+### 使用优化
+
+使用构造函数会产生函数复制造成内存占用，及函数不能共享的问题。
+
+```
+function User(name) {
+  this.name = name;
+  this.get = function() {
+    return this.name;
+  };
+}
+let lisi = new User("小明");
+let wangwu = new User("王五");
+console.log(lisi.get == wangwu.get); //false
+```
+
+体验通过原型定义方法不会产生函数复制
+
+```
+function User(name) {
+  this.name = name;
+}
+User.prototype.get = function() {
+  return "后盾人" + this.name;
+};
+let lisi = new User("小明");
+
+let wangwu = new User("王五");
+console.log(lisi.get == wangwu.get); //true
+//通过修改原型方法会影响所有对象调用，因为方法是共用的
+lisi.__proto__.get = function() {
+  return "后盾人" + this.name;
+};
+console.log(lisi.get());  // 后盾人小明
+console.log(wangwu.get());  // 后盾人王五
+```
+
+下面演示使用原型为多个实例共享属性
+
+```
+function User(name, age) {
+  this.name = name;
+  this.age = age;
+  this.show = () => {
+  	return `你在${this.site}的姓名:${this.name}，年龄:${this.age}`;
+  }
+}
+User.prototype.site = '后盾人';
+let lisi = new User('李四', 12);
+let xiaoming = new User('小明', 32);
+
+console.log(lisi.show()); //你在后盾人的姓名:李四，年龄:12
+console.log(xiaoming.show()); //你在后盾人的姓名:小明，年龄:32
+```
+
+将方法定义在原型上为对象共享，解决通过构造函数创建对象函数复制的内存占用问题
+
+使用`Object.assign`一次设置原型方法来复用，后面会使用这个功能实现 Mixin 模式
+
+```
+function User(name, age) {
+  this.name = name;
+  this.age = age;
+}
+Object.assign(User.prototype, {
+  getName() {
+      return this.name;
+  },
+  getAge() {
+      return this.age;
+  }
+});
+let lisi = new User('李四', 12);
+let xiaoming = new User('小明', 32);
+console.log(lisi.getName()); //李四
+console.log(lisi.__proto__)
+```
+
+下面为 `Stu` 更改了原型为`User` 的实例对象，`lisi`是通过构造函数`Stu`创建的实例对象
+
+- `lisi`在执行`getName` 方法时会从自身并向上查找原型，这就是原型链特性
+- 当然如果把 `getName` 添加到对象上，就不继续追溯原型链了
+
+```
+"use strict";
+function User() {}
+User.prototype.getName = function() {
+  return this.name;
+};
+
+function Stu(name) {
+  this.name = name;
+}
+Stu.prototype = new User();
+const lisi = new Stu("李四");
+
+console.log(lisi.__proto__);  // User {}
+console.log(lisi.getName());  // 李四
+```
+
+## 继承与多态
+
+当对象中没使用的属性时，JS 会从原型上获取这就是继承在 JavaScript 中的实现。
+
+### 继承实现
+
+下面使用Object.create 创建对象，做为Admin、Member的原型对象来实现继承。 ![](./imgs/1713345979364.png)
+
+```
+function User() {}
+User.prototype.getUserName = function() {};
+
+function Admin() {}
+Admin.prototype = Object.create(User.prototype);
+Admin.prototype.role = function() {};
+
+function Member() {}
+Member.prototype = Object.create(User.prototype);
+Member.prototype.email = function() {};
+console.log(new Admin());
+console.log(new Member());
+```
+
+不能使用以下方式操作，因为这样会改变 User 的原型方法，这不是继承，这是改变原型
+
+```
+...
+function User() {}
+User.prototype.getUserName = function() {};
+
+function Admin() {}
+Admin.prototype = User.prototype;
+Admin.prototype.role = function() {};
+...
+```
+
+### 构造函数
+
+有多种方式通过构造函数创建对象
+
+```
+function Admin() {}
+console.log(Admin == Admin.prototype.constructor); //true
+
+let hd = new Admin.prototype.constructor();
+console.log(hd);
+
+let xj = new Admin();
+console.log(xj);
+```
+
+因为有时根据得到的对象获取构造函数，然后再创建新对象所以需要保证构造函数存在，但如果直接设置了 `Admin.prototype`
+属性会造成`constructor`丢失，所以需要再次设置`constructor`值。
+
+```
+function User() {}
+function Admin() {}
+
+Admin.prototype = Object.create(User.prototype);
+Admin.prototype.role = function() {};
+
+let xj = new Admin();
+console.log(xj.constructor); //constructor丢失，返回User构造函数
+
+Admin.prototype.constructor = Admin;
+
+let hd = new Admin();
+console.log(hd.constructor); //正确返回Admin构造函数
+
+//现在可以通过对象获取构造函数来创建新对象了
+console.log(new hd.constructor());
+```
+
+使用`Object.defineProperty`定义来禁止遍历 `constructor` 属性
+
+```
+function User() {}
+function Admin(name) {
+  this.name = name;
+}
+
+Admin.prototype = Object.create(User.prototype);
+
+Object.defineProperty(Admin.prototype, "constructor", {
+  value: Admin,
+  enumerable: false //禁止遍历
+});
+
+let hd = new Admin("后盾人");
+for (const key in hd) {
+  console.log(key);  // name
+}
+```
+
+完全重写构建函数原型，只对后面应用对象有效
+
+```
+function User() {}
+const lisi = new User();
+User.prototype = {
+  show() {
+    return "prototype show";
+  }
+};
+const wangwu = new User();
+console.log(wangwu.show());
+
+console.log(lisi.show()); // lisi.show is not a function
+```
+
+### 方法重写
+
+下而展示的是子类需要重写父类方法的技巧。
+
+```
+function Person() {}
+Person.prototype.getName = function() {
+  console.log("parent method");
+};
+
+function User(name) {}
+User.prototype = Object.create(Person.prototype);
+User.prototype.constructor = User;
+
+User.prototype.getName = function() {
+  //调用父级同名方法
+  Person.prototype.getName.call(this);
+  console.log("child method");
+};
+let hd = new User();
+hd.getName();  //parent method    child method
+```
+
+### 多态
+
+根据多种不同的形态产生不同的结果，下而会根据不同形态的对象得到了不同的结果。 (JavaScript/prototype/30.html)
+

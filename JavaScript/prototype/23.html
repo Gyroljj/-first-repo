@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    // __proto__  getter setter
+    // let hd = {name: "后盾人"};
+    // hd.__proto__ = {
+    //     show() {
+    //         return this.name;
+    //     }
+    // };
+    // hd.__proto__ = 99;
+    // console.log(hd.__proto__);
+    // let hd = {
+    //     action: {},
+    //     get proto() {
+    //         return this.action;
+    //     },
+    //     set proto(obj) {
+    //         if (obj instanceof Object) {
+    //             this.action = obj;
+    //         }
+    //
+    //     }
+    // }
+    // hd.proto = {
+    //     view() {
+    //     }
+    // };
+    // hd.proto = "abc";
+    // console.log(hd.proto);
+    let hd = Object.create(null);
+    console.dir(hd);
+    hd.__proto__ = "后盾人";
+    console.dir(hd.__proto__);
+
+</script>
+</html>

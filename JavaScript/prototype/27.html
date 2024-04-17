@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    // function Hd() {
+    //
+    // }
+    //
+    // let obj = new Hd();
+    // let obj2 = obj.__proto__.constructor;
+    // console.dir(obj2);
+    // console.dir(Hd);
+
+    // 原型的继承，而不是改变构造函数的原型
+    function User() {
+        // this.name = function () {
+        //     console.log("user name method");
+        // };
+    }
+
+    User.prototype.name = function () {
+        console.log("user name method");
+    }
+    // let hd = new User();
+    // hd.name();
+
+    function Admin() {
+
+    };
+
+    // console.log(Admin.prototype.__proto__ == Object.prototype);
+    // Admin.prototype.role = function () {
+    //     console.log("admin.role")
+    // }
+    // Admin.prototype.__proto__ = User.prototype;
+    Admin.prototype = Object.create(User.prototype);
+    Admin.prototype.constructor = Admin;
+    Admin.prototype.role = function () {
+        console.log("admin.role")
+    }
+    console.dir(Admin);
+    console.dir(Admin.prototype.constructor);
+    let a = new Admin();
+    let b = new a.__proto__.constructor();
+    console.log(b);
+
+    function Menber() {
+
+    }
+
+    Menber.prototype.__proto__ = User.prototype;
+    Menber.prototype.role = function () {
+        console.log("menber.role")
+    }
+    // let a = new Admin();
+    // a.name();
+    // a.role();
+</script>
+</html>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    function User() {
+    }
+
+    User.prototype.show = function () {
+        console.log(this.description());
+    };
+
+    function Admin() {
+    }
+
+    // Admin.prototype = Object.create(User.prototype);
+    Admin.prototype.showAdmin = function () {
+        return "管理员在此";
+    };
+
+    function Member() {
+    }
+
+    // Member.prototype = Object.create(User.prototype);
+    Member.prototype.showMember = function () {
+        return "我是会员";
+    };
+
+    function Enterprise() {
+    }
+
+    // Enterprise.prototype = Object.create(User.prototype);
+    Enterprise.prototype.showEnterprise = function () {
+        return "企业帐户";
+    };
+    for (const obj of [new Admin(), new Member(), new Enterprise()]) {
+        // obj.show();
+        if (obj instanceof Admin) {
+            console.log(obj.showAdmin());
+        } else if (obj instanceof Member) {
+            console.log(obj.showMember());
+        } else if (obj instanceof Enterprise) {
+            console.log(obj.showEnterprise());
+        }
+    }
+</script>
+</html>

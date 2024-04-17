@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    let user = {
+        show() {
+            return this.name;
+        }
+    };
+    // prototype
+    // 定义对象的原型，不能获取
+    // let hd = Object.create(user, {
+    //     name: {
+    //         value: "后盾人"
+    //     }
+    // });
+    // hd.name = "后盾人";
+
+    // console.log(hd.show());
+    console.log(user);
+    let hd = {name: "后盾人"};
+    // hd.__proto__ = user;
+    // console.log(hd);
+    Object.setPrototypeOf(hd, user);
+    console.log(hd.show());
+    console.log(Object.getPrototypeOf(hd));
+</script>
+</html>
