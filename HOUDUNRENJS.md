@@ -5516,3 +5516,108 @@ hd.getName();  //parent method    child method
 
 根据多种不同的形态产生不同的结果，下而会根据不同形态的对象得到了不同的结果。 (JavaScript/prototype/30.html)
 
+## 深挖继承
+
+继承是为了复用代码，继承的本质是将原型指向到另一个对象。
+
+### 构造函数
+
+我们希望调用父类构造函数完成对象的属性初始化，但像下面这样使用是不会成功的。因为此时 `this` 指向了 `window`，无法为当前对象声明属性。
+
+```
+function User(name) {
+  this.name = name;
+  console.log(this);// Window
+}
+User.prototype.getUserName = function() {
+  return this.name;
+};
+
+function Admin(name) {
+  User(name);
+}
+Admin.prototype = Object.create(User.prototype);
+
+let xj = new Admin("向军大叔");
+console.log(xj.getUserName()); //undefined
+```
+
+解决上面的问题是使用 `call/apply` 为每个生成的对象设置属性
+
+```
+function User(name) {
+  this.name = name;
+  console.log(this); // Admin
+}
+User.prototype.getUserName = function() {
+  return this.name;
+};
+
+function Admin(name) {
+  User.call(this, name);
+}
+Admin.prototype = Object.create(User.prototype);
+
+let xj = new Admin("向军大叔");
+console.log(xj.getUserName()); //向军大叔
+```
+
+### 原型工厂
+
+原型工厂是将继承的过程封装，使用继承业务简单化。
+
+```
+function extend(sub, sup) {
+  sub.prototype = Object.create(sup.prototype);
+  sub.prototype.constructor = sub;
+}
+
+function Access() {}
+function User() {}
+function Admin() {}
+function Member() {}
+
+extend(User, Access); //User继承Access
+extend(Admin, User); //Admin继承User
+extend(Member, Access); //Member继承Access
+
+Access.prototype.rules = function() {};
+User.prototype.getName = function() {};
+
+console.log(new Admin()); // 继承关系: Admin>User>Access>Object
+console.log(new Member()); //继承关系：Member>Access>Object
+```
+
+### 对象工厂
+
+在原型继承基础上，将对象的生成使用函数完成，并在函数内部为对象添加属性或方法。
+
+```
+function User(name, age) {
+  this.name = name;
+  this.age = age;
+}
+User.prototype.show = function() {
+  console.log(this.name, this.age);
+};
+
+function Admin(name, age) {
+  let instance = Object.create(User.prototype);
+  User.call(instance, name, age);
+  instance.role=function(){
+    console.log('admin.role');
+  }
+  return instance;
+}
+let hd = Admin("后盾人", 19);
+hd.show();  // 后盾人 19
+
+function member(name, age) {
+  let instance = Object.create(User.prototype);
+  User.call(instance, name, age);
+  return instance;
+}
+let lisi = member("李四", 28);
+lisi.show();  // 李四 28
+```
+

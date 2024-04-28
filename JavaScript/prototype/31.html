@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    // let hd = {
+    //     name: "后盾人",
+    //     view() {
+    //         console.log(this.name);
+    //     }
+    // }
+    // hd.view();
+
+    // "use strict";
+
+
+    function User(name, age) {
+        this.name = name;
+        this.age = age;
+        // console.log(this);
+    }
+
+    User.prototype.show = function () {
+        console.log(this.name, this.age);
+    }
+
+    function Admin(...args) {
+        // this.name = name;
+        // this.age = age;
+        // console.log(args);
+        // User.call(this, name, age);
+        User.apply(this, args);
+    }
+
+    Admin.prototype = Object.create(User.prototype);
+    console.dir(Admin);
+
+    let xj = new Admin("向军", 19);
+    xj.show();
+
+    function Member(...args) {
+        // this.name = name;
+        // this.age = age;
+        User.apply(this, args)
+    }
+
+    Member.prototype = Object.create(User.prototype);
+    let lisi = new Member("李四", 28);
+    lisi.show();
+</script>
+</html>
