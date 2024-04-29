@@ -5621,3 +5621,383 @@ let lisi = member("李四", 28);
 lisi.show();  // 李四 28
 ```
 
+### Mixin 模式
+
+`JS`不能实现多继承，如果要使用多个类的方法时可以使用`mixin`混合模式来完成。
+
+- `mixin` 类是一个包含许多供其它类使用的方法的类
+- `mixin` 类不用来继承做为其它类的父类
+
+示例(JavaScript/prototype/34.html)中 `Admin`需要使用 `Request.prototype` 与 `Credit` 的功能，因为`JS`
+是单继承，我们不得不将无关的类连接在一下，显然示例的代码实现并不佳
+
+(JavaScript/prototype/35.html)分拆功能使用 Mixin 实现多继承，使用代码结构更清晰。只让 `Admin` 继承 `User` 原型
+
+- `super` 是在 `mixin` 类的原型中查找，而不是在 `User` 原型中 (JavaScript/prototype/36.html)
+
+### 实例操作
+
+使用 `call/apply` 制作选项卡 (JavaScript/prototype/39.html)
+
+# 类
+
+## 基础知识
+
+为了和其他语言继承形态一致，JS提供了`class` 关键词用于模拟传统的 `class` ，但底层实现机制依然是原型继承。
+
+`class` 只是语法糖为了让类的声明与继承更加简洁清晰。
+
+### 声明定义
+
+可以使用类声明和赋值表达式定义类，推荐使用类声明来定义类
+
+```
+//类声明
+class User {
+}
+console.log(new Article());
+```
+
+```
+let Article = class {
+};
+console.log(new User());
+```
+
+类方法间不需要逗号
+
+```
+class User {
+  show() {}
+  get() {
+    console.log("get method");
+  }
+}
+const hd = new User();
+hd.get();
+```
+
+### 构造函数
+
+使用 `constructor` 构造函数传递参数，下例中`show`为构造函数方法，`getName`为原型方法
+
+- `constructor` 会在 new 时自动执行
+
+```
+class User {
+  constructor(name) {
+    this.name = name;
+    this.show = function() {};
+  }
+  getName() {
+    return this.name;
+  }
+}
+const xj = new User("向军大叔");
+console.log(xj);
+```
+
+构造函数用于传递对象的初始参数，但不是必须定义的，如果不设置系统会设置如下类型
+
+- 子构造器中调用完`super` 后才可以使用 `this`
+- 至于 `super` 的概念会在后面讲到
+
+```
+constructor(...args) {
+  super(...args);
+}
+```
+
+### 原理分析
+
+类其实是函数
+
+```
+class User {
+}
+console.log(typeof User); //function
+```
+
+`constructor` 用于定义函数代码，下面是与普通函数的对比，结构是一致的![](./imgs/1714382030010.png)
+
+```
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+  show() {}
+}
+console.dir(User);
+console.log(User == User.prototype.constructor); //true
+
+//下面是对比的普通函数
+function Hd(name) {
+  this.name = name;
+}
+console.dir(Hd);
+console.log(Hd == Hd.prototype.constructor); //true
+```
+
+在类中定义的方法也保存在函数原型中![](./imgs/1714382072465.png)
+
+```
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+  show() {}
+}
+console.dir(User);
+console.log(Object.getOwnPropertyNames(User.prototype)); //["constructor", "show"]
+```
+
+所以下面定义的类
+
+```
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+  show() {
+    console.log(this.name);
+  }
+}
+```
+
+与下面使用函数的定义是一致的
+
+```
+function User(name) {
+  this.name = name;
+}
+Hd.prototype.show = function() {
+  console.log(this.name);
+};
+```
+
+### 属性定义
+
+在 `class` 中定义的属性为每个`new` 出的对象独立创建，下面定义了 `site` 与 `name` 两个对象属性
+
+```
+class User {
+  site = "后盾人";
+  constructor(name) {
+    this.name = name;
+  }
+  show() {
+    console.log(this.site + ":" + this.name);
+  }
+}
+let hd = new User("向军");
+hd.show();  // 后盾人:向军
+```
+
+### 函数差异
+
+`class` 是使用函数声明类的语法糖，但也有些区别
+
+`class` 中定义的方法不能枚举
+
+```
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+  show() {
+    console.log(this.name);
+  }
+}
+let xj = new User("向军");
+//不会枚举出show属性
+for (const key in xj) {
+  console.log(key);  // name
+}
+
+function Hd(name) {
+  this.name = name;
+}
+Hd.prototype.show = function() {
+  console.log(this.name);
+};
+let obj = new Hd("后盾人");
+for (const key in obj) {
+  console.log(key);  // name show
+}
+```
+
+### 严格模式
+
+`class` 默认使用`strict` 严格模式执行(JavaScript/class/6.html)
+
+## 静态访问
+
+### 静态属性
+
+静态属性即为类设置属性，而不是为生成的对象设置，下面是原理实现
+
+```
+function User() {}
+User.site = "后盾人";
+console.dir(User);
+
+const hd = new User();
+console.log(hd.site); //undefiend
+console.log(User.site); //后盾人
+```
+
+在 `class` 中为属性添加 `static` 关键字即声明为静态属性
+
+- 可以把为所有对象使用的值定义为静态属性
+
+```
+class Request {
+  static HOST = "https://www.houdunren.com";
+  
+  query(api) {
+    return Request.HOST + "/" + api;
+  }
+}
+let request = new Request();
+console.log(request.query("article"));  // https://www.houdunren.com/article
+```
+
+### 静态方法
+
+指通过类访问不能使用对象访问的方法，比如系统的`Math.round()`就是静态方法
+
+- 一般来讲方法不需要对象属性参与计算就可以定义为静态方法
+
+下面是静态方法实现原理
+
+```
+function User() {
+  this.show = function() {
+    return "this is a object function";
+  };
+}
+User.show = function() {
+  return "welcome to houdunren";
+};
+const xj = new User();
+console.dir(xj.show()); //this is a object function
+console.dir(User.show()); //welcome to houdunren
+```
+
+在 `class` 内声明的方法前使用 `static` 定义的方法即是静态方法
+
+```
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+  static create(name) {
+    return new User(name);
+  }
+}
+const xj = User.create("向军大叔");
+console.log(xj);  // User {name: '向军大叔'}
+```
+
+使用静态方法在课程类中的使用(JavaScript/class/9.html)
+
+## 访问器
+
+使用访问器可以对对象的属性进行访问控制，下面是使用访问器对私有属性进行管理。
+
+### 语法介绍
+
+- 使用访问器可以管控属性，有效的防止属性随意修改
+- 访问器就是在函数前加上 `get/set`修饰，操作属性时不需要加函数的扩号，直接用函数名
+
+```
+class User {
+  constructor(name) {
+    this.data = { name };
+  }
+  get name() {
+    return this.data.name;
+  }
+  set name(value) {
+    if (value.trim() == "") throw new Error("invalid params");
+    this.data.name = value;
+  }
+}
+let hd = new User("向军大叔");
+hd.name = "后盾人";
+console.log(hd.name);  // 后盾人
+```
+
+## 访问控制
+
+设置对象的私有属性有多种方式，包括后面章节介绍的模块封装。
+
+### public
+
+`public` 指不受保护的属性，在类的内部与外部都可以访问到
+
+```
+class User {
+  url = "houdunren.com";
+  constructor(name) {
+    this.name = name;
+  }
+}
+let hd = new User("后盾人");
+console.log(hd.name, hd.url);  // 后盾人 houdunren.com
+```
+
+### protected
+
+protected是受保护的属性修释，不允许外部直接操作，但可以继承后在类内部访问，有以下几种方式定义
+
+### 命名保护
+
+将属性定义为以 `_`开始，来告诉使用者这是一个私有属性，请不要在外部使用。
+
+- 外部修改私有属性时可以使用访问器 `setter` 操作
+- 但这只是提示，就像吸烟时烟盒上的吸烟有害健康，但还是可以抽的
+
+```
+class Article {
+  _host = "https://houdunren.com";
+
+  set host(url) {
+    if (!/^https:\/\//i.test(url)) {
+      throw new Error("网址错误");
+    }
+    this._host = url;
+  }
+  
+  lists() {
+    return `${this._host}/article`;
+  }
+}
+let article = new Article();
+console.log(article.lists()); //https://houdunren.com/article
+article.host = "https://hdcms.com";
+console.log(article.lists()); //https://hdcms.com/article
+```
+
+继承时是可以使用的
+
+```
+class Common {
+  _host = "https://houdunren.com";
+  set host(url) {
+    if (!/^https:\/\//i.test(url)) {
+      throw new Error("网址错误");
+    }
+    this._host = url;
+  }
+}
+class Article extends Common {
+  lists() {
+    return `${this._host}/article`;
+  }
+}
+let article = new Article();
+console.log(article.lists()); //https://houdunren.com/article
+article.host = "https://hdcms.com";
+console.log(article.lists()); //https://hdcms.com/article
+```

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    // "use strict";
+    // function show() {
+    //     console.log(this);
+    // }
+    //
+    // show();
+    // "use strict";
+    //
+    // function User() {
+    //
+    // }
+    //
+    // User.prototype.show = function () {
+    //     function test() {
+    //         console.log(this);
+    //     }
+    //
+    //     test();
+    // }
+    // let u = new User();
+    // u.show();
+    class Hd {
+        show() {
+            function test() {
+                console.log(this);
+            }
+
+            test();
+        }
+    }
+
+    let hd = new Hd();
+    hd.show();
+</script>
+</html>

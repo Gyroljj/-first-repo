@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    class User {
+        constructor(name) {
+            this.name = name;
+        }
+
+        show() {
+
+        }
+    };
+    let u = new User("后盾人");
+    // console.log(Object.getOwnPropertyNames(u));
+    console.log(Object.getOwnPropertyNames(User.prototype));
+    // console.log(u);
+    // console.dir(User);
+
+    // console.log(User === User.prototype.constructor);
+
+    function Hd(name) {
+        this.name = name;
+    }
+
+    Hd.prototype.show = function () {
+
+    }
+    let h = new Hd("向军");
+    // console.log(Object.getOwnPropertyNames(h));
+    console.log(Object.getOwnPropertyNames(Hd.prototype));
+    // console.log(h);
+
+
+    // console.dir(Hd)
+    // console.log(Hd === Hd.prototype.constructor);
+</script>
+</html>

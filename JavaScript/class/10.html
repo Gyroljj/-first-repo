@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    class Requset {
+        constructor(host) {
+            this.data = {};
+            this.host = host;
+        }
+
+        // setUrl(url) {
+        //     if (!/^https?:\/\//i.test(url)) {
+        //         throw new Error("地址错误");
+        //     }
+        //     this.host = url;
+        // }
+        set host(url) {
+            if (!/^https?:\/\//i.test(url)) {
+                throw new Error("地址错误");
+            }
+            this.data.host = url;
+        }
+
+        get host() {
+            return this.data["host"];
+        }
+    }
+
+    let hd = new Requset("https://www.houdunren.com");
+    // hd.host = "https://hdcms.com";
+    // hd.setUrl("https://hdcms.com");
+    console.log(hd.host);
+</script>
+</html>

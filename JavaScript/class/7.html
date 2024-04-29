@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    // function Web(url) {
+    //     this.url = url;
+    // }
+    //
+    // Web.url = "hdcms.com";
+    // let hd = new Web("houdunren.com");
+    // console.log(hd);
+    // console.dir(Web);
+    class Request {
+        static host = "https://www.houdunren.com";
+
+        api(url) {
+            return Request.host + `/${url}`;
+        }
+    }
+
+    let obj = new Request();
+    console.log(obj.api("article"));
+    // console.log(Request.host);
+    // console.dir(Request);
+    // let obj2 = new Request();
+    // obj.host = "https://www.hdcms.com"
+    // console.log(obj2);
+</script>
+</html>
