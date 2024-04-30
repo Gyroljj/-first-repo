@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    class Arr extends Array {
+        constructor(...args) {
+            super(...args);
+        }
+
+        first() {
+            return this[0];
+        };
+
+        max() {
+            return this.sort((a, b) => {
+                return b - a
+            })[0]
+        };
+
+        add(item) {
+            this.push(item);
+        }
+
+        remove(value) {
+            let pos = this.findIndex(item => item == value);
+            // console.log(pos);
+            this.splice(pos, 1);
+        }
+    }
+
+    let hd = new Arr(1, 2, 3);
+    hd.remove(3);
+    hd.add("后盾人");
+    console.log(hd);
+
+    // function Arr(...args) {
+    //     args.forEach(item => this.push(item));
+    //     this.first = function () {
+    //         return this[0];
+    //     };
+    //     this.max = function () {
+    //         return this.sort((a, b) => {
+    //             return b - a
+    //         })[0]
+    //     }
+    // }
+    //
+    // Arr.prototype = Object.create(Array.prototype);
+    // console.dir(Arr);
+</script>
+</html>

@@ -2363,7 +2363,7 @@ WeakMap 对象是一组键/值对的集
 - WeaMap对键名是弱引用的，键值是正常引用
 - 垃圾回收不考虑WeaMap的键名，不会改变引用计数器，键在其他地方不被引用时即删除
 - 因为WeakMap 是弱引用，由于其他地方操作成员可能会不存在，所以不可以进行`forEach( )`遍历等操作
-- 也是因为弱引用，WeaMap 结构没有keys( )，values( )，entries( )等方法和 size 属性
+- 也是因为弱引用，WeakMap 结构没有keys( )，values( )，entries( )等方法和 size 属性
 - 当键的外部引用删除时，希望自动删除数据时使用 `WeakMap`
 
 ## 声明定义
@@ -6000,4 +6000,683 @@ let article = new Article();
 console.log(article.lists()); //https://houdunren.com/article
 article.host = "https://hdcms.com";
 console.log(article.lists()); //https://hdcms.com/article
+```
+
+### Symbol
+
+下面使用 `Symbol`定义私有访问属性，即在外部通过查看对象结构无法获取的属性
+
+```
+const protecteds = Symbol();
+class Common {
+  constructor() {
+    this[protecteds] = {};
+    this[protecteds].host = "https://houdunren.com";
+  }
+  set host(url) {
+    if (!/^https?:/i.test(url)) {
+      throw new Error("非常网址");
+    }
+    this[protecteds].host = url;
+  }
+  get host() {
+    return this[protecteds].host;
+  }
+}
+class User extends Common {
+  constructor(name) {
+    super();
+    this[protecteds].name = name;
+  }
+  get name() {
+    return this[protecteds].name;
+  }
+}
+let hd = new User("后盾人");
+hd.host = "https://www.hdcms.com";
+// console.log(hd[Symbol()]);
+console.log(hd.name);  // 后盾人
+```
+
+### WeakMap
+
+**WeakMap** 是一组键/值对的集，下面利用`WeakMap`类型特性定义私有属性
+
+```
+const _host = new WeakMap();
+class Common {
+  constructor() {
+    _host.set(this, "https://houdunren.com");
+  }
+  set host(url) {
+    if (!/^https:\/\//i.test(url)) {
+      throw new Error("网址错误");
+    }
+    _host.set(this, url);
+  }
+}
+class Article extends Common {
+  constructor() {
+    super();
+  }
+  lists() {
+    return `${_host.get(this)}/article`;
+  }
+}
+let article = new Article();
+console.log(article.lists()); //https://houdunren.com/article
+article.host = "https://hdcms.com";
+console.log(article.lists()); //https://hdcms.com/article
+```
+
+也可以统一定义私有属性
+
+```
+const protecteds = new WeakMap();
+class Common {
+  constructor() {
+    protecteds.set(this, {
+      host: "https://houdunren.com",
+      port: "80"
+    });
+  }
+  set host(url) {
+    if (!/^https:\/\//i.test(url)) {
+      throw new Error("网址错误");
+    }
+    protecteds.set(this, { ...protecteds.get(this), host: url });
+  }
+}
+class Article extends Common {
+  constructor() {
+    super();
+  }
+  lists() {
+    return `${protecteds.get(this).host}/article`;
+  }
+}
+let article = new Article();
+console.log(article.lists()); //https://houdunren.com/article
+article.host = "https://hdcms.com";
+console.log(article.lists()); //https://hdcms.com/article
+```
+
+### private
+
+`private` 指私有属性，只在当前类可以访问到，并且不允许继承使用
+
+- 为属性或方法名前加 `#` 为声明为私有属性
+- 私有属性只能在声明的类中使用
+
+下面声明私有属性 `#host` 与私有方法 `check` 用于检测用户名
+
+```
+class User {
+  //private
+  #host = "https://houdunren.com";
+  constructor(name) {
+    this.name = name ;
+    this.#check(name);
+  }
+  set host(url) {
+    if (!/^https?:/i.test(url)) {
+      throw new Error("非常网址");
+    }
+    this.#host = url;
+  }
+  get host() {
+    return this.#host;
+  }
+  #check = () => {
+    if (this.name.length <= 5) {
+      throw new Error("用户名长度不能小于五位");
+    }
+    return true;
+  };
+}
+let hd = new User("后盾人在线教程");
+hd.host = "https://www.hdcms.com";
+console.log(hd.host);  // https://www.hdcms.com
+```
+
+### 属性保护
+
+保护属性并使用访问器控制
+
+```
+const protecteds = Symbol("protected");
+class User {
+  constructor(name) {
+    this[protecteds] = { name };
+  }
+  get name() {
+    return this[protecteds].name;
+  }
+  set name(value) {
+    if (value.trim() == "") throw new Error("invalid params");
+    this[protecteds].name = value;
+  }
+}
+let hd = new User("向军大叔");
+hd.name = "后盾人";
+console.log(hd.name);  // 后盾人
+console.log(Object.keys(hd));  // []
+```
+
+## 详解继承
+
+### 属性继承
+
+属性继承的原型如下
+
+```
+function User(name) {
+  this.name = name;
+}
+function Admin(name) {
+  User.call(this, name); 
+}
+let hd = new Admin("后盾人");
+console.log(hd);  // Admim {name: '后盾人'}
+```
+
+这就解释了为什么在子类构造函数中要先执行`super`
+
+```
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+}
+class Admin extends User {
+  constructor(name) {
+    super(name);
+  }
+}
+let hd = new Admin("后盾人");
+console.log(hd);  // Admin {name: '后盾人'}
+```
+
+### 继承原理
+
+`class` 继承内部使用原型继承![](./imgs/1714451408252.png)
+
+```
+class User {
+  show() {
+    console.log("user.show");
+  }
+}
+class Admin extends User {
+  info() {
+    this.show();
+  }
+}
+let hd = new Admin();
+console.dir(hd);
+```
+
+### 方法继承
+
+原生的继承主要是操作原型链，实现起来比较麻烦，使用 `class` 就要简单的多了。
+
+- 继承时必须在子类构造函数中调用 super() 执行父类构造函数
+- super.show() 执行父类方法
+
+下面是子类继承了父类的方法`show`
+
+```
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+  show() {
+    return `后盾人会员: ${this.name}`;
+  }
+}
+class User extends Person {
+  constructor(name) {
+    super(name);
+  }
+  run() {
+    return super.show();
+  }
+}
+const xj = new User("向军");
+console.dir(xj.run());  // 后盾人会员: 向军
+```
+
+可以使用 `extends` 继承表达式返回的类
+
+```
+function controller() {
+  return class {
+    show() {
+      console.log("user.show");
+    }
+  };
+}
+class Admin extends controller() {
+  info() {
+    this.show();
+  }
+}
+let hd = new Admin();
+console.dir(hd);
+```
+
+### super
+
+表示从当前原型中执行方法，
+
+- super 一直指向当前对象
+
+下面是使用 `this` 模拟`super`，会有以下问题
+
+- 但`this`指向当前对象，结果并不是 `admin`的`name`值
+
+```
+let user = {
+  name: "user",
+  show() {
+    return this.name;
+  }
+};
+let admin = {
+  __proto__: user,
+  name: "admin",
+  show() {
+    return this.__proto__.show();
+  }
+};
+console.log(admin.show());  // user
+```
+
+为了解决以上问题，需要调用父类方法时传递`this`
+
+```
+let user = {
+  name: "user",
+  show() {
+    return this.name;
+  }
+};
+let admin = {
+  __proto__: user,
+  name: "admin",
+  show() {
+    return this.__proto__.show.call(this);
+  }
+};
+console.log(admin.show());  // admin
+```
+
+上面看似结果正常，但如果是多层继承时，会出现新的问题
+
+- 因为始终传递的是当前对象`this` ，造成从 `this` 原型循环调用
+
+```
+let common = {
+  show() {
+    console.log("common.init");
+  }
+};
+let user = {
+  __proto__: common,
+  name: "user",
+  show() {
+    return this.__proto__.show.call(this);
+  }
+};
+let admin = {
+  __proto__: user,
+  name: "admin",
+  get() {
+    return this.__proto__.show.call(this);
+  }
+};
+console.log(admin.get());
+```
+
+为了解决以上问题 js 提供了 `super` 关键字
+
+- 使用 `super` 调用时，在所有继承中 `this` 始终为调用对象
+- `super` 是用来查找当前对象的原型，而不像上面使用 `this` 查找原型造成死循环
+- 也就是说把查询原型方法的事情交给了 `super`，`this` 只是单纯的调用对象在各个继承中使用
+
+```
+let common = {
+  show() {
+    return this.name;
+  }
+};
+let user = {
+  __proto__: common,
+  name: "user",
+  show() {
+    return super.show(this);
+  }
+};
+let admin = {
+  __proto__: user,
+  name: "admin",
+  get() {
+    return super.show();
+  }
+};
+console.log(admin.get());
+```
+
+`super` 只能在类或对象的方法中使用，而不能在函数中使用，下面将产生错误
+
+```
+let user = {
+  name: "user",
+  show() {
+    return this.name;
+  }
+};
+let admin = {
+  __proto__: user,
+  name: "admin",
+  get: function() {
+    return super.show();
+  }
+};
+console.log(admin.get()); //Uncaught SyntaxError: 'super' keyword unexpected here
+```
+
+### constructor
+
+`super` 指调父类引用，在构造函数`constructor` 中必须先调用`super()`
+
+- `super()` 指调用父类的构造函数
+- 必须在 `constructor` 函数里的`this` 调用前执行 `super()`
+
+```
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+  show() {
+    console.log(this.name);
+  }
+}
+class Admin extends User {
+  constructor(name) {
+    super(name);
+  }
+}
+let hd = new Admin("后盾人");
+hd.show();  // 后盾人
+```
+
+`constructor` 中先调用 `super` 方法的原理如下
+
+```
+function Parent(name) {
+  this.name = name;
+}
+function User(...args) {
+  Parent.apply(this, args);
+}
+User.prototype = Object.create(User.prototype)
+User.prototype.constructor = User;
+const hd = new User("后盾人");
+console.log(hd.name);  // 后盾人
+```
+
+### 父类方法
+
+使用`super` 可以执行父类方法
+
+- 不添加方法名是执调用父类构造函数
+
+```
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+  getName() {
+    return this.name;
+  }
+}
+class Admin extends User {
+  constructor(name) {
+    super(name);
+  }
+}
+const hd = new Admin("后盾人");
+console.log(hd.getName());  // 后盾人
+```
+
+下面是通过父类方法获取课程总价
+
+```
+class Controller {
+  sum() {
+    return this.data.reduce((t, c) => t + c.price, 0);
+  }
+} 
+class Lesson extends Controller {
+  constructor(lessons) {
+    super();
+    this.data = lessons;
+  }
+  info() {
+    return {
+      totalPrice: super.sum(),
+      data: this.data
+    };
+  }
+}
+let data = [
+  { name: "js", price: 100 },
+  { name: "mysql", price: 212 },
+  { name: "vue.js", price: 98 }
+];
+const hd = new Lesson(data);
+console.log(hd.info().totalPrice);  // 410
+```
+
+### 方法覆盖
+
+子类存在父类同名方法时使用子类方法
+
+```
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+  say() {
+    return this.name;
+  }
+}
+class Admin extends User {
+  constructor(name) {
+    super(name);
+  }
+  say() {
+    return "后盾人：" + super.say();
+  }
+}
+const xj = new Admin("向军");
+console.log(xj.say());  // 后盾人：向军
+```
+
+下面是覆盖父类方法，只获取课程名称
+
+```
+class Controller {
+  say() {
+    return this.name;
+  }
+  total() {
+    return this.data.reduce((t, c) => t + c.price, 0);
+  }
+  getByKey(key) {
+    return this.data.filter(item => item.name.includes(key));
+  }
+}
+class Lesson extends Controller {
+  constructor(lessons) {
+    super();
+    this.data = lessons;
+  }
+  getByKey(key) {
+    return super.getByKey(key).map(item => item.name);
+  }
+}
+let data = [
+  { name: "js", price: 100 },
+  { name: "mysql", price: 212 },
+  { name: "vue.js", price: 98 }
+];
+const hd = new Lesson(data);
+console.log(hd.getByKey("js"));  // ['js', 'vue.js']
+```
+
+### 静态继承
+
+静态的属性和方法也是可以被继承使用的，下面是原理分析
+
+```
+function User() {}
+User.site = "后盾人";
+User.url = function() {
+  return "houdunren.com";
+};
+function Admin() {}
+Admin.__proto__ = User;
+console.dir(Admin);
+console.log(Admin.url());  // houdunren.com
+```
+
+下面使用 `class` 来演示静态继承
+
+```
+class User {
+  static site = "后盾人";
+  static host() {
+    return "houdunren.com";
+  }
+}
+class Admin extends User {}
+console.dir(Admin);
+console.log(Admin.host());  // houdunren.com
+```
+
+### 对象检测
+
+#### instanceof
+
+使用 `instanceof` 用于检测，下面是在原型中的分析（已经在原型与继承中讲过）
+
+```
+function User() {}
+function Admin() {}
+Admin.prototype = Object.create(User.prototype);
+let hd = new Admin();
+console.log(hd instanceof Admin); //true
+console.log(hd instanceof User); //true
+
+console.log(hd.__proto__ == Admin.prototype);
+console.log(hd.__proto__.__proto__ == User.prototype);
+```
+
+下面是递归检测原型的代码，帮助分析 `instanceof` 的原理
+
+```
+function checkPrototype(obj, constructor) {
+  if (!obj.__proto__) return false;
+  if (obj.__proto__ == constructor.prototype) return true;
+  return checkPrototype(obj.__proto__, constructor);
+}
+```
+
+`class` 内部实现就是基于原型，所以使用`instanceof` 判断和上面原型是一样的
+
+```
+class User {}
+class Admin extends User {}
+let hd = new Admin();
+console.log(hd instanceof Admin);  // true
+console.log(hd instanceof User);  // true
+```
+
+#### isPrototypeOf
+
+使用 `isPrototypeOf` 判断一个对象是否在另一个对象的原型链中，下面是原理分析
+
+```
+const a = {};
+const b = {
+  __proto__: a
+};
+const c = {
+  __proto__: b
+};
+console.log(a.isPrototypeOf(b)); //true
+console.log(a.isPrototypeOf(c)); //true
+```
+
+下面在使用 `class` 语法中使用
+
+```
+class User {}
+class Admin extends User {}
+let hd = new Admin();
+console.log(Admin.prototype.isPrototypeOf(hd));  // true
+console.log(User.prototype.isPrototypeOf(hd));  // true
+```
+
+### 继承内置类
+
+使用原型扩展内置类
+
+```
+function Arr(...args) {
+  args.forEach(item => this.push(item));
+  this.first = function() {
+    return this[0];
+  };
+  this.max = function() {
+    return this.data.sort((a, b) => b - a)[0];
+  };
+}
+let a = [1, 23];
+Arr.prototype = Object.create(Array.prototype);
+let arr = new Arr("后盾人", 2, 3);
+console.log(arr.first());  // 后盾人
+```
+
+使用 `class`扩展内置类
+
+```
+class NewArr extends Array {
+  constructor(...args) {
+    super(...args);
+  }
+  first() {
+    return this[0];
+  }
+  add(value) {
+    this.push(value);
+  }
+  remove(value) {
+    let pos = this.findIndex(curValue => {
+      return curValue == value;
+    });
+    this.splice(pos, 1);
+  }
+}
+let hd = new NewArr(5, 3, 2, 1);
+console.log(hd.length); //4
+console.log(hd.first()); //5
+
+hd.add("houdunren");
+console.log(hd.join(",")); //5,3,2,1,houdunren
+
+hd.remove("3");
+console.log(hd.join(",")); //5,2,1,houdunren
 ```

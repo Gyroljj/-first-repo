@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    class Common {
+        sum() {
+            return this.data.reduce((t, l) => {
+                return t + l.price;
+            }, 0)
+        }
+
+        getByKey(key) {
+            return this.data.filter((item) => {
+                return item.name.includes(key);
+            })
+        }
+    }
+
+    class Controller extends Common {
+    }
+
+    class Lesson extends Controller {
+        constructor(data) {
+            super();
+            this.data = data
+        }
+
+        getByKey(key) {
+            return super.getByKey(key).map(item => {
+                return item.name;
+            })
+        }
+    }
+
+    let data = [
+        {name: "js", price: 100},
+        {name: "mysql", price: 212},
+        {name: "vue.js", price: 98}
+    ]
+    let hd = new Lesson(data);
+    console.log(hd.getByKey("js"));
+</script>
+</html>

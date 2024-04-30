@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    // function User(name) {
+    //     this.name = name;
+    // }
+    //
+    // function Admin(name) {
+    //     User.call(this, name);
+    // }
+    //
+    // Admin.prototype = Object.create(User.prototype);
+    // Admin.prototype.show = function () {
+    //
+    // }
+    // let hd = new Admin("后盾人")
+    // console.log(hd);
+    class User {
+        constructor(name) {
+            this.name = name;
+        }
+    }
+
+    class Admin extends User {
+        constructor(name) {
+            console.log(33)
+            super(name);
+        }
+    }
+
+    let admin = new Admin("后盾人")
+    console.log(admin);
+</script>
+</html>

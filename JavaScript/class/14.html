@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    class Common {
+        #check = () => {
+            if (this.name.length < 5) {
+                throw new Error("名字长度不能小于五位");
+            }
+            return true;
+        }
+    }
+
+    class User extends Common {
+        //public protected private
+        #host = "https://houdunren.com";
+
+        constructor(name) {
+            super();
+            this.name = name;
+            this.#check(name);
+        }
+
+        set host(url) {
+            if (!/^https?:\/\//i.test(url)) {
+                throw new Error("非法链接");
+            }
+            this.#host = url;
+        }
+
+
+    }
+
+    let hd = new User("后盾人在线教程");
+    hd.host = "https://hdcms.com"
+    // hd.#check();
+    console.log(hd)
+</script>
+</html>
