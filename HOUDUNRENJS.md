@@ -6680,3 +6680,210 @@ console.log(hd.join(",")); //5,3,2,1,houdunren
 hd.remove("3");
 console.log(hd.join(",")); //5,2,1,houdunren
 ```
+
+### mixin
+
+`JS`不能实现多继承，如果要使用多个类的方法时可以使用`mixin`混合模式来完成]
+
+- `mixin` 类是一个包含许多供其它类使用的方法的类
+- `mixin` 类不用来继承做为其它类的父类
+
+```
+const Tool = {
+  max(key) {
+    return this.data.sort((a, b) => b[key] - a[key])[0];
+  }
+};
+
+class Lesson {
+  constructor(lessons) {
+    this.lessons = lessons;
+  }
+  get data() {
+    return this.lessons;
+  }
+}
+
+Object.assign(Lesson.prototype, Tool);
+const data = [
+  { name: "js", price: 100 },
+  { name: "mysql", price: 212 },
+  { name: "vue.js", price: 98 }
+];
+let hd = new Lesson(data);
+console.log(hd.max("price"));  // {name: 'mysql', price: 212}
+```
+
+### 动画示例(JavaScript/class/31.html)
+
+# 模块设计
+
+## 模块设计
+
+### 使用分析
+
+项目变大时需要把不同的业务分割成多个文件，这就是模块的思想。模块是比对象与函数更大的单元，使用模块组织程序便于维护与扩展。
+
+生产环境中一般使用打包工具如 `webpack` 构建，他提供更多的功能。但学习完本章节后会再学习打包工具会变得简单。
+
+- 模块就是一个独立的文件，里面是函数或者类库
+- 虽然 JS 没有命名空间的概念，使用模块可以解决全局变量冲突
+- 模块需要隐藏内部实现，只对外开发接口
+- 模块可以避免滥用全局变量，造成代码不可控
+- 模块可以被不同的应用使用，提高编码效率
+
+### 实现原理
+
+在过去 JS 不支持模块时我们使用`AMD/CMD（浏览器端使用`）、`CommonJS（Node.js使用）`、`UMD(两者都支持)`等形式定义模块。
+
+AMD 代表性的是 `require.js`，CMD 代表是淘宝的 `seaJS` 框架。
+
+下面通过定义一个类似 `require.js` 的 AMD 模块管理引擎，来体验模块的工作原理。
+
+```
+let module = (function() {
+  //模块列表集合
+  const moduleLists = {};
+  function define(name, modules, action) {
+    modules.map((m, i) => {
+      modules[i] = moduleLists[m];
+    });
+    //执行并保存模块
+    moduleLists[name] = action.apply(null, modules);
+  }
+
+  return { define };
+})();
+
+//声明模块不依赖其它模块
+module.define("hd", [], function() {
+  return {
+    show() {
+      console.log("hd module show");
+    }
+  };
+});
+
+//声明模块时依赖其它模块
+module.define("xj", ["hd"], function(hd) {
+  hd.show();  // hd module show
+});
+```
+
+## 基础知识
+
+### 标签使用
+
+在浏览器中使用以下语法靠之脚本做为模块使用，这样就可以在里面使用模块的代码了。
+
+在 html 文件中导入模块，需要定义属性 `type="module"`
+
+```
+<script type="module"></script>
+```
+
+模块路径
+
+在浏览器中引用模块必须添加路径如`./` ，但在打包工具如`webpack`中则不需要，因为他们有自己的存放方式。
+
+```
+<script type="module">
+  import { hd } from "./3.js";
+</script>
+```
+
+### 延迟解析
+
+模块总是会在所有 html 解析后才执行，下面的模块代码可以看到后加载的 `button` 按钮元素。
+
+- 建议为用户提供加载动画提示，当模块运行时再去掉动画
+
+```
+<body>
+  <script type="module">
+    console.log(document.querySelector("button")); //Button
+  </script>
+  <script>
+    console.log(document.querySelector("button")); //undefined
+  </script>
+  <button>后盾人</button>
+</body>
+```
+
+### 严格模式
+
+模块默认运行在严格模式，以下代码没有使用声明语句将报错
+
+```
+<script type="module">
+	hd = "houdunren"; // Error
+</script>
+```
+
+下面的 `this` 也会是 `undefined`
+
+```
+<script>
+  console.log(this); //Window
+</script>
+<script type="module">
+  console.log(this); //undefiend
+</script>
+```
+
+### 作用域
+
+模块都有独立的顶级作用域，下面的模块不能互相访问
+
+```
+<script type="module">
+  let hd = "houdunren.com";
+</script>
+
+<script type="module">
+  alert(hd); // Error
+</script>
+```
+
+单独文件作用域也是独立的，下面的模块 `1.2.js` 不能访问模块 `1.1.js` 中的数据
+
+```
+<script type="module" src="1.1.js"></script>
+<script type="module" src="1.2.js"></script>
+
+文件内容如下
+# 1.1.js
+let hd = "houdunren";
+
+# 1.2.js
+console.log(hd)
+```
+
+### 预解析
+
+模块在导入时只执行一次解析，之后的导入不会再执行模块代码，而使用第一次解析结果，并共享数据。
+
+- 可以在首次导入时完成一些初始化工作
+- 如果模块内有后台请求，也只执行一次即可
+
+引入多入`hd.js` 脚本时只执行一次
+
+```
+<script type="module" src="hd.js"></script>
+<script type="module" src="hd.js"></script>
+
+#hd.js内容如下
+console.log("houdunren.com");
+```
+
+下面在导入多次 `hd.js` 时只解析一次
+
+```
+<script type="module">
+  import "./hd.js";
+  import "./hd.js";
+</script>
+
+# hd.js内容如下
+console.log("houdunren.com");
+```

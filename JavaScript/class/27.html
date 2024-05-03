@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    //mixin
+    let Tool = {
+        max(key) {
+            return this.data.sort((a, b) => {
+                return b[key] - a[key];
+            })[0]
+        }
+    }
+    let Arr = {
+        count(key) {
+            return this.data.reduce((t, c) => {
+                return t + c[key]
+            }, 0);
+        }
+    }
+
+    class Lesson {
+        constructor(lessons) {
+            this.lessons = lessons;
+        }
+
+        get data() {
+            return this.lessons;
+        }
+    }
+
+    const data = [
+        {name: "js", price: 100, click: 188},
+        {name: "mysql", price: 212, click: 34},
+        {name: "vue.js", price: 98, click: 89}
+    ];
+    Object.assign(Lesson.prototype, Tool, Arr);
+    // console.dir(Lesson);
+    let hd = new Lesson(data);
+    console.log(hd.count("price"));
+</script>
+</html>
