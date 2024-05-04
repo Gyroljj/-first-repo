@@ -6887,3 +6887,592 @@ console.log("houdunren.com");
 # hd.js内容如下
 console.log("houdunren.com");
 ```
+
+## 导入导出
+
+ES6 使用基于文件的模块，即一个文件一个模块。
+
+- 使用`export` 将开发的接口导出
+- 使用`import` 导入模块接口
+- 使用`*` 可以导入全部模块接口
+- 导出是以引用方式导出，无论是标量还是对象，即模块内部变量发生变化将影响已经导入的变量
+
+### 导出模块
+
+没有导出的变量都是模块私有的。
+
+下面是对定义的 `hd.js` 模块，分别导出内容
+
+```
+export const site = "后盾人";
+export const func = function() {
+  return "is a module function";
+};
+export class User {
+  show() {
+    console.log("user.show");
+  }
+}
+```
+
+下面定义了`hd.js` 模块，并使用指量导出
+
+```
+const site = "后盾人";
+const func = function() {
+  return "is a module function";
+};
+class User {
+  show() {
+    console.log("user.show");
+  }
+}
+export { site, func, User };
+```
+
+### 具名导入
+
+下面导入上面定义的 `hd.js` 模块，分别导入模块导出的内容
+
+```
+<script type="module">
+  import { User, site, func } from "./hd.js";
+  console.log(site);  // 后盾人
+  console.log(User);  // user.show
+</script>
+```
+
+像下面这样在 `{}` 中导入是错误的，模块默认是在顶层静态导入，这是为了分析使用的模块方便打包
+
+```
+if (true) {
+  import { site, func } from "./hd.js"; // Error
+}
+```
+
+### 批量导入
+
+如果要导入的内容比较多，可以使用 `*`来批量导入。
+
+```
+<script type="module">
+  import * as api from "./hd.js";
+  console.log(api.site);  // 后盾人
+  console.log(api.User);  // user.show
+</script>
+```
+
+### 导入建议
+
+因为以下几点，我们更建议使用明确导入方式
+
+- 使用`webpack` 构建工具时，没有导入的功能会删除节省文件大小
+- 可以更清晰知道都使用了其他模块的哪些功能
+
+## 别名使用
+
+### 导入别名
+
+可以为导入的模块重新命名，下面是为了测试定义的 `hd.js` 模块内容。
+
+- 有些导出的模块命名过长，起别名可以理简洁
+- 本模块与导入模块重名时，可以通过起别名防止错误
+
+```
+const site = "后盾人";
+const func = function() {
+  return "is a module function";
+};
+class User {
+  show() {
+    console.log("user.show");
+  }
+}
+export { site, func, User };
+```
+
+模块导入使用 as 对接口重命名，本模块中已经存在 `func` 变量，需要对导入的模块重命名防止重名错误。
+
+```
+<script type="module">
+  import { User as user, func as action, site as name } from "./hd.js";
+  let func = "houdunren";
+  console.log(name);
+  console.log(user);
+  console.log(action);
+</script>
+```
+
+### 导出别名
+
+模块可以对导出给外部的功能起别名，下面是`hd.js` 模块对导出给外部的模块功能起了别名
+
+```
+const site = "后盾人";
+const func = function() {
+  console.log("is a module function");
+};
+class User {
+  show() {
+    console.log("user.show");
+  }
+}
+export { site, func as action, User as user };
+```
+
+这时就要使用新的别名导入了
+
+```
+<script type="module">
+  import { user, action } from "./hd.js";
+  action();
+</script>
+```
+
+## 默认导出
+
+很多时候模块只是一个类，也就是说只需要导入一个内容，这地可以使用默认导入。
+
+使用`default` 定义默认导出的接口，导入时不需要使用 `{}`
+
+- 可以为默认导出自定义别名
+- 只能有一个默认导出
+- 默认导出可以没有命名
+
+### 单一导出
+
+下面是`hd.js` 模块内容，默认只导出一个类。并且没有对类命名，这是可以的
+
+```
+export default class {
+  static show() {
+    console.log("User.method");
+  }
+}
+```
+
+从程序来讲如果将一个导出命名为 `default` 也算默认导出
+
+```
+class User {
+  static show() {
+    console.log("User.method");
+  }
+}
+export { User as default };
+```
+
+导入时就不需要使用 `{}` 来导入了
+
+```
+<script type="module">
+  import User from "./hd.js";
+  User.show();
+</script>
+```
+
+默认导出的功能可以使用任意变量接收
+
+```
+<script type="module">
+  import hd from "./hd.js";
+  hd.show();
+</script>
+```
+
+### 混合导出
+
+模块可以存在默认导出与命名导出。
+
+使用`export default` 导出默认接口，使用 `export {}` 导出普通接口
+
+```
+const site = "后盾人";
+const func = function() {
+  console.log("is a module function");
+};
+export default class {
+  static show() {
+    console.log("user.show");
+  }
+}
+export { site, func };
+```
+
+也可以使用以下方式导出模块
+
+```
+const site = "后盾人";
+const func = function() {
+  console.log("is a module function");
+};
+class User {
+  static show() {
+    console.log("user.show");
+  }
+}
+export { site, func, User as default };
+```
+
+导入默认接口时不需要使用 `{}` ，普通接口还用 `{}` 导入
+
+```
+<script type="module">
+	//可以将 hd 替换为任何变量
+  import hd, { site }from "./hd.js";
+  console.log(site);
+  hd.show();
+</script>
+```
+
+也可以使用别名导入默认导出
+
+```
+import { site, default as hd } from "./hd.js";
+console.log(site);
+hd.show();
+```
+
+如果是批量导入时，使用 `default` 获得默认导出
+
+```
+<script type="module">
+  import * as api from "./hd.js";
+  console.log(api.site);
+  api.default.show();
+</script>
+```
+
+### 使用建议
+
+对于默认导出和命名导出有以下建议
+
+- 不建议使用默认导出，会让开发者导入时随意命名
+
+```
+import hd from "./hd.js";
+import xj from "./hd.js";
+```
+
+- 如果使用默认导入最好以模块的文件名有关联，会使用代码更易阅读
+
+```
+import hd from "./hd.js";
+```
+
+## 导出合并
+
+### 解决问题
+
+可以将导入的模块重新导出使用，比如项目模块比较多时，这时可以将所有模块合并到一个入口文件中。
+
+这样只需要使用一个模块入口文件，而不用关注多个模块文件
+
+### 实际使用
+
+下面是 `hd.js` 模块内容
+
+```
+const site = "后盾人";
+const func = function() {
+  console.log("is a module function");
+};
+export { site, func };
+```
+
+下面是 `houdunren.js` 模块内容
+
+```
+export default class {
+  static get() {
+    console.log("houdunren.js.get");
+  }
+}
+```
+
+下面是 `index.js` 模块内容，使用 `*` 会将默认模块以 `default` 导出
+
+```
+export * as hd from "./hd.js";
+// 默认模块需要单独导出
+export { default as houdunren } from "./houdunren.js";
+// 以下方式导出默认模块是错误的
+// export houdunren from "./houdunren.js";
+```
+
+使用方法如下
+
+```
+<script type="module">
+  import * as api from "./index.js";
+  console.log(api);
+  api.houdunren.get();
+  console.log(api.hd.site);
+</script>
+```
+
+## 动态加载
+
+使用 `import` 必须在顶层静态导入模块，而使用`import()` 函数可以动态导入模块，它返回一个 `promise` 对象。
+
+### 静态导入
+
+使用 `import` 顶层静态导入，像下面这样在 `{}` 中导入是错误的，这是为了分析使用的模块方便打包，所以系统禁止这种行为
+
+```
+if (true) {
+  import { site, func } from "./hd.js"; // Error
+}
+```
+
+### 动态使用
+
+测试用的 `hd.js` 模块内容如下
+
+```
+const site = "后盾人";
+const func = function() {
+  console.log("is a module function");
+};
+export { site, func };
+```
+
+使用 `import()` 函数可以动态导入，实现按需加载
+
+```
+<script>
+  if (true) {
+    let hd = import("./hd.js").then(module => {
+      console.log(module.site);
+    });
+  }
+</script>
+```
+
+下面是在点击事件发生后按需要加载模块
+
+```
+<button>后盾人</button>
+<script>
+  document.querySelector("button").addEventListener("click", () => {
+    let hd = import("./hd.js").then(module => {
+      console.log(module.site);
+    });
+  });
+</script>
+```
+
+因为是返回的对象可以使用解构语法
+
+```
+<button>后盾人</button>
+<script>
+  document.querySelector("button").addEventListener("click", () => {
+    let hd = import("./hd.js").then(({ site, func }) => {
+      console.log(site);
+    });
+  });
+</script>
+```
+
+## 指令总结
+
+| 表达式                                              | 说明       |
+|--------------------------------------------------|----------|
+| export function show(){}                         | 导出函数     |
+| export const name='后盾人'                          | 导出变量     |
+| export class User{}                              | 导出类      |
+| export default show                              | 默认导出     |
+| const name = '后盾人' export {name}                 | 导出已经存在变量 |
+| export                                           | 别名导出     |
+| import defaultVar from 'houdunren.js'            | 导入默认导出   |
+| import {name,show} from 'a.j'                    | 导入命名导出   |
+| Import {name as hdName,show} from 'houdunren.js' | 别名导入     |
+| Import * as api from 'houdunren.js'              | 导入全部接口   |
+
+## 编译打包
+
+编译指将 ECMAScript 2015+ 版本的代码转换为向后兼容的 JavaScript 语法，以便能够运行在当前和旧版本的浏览器或其他环境中。
+
+首先登录 `https://nodejs.org/en/` 官网下载安装`Node.js`，我们将使用其他的 `npm` 命令，`npm` 用来安装第三方类库。
+
+在命令行输入 `node -v` 显示版本信息表示安装成功。
+
+### 安装配置
+
+使用以下命令生成配置文件 `package.json`
+
+```
+npm init -y
+```
+
+修改`package.json`添加打包命令
+
+```
+...
+"main": "index.js",
+"scripts": {
+	"dev": "webpack --mode development --watch"
+},
+...
+```
+
+安装 `webpack` 工具包，如果安装慢可以使用淘宝 cnpm 命令
+
+```
+npm i webpack webpack-cli --save-dev
+```
+
+### 目录结构
+
+```
+index.html
+--dist #压缩打包后的文件
+--src
+----index.js  #入口
+----style.js //模块
+```
+
+index.html 内容如下
+
+```
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="dist/main.js"></script>
+  </body>
+</html>
+```
+
+index.js 内容如下
+
+```
+import style from "./style";
+new style().init();
+```
+
+style.js
+
+```
+export default class User {
+  constructor() {}
+  init() {
+    document.body.style.backgroundColor = "green";
+  }
+}
+```
+
+### 执行打包
+
+运行以下命令将生成打包文件到 `dist`目录，因为在命令中添加了 `--watch`参数，所以源文件编辑后自动生成打包文件。
+
+```
+npm run dev
+```
+
+# 正则表达式
+
+## 基础知识
+
+正则表达式是用于匹配字符串中字符组合的模式，在 JavaScript 中，正则表达式也是对象。
+
+- 正则表达式是在宿主环境下运行的，如`js/php/node.js` 等
+- 本章讲解的知识在其他语言中知识也是可用的，会有些函数使用上的区别
+
+### 对比分析
+
+与普通函数操作字符串来比较，正则表达式可以写出更简洁、功能强大的代码。
+
+下面使用获取字符串中的所有数字来比较函数与正则的差异。
+
+```
+let hd = "houdunren2200hdcms9988";
+let nums = [...hd].filter(a => !Number.isNaN(parseInt(a)));
+console.log(nums.join(""));
+```
+
+使用正则表达式将简单得多
+
+```
+let hd = "houdunren2200hdcms9988";
+console.log(hd.match(/\d/g).join(""));
+```
+
+### 创建正则
+
+JS 提供字面量与对象两种方式创建正则表达式
+
+#### 字面量创建
+
+使用 `//` 包裹的字面量创建方式是推荐的作法，但它不能在其中使用变量
+
+```
+let hd = "houdunren.com";
+console.log(/u/.test(hd));//true
+```
+
+可以使用 `eval` 转换为 js 语法来实现将变量解析到正则中，但是比较麻烦，所以有变量时建议使用下面的对象创建方式
+
+```
+let hd = "houdunren.com";
+let a = "u";
+console.log(eval(`/${a}/`).test(hd)); //true
+```
+
+#### 对象创建
+
+当正则需要动态创建时使用对象方式
+
+```
+let hd = "houdunren.com";
+let web = "houdunren";
+let reg = new RegExp(web);
+console.log(reg.test(hd)); //true
+```
+
+根据用户输入高亮显示内容，支持用户输入正则表达式
+
+```
+<body>
+  <div id="content">houdunren.com</div>
+</body>
+<script>
+  const content = prompt("请输入要搜索的内容，支持正则表达式");
+  const reg = new RegExp(content, "g");
+  let body = document
+    .querySelector("#content")
+    .innerHTML.replace(reg, str => {
+      return `<span style="color:red">${str}</span>`;
+    });
+  document.body.innerHTML = body;
+</script>
+```
+
+### 选择符
+
+`|` 这个符号带表选择修释符，也就是 `|` 左右两侧有一个匹配到就可以。
+
+检测电话是否是上海或北京的坐机
+
+```
+let tel = "010-12345678";
+//错误结果：只匹配 | 左右两边任一结果
+console.log(tel.match(/010|020\-\d{7,8}/));
+
+//正确结果：所以需要放在原子组中使用
+console.log(tel.match(/(010|020)\-\d{7,8}/));
+```
+
+匹配字符是否包含`houdunren` 或 `hdcms`
+
+```
+const hd = "houdunren";
+console.log(/houdunren|hdcms/.test(hd)); //true
+```
+
