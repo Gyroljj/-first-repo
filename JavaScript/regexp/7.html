@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    let price = 23.11;
+    //.除换行外任何字符 .普通点
+    //d  \d 数字 0~9
+    // console.log(/\d+\.\d+/.test(price));
+    // console.log("\d" == "d");
+    // console.log("\\d+\\.\\d+")
+    // let reg = new RegExp("\\d+\\.\\d+")
+    // console.log(reg.test(price));
+    let url = "https://www.houdunren.com";
+    console.log(/https?:\/\/\w+\.\w+\.\w+/.test(url));
+</script>
+</html>

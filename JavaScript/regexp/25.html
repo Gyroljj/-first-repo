@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<input type="text" name="mail" value="2391332771@hdcms.com.cn"/>
+<span></span>
+</body>
+<script>
+    let mail = document.querySelector(`[name="mail"]`).addEventListener("keyup",
+        function () {
+            let reg = /^[\w-]+@([\w-]+\.)+(com|org|cc|cn|net)$/i;
+            return document.querySelector("span").innerHTML = reg.test(this.value) ? "正确" : "错误"
+        });
+    // let reg = /^[\w-]+@[\w-]+\.(com|org|cc|cn|net)$/i;
+    // let reg = /^[\w-]+@([\w-]+\.)+(com|org|cc|cn|net)$/i;
+    // console.log(mail.match(reg));
+</script>
+</html>
