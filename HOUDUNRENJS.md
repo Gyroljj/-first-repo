@@ -7977,3 +7977,361 @@ let reg = /^[\w-]+@([\w-]+\.)+(org|com|cc|cn)$/;
 console.log(hd.match(reg));
 ```
 
+### 引用分组
+
+`\n` 在匹配时引用原子组， `$n` 指在替换时使用匹配的组数据。下面将标签替换为`p`标签
+
+```
+let hd = `
+  <h1>houdunren</h1>
+  <span>后盾人</span>
+  <h2>hdcms</h2>
+`;
+
+let reg = /<(h[1-6])>([\s\S]*)<\/\1>/gi;
+console.log(hd.replace(reg, `<p>$2</p>`));
+```
+
+如果只希望组参与匹配，便不希望返回到结果中使用 `(?:` 处理。下面是获取所有域名的示例
+
+```
+let hd = `
+  https://www.houdunren.com
+  http://houdunwang.com
+  https://hdcms.com
+`;
+
+let reg = /https?:\/\/((?:\w+\.)?\w+\.(?:com|org|cn))/gi;
+while ((v = reg.exec(hd))) {
+  console.dir(v);
+}
+```
+
+### 分组别名
+
+如果希望返回的组数据更清晰，可以为原子组编号，结果将保存在返回的 `groups`字段中
+
+```
+let hd = "<h1>houdunren.com</h1>";
+console.dir(hd.match(/<(?<tag>h[1-6])[\s\S]*<\/\1>/));
+```
+
+组别名使用 `?<>` 形式定义，下面将标签替换为`p`标签
+
+```
+let hd = `
+  <h1>houdunren</h1>
+  <span>后盾人</span>
+  <h2>hdcms</h2>
+`;
+let reg = /<(?<tag>h[1-6])>(?<con>[\s\S]*)<\/\1>/gi;
+console.log(hd.replace(reg, `<p>$<con></p>`));
+```
+
+获取链接与网站名称组成数组集合
+
+```
+<body>
+  <a href="https://www.houdunren.com">后盾人</a>
+  <a href="https://www.hdcms.com">hdcms</a>
+  <a href="https://www.sina.com.cn">新浪</a>
+</body>
+
+<script>
+  let body = document.body.innerHTML;
+  let reg = /<a\s*.+?(?<link>https?:\/\/(\w+\.)+(com|org|cc|cn)).*>(?<title>.+)<\/a>/gi;
+  const links = [];
+  for (const iterator of body.matchAll(reg)) {
+    links.push(iterator["groups"]);
+  }
+  console.log(links);
+</script>
+```
+
+## 重复匹配
+
+### 重复匹配
+
+如果要重复匹配一些内容时我们要使用重复匹配修饰符，包括以下几种。
+
+| 符号    | 说明         |
+|-------|------------|
+| *     | 重复零次或更多次   |
+| +     | 重复一次或更多次   |
+| ?     | 重复零次或一次    |
+| {n}   | 重复 n 次     |
+| {n,}  | 重复 n 次或更多次 |
+| {n,m} | 重复 n 到 m 次 |
+
+默认情况下重复选项对单个字符进行重复匹配
+
+```
+let hd = "hdddd";
+console.log(hd.match(/hd+/i)); //hddd
+```
+
+使用原子组后则对整个组重复匹配
+
+```
+let hd = "hdddd";
+console.log(hd.match(/(hd)+/i)); //hd
+```
+
+下面是验证坐机号的正则
+
+```
+let hd = "010-12345678";
+console.log(/0\d{2,3}-\d{7,8}/.exec(hd));
+```
+
+验证用户名只能为 3~8 位的字母或数字，并以字母开始
+
+```
+<body>
+  <input type="text" name="username" />
+</body>
+<script>
+  let input = document.querySelector(`[name="username"]`);
+  input.addEventListener("keyup", e => {
+    const value = e.target.value;
+    let state = /^[a-z][\w]{2,7}$/i.test(value);
+    console.log(
+      state ? "正确！" : "用户名只能为3~8位的字母或数字，并以字母开始"
+    );
+  });
+</script>
+```
+
+验证密码必须包含大写字母并在 5~10 位之间
+
+```
+<body>
+<input type="text" name="password" />
+</body>
+<script>
+let input = document.querySelector(`[name="password"]`);
+input.addEventListener("keyup", e => {
+  const value = e.target.value.trim();
+  const regs = [/^[a-zA-Z0-9]{5,10}$/, /[A-Z]/];
+  let state = regs.every(v => v.test(value));
+  console.log(state ? "正确！" : "密码必须包含大写字母并在5~10位之间");
+});
+</script>
+```
+
+### 禁止贪婪
+
+正则表达式在进行重复匹配时，默认是贪婪匹配模式，也就是说会尽量匹配更多内容，但是有的时候我们并不希望他匹配更多内容，这时可以通过`?`
+进行修饰来禁止重复匹配
+
+| 使用     | 说明                  |
+|--------|---------------------|
+| *?     | 重复任意次，但尽可能少重复       |
+| +?     | 重复 1 次或更多次，但尽可能少重复  |
+| ??     | 重复 0 次或 1 次，但尽可能少重复 |
+| {n,m}? | 重复 n 到 m 次，但尽可能少重复  |
+| {n,}?  | 重复 n 次以上，但尽可能少重复    |
+
+下面是禁止贪婪的语法例子
+
+```
+let str = "aaa";
+console.log(str.match(/a+/)); //aaa
+console.log(str.match(/a+?/)); //a
+console.log(str.match(/a{2,3}?/)); //aa
+console.log(str.match(/a{2,}?/)); //aa
+```
+
+将所有 `span` 更换为`h4` 并`描红`，并在内容前加上 `后盾人-`  (JavaScript/regexp/33.html)
+
+## 全局匹配
+
+### 问题分析
+
+下面是使用`match` 全局获取页面中标签内容，但并不会返回匹配细节
+
+```
+<body>
+  <h1>houdunren.com</h1>
+  <h2>hdcms.com</h2>
+  <h1>后盾人</h1>
+</body>
+
+<script>
+  function elem(tag) {
+    const reg = new RegExp("<(" + tag + ")>.+?<\.\\1>", "g");
+    return document.body.innerHTML.match(reg);
+  }
+  console.table(elem("h1"));
+</script>
+```
+
+### matchAll
+
+在新浏览器中支持使用 `matchAll` 操作，并返回迭代对象
+
+> 需要添加 `g` 修饰符
+
+```
+let str = "houdunren";
+let reg = /[a-z]/ig;
+for (const iterator of str.matchAll(reg)) {
+  console.log(iterator);
+}
+```
+
+在原型定义 `matchAll`方法，用于在旧浏览器中工作，不需要添加`g` 模式运行
+
+```
+String.prototype.matchAll = function(reg) {
+  let res = this.match(reg);
+  if (res) {
+    let str = this.replace(res[0], "^".repeat(res[0].length));
+    let match = str.matchAll(reg) || [];
+    return [res, ...match];
+  }
+};
+let str = "houdunren";
+console.dir(str.matchAll(/(U)/i));
+```
+
+### exec
+
+使用 `g` 模式修正符并结合 `exec` 循环操作可以获取结果和匹配细节
+
+```
+<body>
+  <h1>houdunren.com</h1>
+  <h2>hdcms.com</h2>
+  <h1>后盾人</h1>
+</body>
+<script>
+  function search(string, reg) {
+    const matchs = [];
+    while ((data = reg.exec(string))) {
+      matchs.push(data);
+    }
+    return matchs;
+  }
+  console.log(search(document.body.innerHTML, /<(h[1-6])>[\s\S]+?<\/\1>/gi));
+</script>
+```
+
+使用上面定义的函数来检索字符串中的网址
+
+```
+let hd = `https://hdcms.com
+https://www.sina.com.cn
+https://www.houdunren.com`;
+
+let res = search(hd, /https?:\/\/(\w+\.)?(\w+\.)+(com|cn)/gi);
+console.dir(res);
+```
+
+## 字符方法
+
+下面介绍的方法是 `String` 提供的支持正则表达式的方法
+
+### search
+
+`search()` 方法用于检索字符串中指定的子字符串，也可以使用正则表达式搜索，返回值为索引位置
+
+```
+let str = "houdunren.com";
+console.log(str.search("com"));  // 10
+```
+
+使用正则表达式搜索
+
+```
+console.log(str.search(/com/i));  // 10
+```
+
+### match
+
+直接使用字符串搜索
+
+```
+let str = "houdunren.com";
+console.log(str.match("com"));
+```
+
+使用正则获取内容，下面是简单的搜索字符串
+
+```
+let hd = "houdunren";
+let res = hd.match(/u/);
+console.log(res);
+console.log(res[0]); //匹配的结果
+console.log(res["index"]); //出现的位置
+```
+
+如果使用 `g` 修饰符时，就不会有结果的详细信息了（可以使用 exec），下面是获取所有 h1~6 的标题元素
+
+```
+let body = document.body.innerHTML;
+let result = body.match(/<(h[1-6])>[\s\S]+?<\/\1>/g);
+console.table(result);
+```
+
+### matchAll
+
+在新浏览器中支持使用 `matchAll` 操作，并返回迭代对象
+
+```
+let str = "houdunren";
+let reg = /[a-z]/ig;
+for (const iterator of str.matchAll(reg)) {
+  console.log(iterator);
+}
+```
+
+### split
+
+用于使用字符串或正则表达式分隔字符串，下面是使用字符串分隔日期
+
+```
+let str = "2023-02-12";
+console.log(str.split("-")); //["2023", "02", "12"]
+```
+
+如果日期的连接符不确定，那就要使用正则操作了
+
+```
+let str = "2023/02-12";
+console.log(str.split(/-|\//));
+```
+
+### replace
+
+`replace` 方法不仅可以执行基本字符替换，也可以进行正则替换，下面替换日期连接符
+
+```
+let str = "2023/02/12";
+console.log(str.replace(/\//g, "-")); //2023-02-12
+```
+
+替换字符串可以插入下面的特殊变量名：
+
+| 变量 | 说明                                                                    |
+|----|-----------------------------------------------------------------------|
+| $$ | 插入一个 "$"。                                                             |
+| $& | 插入匹配的子串。                                                              |
+| $` | 插入当前匹配的子串左边的内容。                                                       |
+| $' | 插入当前匹配的子串右边的内容。                                                       |
+| $n | 假如第一个参数是 RegExp 对象，并且 n 是个小于 100 的非负整数，那么插入第 n 个括号匹配的字符串。提示：索引是从 1 开始 |
+
+在后盾人前后添加三个`=`
+
+```
+let hd = "=后盾人=";
+console.log(hd.replace(/后盾人/g, "$`$`$&$'$'"));  // ===后盾人===
+```
+
+把电话号用 `-` 连接
+
+```
+let hd = "(010)99999999 (020)8888888";
+console.log(hd.replace(/\((\d{3,4})\)(\d{7,8})/g, "$1-$2"));  // 010-99999999 020-8888888
+```
+

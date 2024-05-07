@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    // match exec matchAll replace
+
+    // let hd = "houdunren.com"
+    // console.log(hd.search(/u/))
+    // console.log(hd.match(/u/gi))
+
+    let hd = `
+    https://hdcms.com
+    https://www.sina.com.cn
+    https://www.houdunren.com
+    `
+    let reg = /https?:\/\/(\w+\.)?(\w+\.)+(com|cn|org|cc)/gi
+    console.log(hd.match(reg));
+</script>
+</html>
