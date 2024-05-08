@@ -9,11 +9,14 @@
 </head>
 <body>
 <main>
-    在线教育是一种高效的学习方式，教育是一生的事业
+    <input type="text" name="username"/>
 </main>
 </body>
 <script>
-    const main = document.querySelector("body main")
-    main.innerHTML = main.innerHTML.replace(/教育/g, `<a href="https://www.hdcms.com">$&</a>`)
+    const input = document.querySelector(`[name="username"]`);
+    input.addEventListener("keyup", function () {
+        const reg = /^(?!.*向军)[a-z]{5,6}$/i
+        console.log(this.value.match(reg))
+    })
 </script>
 </html>

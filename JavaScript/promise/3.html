@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background: yellowgreen;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<div></div>
+</body>
+<script>
+    function interval(callback, delay) {
+        let id = setInterval(() => {
+            return callback(id)
+        }, delay);
+
+    }
+
+    interval((timeId) => {
+        const div = document.querySelector("div")
+        let left = parseInt(window.getComputedStyle(div).left);
+        div.style.left = left + 10 + "px";
+        if (left >= 200) {
+            clearInterval(timeId);
+            interval((timeId) => {
+                let width = parseInt(window.getComputedStyle(div).width);
+                div.style.width = width - 10 + "px";
+                ;
+                if (width <= 20) {
+                    clearInterval(timeId)
+                }
+            }, 100)
+        }
+    }, 50)
+    console.log("houdunren")
+    for (let i = 0; i < 200000; i++) {
+        console.log(i)
+    }
+</script>
+</html>

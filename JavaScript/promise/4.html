@@ -8,12 +8,22 @@
     <title>Document</title>
 </head>
 <body>
-<main>
-    在线教育是一种高效的学习方式，教育是一生的事业
-</main>
+
 </body>
 <script>
-    const main = document.querySelector("body main")
-    main.innerHTML = main.innerHTML.replace(/教育/g, `<a href="https://www.hdcms.com">$&</a>`)
+    function load(src, resolve) {
+        let script = document.createElement("script")
+        script.src = src;
+        script.onload = resolve
+        document.body.appendChild(script)
+    }
+
+    load("4.js", () => {
+        load("4.1.js", () => {
+            houdunren();
+        });
+    });
+   
+    console.log(435352)
 </script>
 </html>

@@ -8,12 +8,15 @@
     <title>Document</title>
 </head>
 <body>
-<main>
-    在线教育是一种高效的学习方式，教育是一生的事业
-</main>
+
 </body>
+<script src="5/ajax.js"></script>
 <script>
-    const main = document.querySelector("body main")
-    main.innerHTML = main.innerHTML.replace(/教育/g, `<a href="https://www.hdcms.com">$&</a>`)
+    ajax(`http://localhost:8888/5/user.php?name=后盾人`, user => {
+        ajax(`http://localhost:8888/5/houdunren.php?id=${user.id}`, lessons => {
+            console.log(lessons);
+        });
+    });
+    console.log("houdunren.com");
 </script>
 </html>

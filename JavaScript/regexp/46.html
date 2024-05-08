@@ -9,11 +9,12 @@
 </head>
 <body>
 <main>
-    在线教育是一种高效的学习方式，教育是一生的事业
+    后盾人不断分享视频教程，学习后盾人教程提升编程能力。
 </main>
 </body>
 <script>
-    const main = document.querySelector("body main")
-    main.innerHTML = main.innerHTML.replace(/教育/g, `<a href="https://www.hdcms.com">$&</a>`)
+    let main = document.querySelector("main")
+    let reg = /后盾人(?=教程)/g
+    main.innerHTML = main.innerHTML.replace(reg, `<a href="https://houdunren.com">$&</a>`)
 </script>
 </html>

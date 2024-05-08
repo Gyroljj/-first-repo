@@ -8,12 +8,15 @@
     <title>Document</title>
 </head>
 <body>
-<main>
-    在线教育是一种高效的学习方式，教育是一生的事业
-</main>
-</body>
 <script>
-    const main = document.querySelector("body main")
-    main.innerHTML = main.innerHTML.replace(/教育/g, `<a href="https://www.hdcms.com">$&</a>`)
+    let hd = `
+      <h1>houdunren</h1>
+      <span>后盾人</span>
+      <h2>hdcms</h2>
+        `;
+    let reg = /<(h[1-6])>(?<con>.*?)<\/\1>/ig;
+    console.log(hd.replace(reg, "<h4>$<con></h4>"))
 </script>
+
+</body>
 </html>

@@ -8,12 +8,16 @@
     <title>Document</title>
 </head>
 <body>
-<main>
-    在线教育是一种高效的学习方式，教育是一生的事业
-</main>
+
 </body>
 <script>
-    const main = document.querySelector("body main")
-    main.innerHTML = main.innerHTML.replace(/教育/g, `<a href="https://www.hdcms.com">$&</a>`)
+    let users = `
+  向军电话: 12345678901
+  后盾人电话: 98745675603
+`;
+    let reg = /(?<=\d{7})\d{4}/ig;
+    console.log(users.replace(reg, (v) => {
+        return "*".repeat(4);
+    }))
 </script>
 </html>

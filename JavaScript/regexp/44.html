@@ -8,12 +8,15 @@
     <title>Document</title>
 </head>
 <body>
-<main>
-    在线教育是一种高效的学习方式，教育是一生的事业
-</main>
+<input type="text" name="email"/>
 </body>
 <script>
-    const main = document.querySelector("body main")
-    main.innerHTML = main.innerHTML.replace(/教育/g, `<a href="https://www.hdcms.com">$&</a>`)
+    // match matchAll search replace
+    const mail = document.querySelector(`[name="email"]`);
+    mail.addEventListener("keyup", (e) => {
+        let value = e.target.value;
+        let flag = /^[\w-]+@(\w+\.)+(com|cn|cc|org)$/i.test(value);
+        console.log(flag);
+    })
 </script>
 </html>

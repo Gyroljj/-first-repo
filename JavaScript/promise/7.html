@@ -8,12 +8,18 @@
     <title>Document</title>
 </head>
 <body>
-<main>
-    在线教育是一种高效的学习方式，教育是一生的事业
-</main>
+
 </body>
 <script>
-    const main = document.querySelector("body main")
-    main.innerHTML = main.innerHTML.replace(/教育/g, `<a href="https://www.hdcms.com">$&</a>`)
+    setTimeout(() => {
+        console.log("setTimeout")
+    }, 0);
+    new Promise(resolve => {
+        resolve();
+        console.log("promise")
+    }).then(value => {
+        console.log("成功")
+    })
+    console.log("后盾人")
 </script>
 </html>
