@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<style>
+    div {
+        width: 100px;
+        height: 100px;
+        background: red;
+        color: white;
+        display: none;
+    }
+</style>
+<div id="loading">loading...</div>
+</body>
+<script src="17/ajax.js"></script>
+<script>
+    ajax(`http://localhost:8888/17/user.php?name=后盾人`)
+        .then(value => {
+            console.log(value);
+        })
+        .finally(() => {
+            loading.style.display = "none";
+        });
+    // const promise = new Promise((resolve, reject) => {
+    //     reject("hdcms");
+    // })
+    //     .then(msg => {
+    //         console.log("resolve");
+    //     })
+    //     .catch(error => {
+    //     })
+    //     .finally(() => {
+    //         console.log("永远会执行");
+    //     });
+</script>
+</html>

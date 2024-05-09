@@ -8466,3 +8466,258 @@ promise 是队列状态，就像体育中的接力赛，或多米诺骨牌游戏
 - promise 的 then、catch、finally 的方法都是异步任务
 - 程序需要将主任务执行完成才会执行异步队列任务
 
+状态被改变后就不能再修改了
+
+### 动态改变
+
+p2 返回了 p1 所以此时 p2 的状态已经无意义了，后面的 then 是对 p1 状态的处理。 [示例](JavaScript/promise/9.html)
+
+如果 `resolve` 参数是一个 `promise` ，将会改变`promise`状态。
+
+当 promise 做为参数传递时，需要等待 promise 执行完才可以继承
+
+- 因为`p2` 的`resolve` 返回了 `p1` 的 `promise`，所以此时`p2` 的`then` 方法已经是`p1` 的了
+- 正因为以上原因 `then` 的第一个函数输出了 `p1` 的 `resolve` 的参数
+
+## then
+
+一个 promise 需要提供一个 then 方法访问 promise 结果，`then` 用于定义当 `promise` 状态发生改变时的处理，即`promise`
+处理异步操作，`then` 用于结果。
+
+`promise` 就像 kfc 中的厨房，`then` 就是我们用户，如果餐做好了即 `fulfilled` ，做不了拒绝即`rejected` 状态。那么 `then`
+就要对不同状态处理。
+
+- `then` 方法必须返回 `promise`，用户返回或系统自动返回
+- 第一个函数在`resolved` 状态时执行，即执行`resolve`时执行`then`第一个函数处理成功状态
+- 第二个函数在`rejected`状态时执行，即执行`reject` 时执行第二个函数处理失败状态，该函数是可选的
+- 两个函数都接收 `promise` 传出的值做为参数
+- 也可以使用`catch`来处理失败的状态
+- 如果 `then` 返回 `promise` ，下一个`then` 会在当前`promise` 状态改变后执行
+
+### 语法说明
+
+then 的语法如下，onFulfilled 函数处理 `fulfilled` 状态， onRejected 函数处理 `rejected` 状态
+
+- onFulfilled 或 onRejected 不是函数将被忽略
+- 两个函数只会被调用一次
+- onFulfilled 在 promise 执行成功时调用
+- onRejected 在 promise 执行拒绝时调用
+
+```
+promise.then(onFulfilled, onRejected)
+```
+
+### 基础知识
+
+`then` 会在 `promise` 执行完成后执行，`then` 第一个函数在 `resolve`成功状态执行
+
+`then` 中第二个参数在失败状态执行
+
+如果只关心成功则不需要传递 `then` 的第二个参数
+
+如果只关心失败时状态，`then` 的第一个参数传递 `null`
+
+`promise` 传向 `then` 的传递值，如果 `then` 没有可处理函数，会一直向后传递
+
+### 链式调用
+
+每次的 `then` 都是一个全新的 `promise` ，默认 `then` 返回的 `promise` 状态是 `fulfilled`
+
+每次的 `then` 都是一个全新的 `promise` ，不要认为上一个 `promise` 状态会影响以后 `then` 返回的状态
+
+如果内部返回 `promise` 时将使用该 `promise`
+
+如果`then`返回 `promise` 时，返回的`promise` 后面的`then` 就是处理这个`promise` 的  [示例](JavaScript/promise/12.html)
+
+### 其它类型
+
+`Promise` 解决过程是一个抽象的操作，其需输入一个 `promise` 和一个值，我们表示为 `[[Resolve]](promise, x)`，如果 `x`
+有 `then` 方法且看上去像一个 `Promise` ，解决程序即尝试使 `promise` 接受 `x` 的状态；否则其用 `x` 的值来执行 `promise` 。
+
+#### 循环调用
+
+如果 `then` 返回与 `promise` 相同将禁止执行
+
+#### promise
+
+如果返加值是 `promise` 对象，则需要更新状态后，才可以继承执行后面的 `promise`
+
+#### Thenables
+
+包含 `then` 方法的对象就是一个 `promise` ，系统将传递 `resolvePromise` 与 `rejectPromise` 做为函数参数
+
+下例中使用 `resolve` `或在then` 方法中返回了具有 `then`方法的对象
+
+- 该对象即为 `promise` 要先执行，并在方法内部更改状态
+- 如果不更改状态，后面的 `then` `promise` 都为等待状态
+
+```
+new Promise((resolve, reject) => {
+  resolve({
+    then(resolve, reject) {
+      resolve("解决状态");
+    }
+  });
+})
+.then(v => {
+  console.log(`fulfilled: ${v}`);
+  return {
+    then(resolve, reject) {
+      setTimeout(() => {
+        reject("失败状态");
+      }, 2000);
+    }
+  };
+})
+.then(null, error => {
+  console.log(`rejected: ${error}`);
+});
+```
+
+包含 `then` 方法的对象可以当作 `promise` 来使用
+
+当然也可以是类 [示例](JavaScript/promise/13.html)
+
+如果对象中的 `then` 不是函数，则将对象做为值传递
+
+```
+new Promise((resolve, reject) => {
+  resolve();
+})
+.then(() => {
+  return {
+    then: "后盾人"
+  };
+})
+.then(v => {
+  console.log(v); //{then: "后盾人"}
+});
+```
+
+## catch
+
+使用未定义的变量同样会触发失败状态
+
+如果 `onFulfilled` 或 `onRejected` 抛出异常，则 `p2` 拒绝执行并返回拒因
+
+```
+let promise = new Promise((resolve, reject) => {
+  throw new Error("fail");
+});
+let p2 = promise.then();
+p2.then().then(null, resolve => {
+  console.log(resolve + ",后盾人");
+});
+```
+
+catch 用于失败状态的处理函数，等同于 `then(null,reject){}`
+
+- 建议使用 `catch` 处理错误
+- 将 `catch` 放在最后面用于统一处理前面发生的错误
+
+`catch` 可以捕获之前所有 `promise` 的错误，所以建议将 `catch` 放在最后。
+
+错误是冒泡的操作的，下面没有任何一个`then` 定义第二个函数，将一直冒泡到 `catch` 处理错误
+
+```
+new Promise((resolve, reject) => {
+  reject(new Error("请求失败"));
+})
+.then(msg => {})
+.then(msg => {})
+.catch(error => {
+  console.log(error);
+});
+```
+
+`catch` 也可以捕获对 `then` 抛出的错误处理
+
+`catch` 也可以捕获其他错误，在 `then` 中使用了未定义的变量，将会把错误抛出到 `catch`
+
+### 使用建议
+
+建议将错误要交给`catch`处理而不是在`then`中完成
+
+### 处理机制
+
+在 `promise` 中抛出的错误也会被`catch` 捕获
+
+但像下面的在异步中 `throw` 将不会触发 `catch`，而使用系统错误处理
+
+```
+const promise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    throw new Error("fail");
+  }, 2000);
+}).catch(msg => {
+  console.log(msg + "后盾人");
+});
+```
+
+下面在`then` 方法中使用了没有定义的`hd`函数，也会抛除到 `catch` 执行，可以理解为内部自动执行 `try...catch`
+
+```
+const promise = new Promise((resolve, reject) => {
+  resolve();
+})
+.then(() => {
+  hd();
+})
+.catch(msg => {
+  console.log(msg.toString());
+});
+```
+
+在 `catch` 中发生的错误也会抛给最近的错误处理
+
+### 定制错误
+
+可以根据不同的错误类型进行定制操作，[示例](JavaScript/promise/16.html)将参数错误与 404 错误分别进行了处理
+
+## finally
+
+无论状态是`resolve` 或 `reject` 都会执行此动作，`finally` 与状态无关。
+
+[示例](JavaScript/promise/17.html)使用 `finally` 处理加载状态，当请求完成时移除加载图标。
+
+## 示例操作
+
+### 图片加载
+
+异步加载图片[示例](JavaScript/promise/18.html)
+
+### 定时器
+
+[示例](JavaScript/promise/19.html)是封装的`timeout` 函数，使用定时器操作更加方便
+
+封闭 `setInterval` 定时器并实现动画效果  [示例](JavaScript/promise/20.html)
+
+## 链式操作
+
+- 每个 `then` 都是一个 `promise`
+- 如果 `then` 返回 `promse`，只当`promise` 结束后，才会继承执行下一个 `then`
+
+## 扩展接口
+
+### resolve
+
+使用 `promise.resolve` 方法可以快速的返回一个 `promise` 对象
+
+### reject
+
+和 `Promise.resolve` 类似，`reject` 生成一个失败的`promise`
+
+使用 `Project.reject` 设置状态  [示例](JavaScript/promise/23.html)
+
+### all
+
+使用`Promise.all` 方法可以同时执行多个并行异步操作，比如页面加载时同进获取课程列表与推荐课程。
+
+- 任何一个 `Promise` 执行失败就会调用 `catch`方法
+- 适用于一次发送多个异步操作
+- 参数必须是可迭代类型，如 Array/Set
+- 成功后返回 `promise` 结果的有序数组
+
+[示例](JavaScript/promise/24.html)当 `hdcms、houdunren` 两个 `Promise` 状态都为 `fulfilled` 时，`hd` 状态才为`fulfilled`。
+
+如果某一个`promise`没有 `catch` 处理，将使用`promise.all` 的 `catch` 处理

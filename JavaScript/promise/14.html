@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script src="14/ajax.js"></script>
+<script>
+    let url = `http://localhost:8888/14`;
+    ajax(`${url}/user.php?name=后盾人`)
+        .then(user => ajax(`${url}/houdunren.php?id=${user.id}`))
+        .then(lessons => console.log(lessons));
+    // function request() {
+    //     return new Promise((resolve, reject) => {
+    //         setTimeout(() => {
+    //             resolve("成功")
+    //         }, 2000)
+    //     })
+    // }
+    //
+    // request().then(value => console.log(value))
+</script>
+</html>

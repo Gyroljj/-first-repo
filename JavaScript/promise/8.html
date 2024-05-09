@@ -11,19 +11,15 @@
 
 </body>
 <script>
-    function load(src, resolve) {
-        let script = document.createElement("script")
-        script.src = src;
-        script.onload = resolve
-        document.body.appendChild(script)
-    }
-
-    load("4.1.js", () => {
-        load("4.2.js", () => {
-            houdunren();
-        });
-    });
-
-    console.log(435352)
+    let promise = new Promise(resolve => {
+        setTimeout(() => {
+            resolve();
+            console.log("setTimeout")
+        }, 0);
+        console.log("promise")
+    }).then(value => {
+        console.log("成功")
+    })
+    console.log("houdunren")
 </script>
 </html>

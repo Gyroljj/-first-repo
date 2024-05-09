@@ -11,19 +11,13 @@
 
 </body>
 <script>
-    function load(src, resolve) {
-        let script = document.createElement("script")
-        script.src = src;
-        script.onload = resolve
-        document.body.appendChild(script)
-    }
-
-    load("4.1.js", () => {
-        load("4.2.js", () => {
-            houdunren();
-        });
+    new Promise((resolve, reject) => {
+        // resolve("一瓶可乐");
+        reject("买不起");
+    }).then(null, a => {
+        console.log(`处理了失败的状态,${a}`)
+    }).then(null, reason => {
+        console.log(reason);
     });
-
-    console.log(435352)
 </script>
 </html>

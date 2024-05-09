@@ -11,19 +11,17 @@
 
 </body>
 <script>
-    function load(src, resolve) {
-        let script = document.createElement("script")
-        script.src = src;
-        script.onload = resolve
-        document.body.appendChild(script)
-    }
-
-    load("4.1.js", () => {
-        load("4.2.js", () => {
-            houdunren();
+    // console.log(Promise.resolve("后盾人"));
+    // Promise.resolve("后盾人").then(value => {
+    //     console.log(value);
+    // })
+    Promise.hd = function (value) {
+        return new Promise(resolve => {
+            resolve(value);
         });
+    };
+    Promise.hd("后盾人").then(value => {
+        console.log(value);
     });
-
-    console.log(435352)
 </script>
 </html>
