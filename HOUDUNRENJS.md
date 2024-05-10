@@ -8721,3 +8721,148 @@ const promise = new Promise((resolve, reject) => {
 [示例](JavaScript/promise/24.html)当 `hdcms、houdunren` 两个 `Promise` 状态都为 `fulfilled` 时，`hd` 状态才为`fulfilled`。
 
 如果某一个`promise`没有 `catch` 处理，将使用`promise.all` 的 `catch` 处理
+
+### allSettled
+
+`allSettled` 用于处理多个`promise` ，只关注执行完成，不关注是否全部执行成功，`allSettled` 状态只会是`fulfilled`。
+
+[示例](JavaScript/promise/25.html)的 `p2` 返回状态为 `rejected` ，但`promise.allSettled`
+不关心，它始终将状态设置为 `fulfilled` 。
+
+### race
+
+使用`Promise.race()` 处理容错异步，和race单词一样哪个 `Promise` 快用哪个，哪个先返回用哪个。
+
+- 以最快返回的 `promise` 为准
+- 如果最快返加的状态为`rejected` 那整个`promise`为`rejected`执行 `cache`
+- 如果参数不是 `promise`，内部将自动转为 `promise`
+
+[示例](JavaScript/promise/26.html)请求的异步时间谁更快就返回谁，这时第二个先返回就用第二人。
+
+## 任务队列
+
+### 实现原理
+
+如果 `then` 返回`promise` 时，后面的`then` 就是对返回的 `promise` 的处理 [示例](JavaScript/promise/27.html)
+
+[示例](JavaScript/promise/28.html)使用 `map` 构建的队列，有以下几点需要说明
+
+- `then` 内部返回的 `promise` 更改外部的 `promise` 变量
+- 为了让任务继承，执行完任务需要将 `promise` 状态修改为 `fulfilled`
+
+[示例](JavaScript/promise/29.html)再来通过 `reduce` 来实现队列
+
+## async/await
+
+使用 `async/await` 是 `promise` 的语法糖，可以让编写 `promise` 更清晰易懂，也是推荐编写 `promise` 的方式。
+
+- `async/await` 本质还是 `promise`，只是更简洁的语法糖书写
+- `async/await` 使用更清晰的 `promise` 来替换 `promise.then/catch` 的方式
+
+### async
+
+[示例](JavaScript/promise/31.html)在 `hd` 函数前加上 `async`，函数将返回 promise，我们就可以像使用标准 `Promise` 一样使用了。
+
+如果有多个 `await` 需要排队执行完成，我们可以很方便的处理多个异步队列
+
+### await
+
+使用 `await` 关键词后会等待 `promise` 完
+
+- `await` 后面一般是 `promise`，如果不是直接返回
+- `await` 必须放在 `async` 定义的函数中使用
+- `await` 用于替代 `then` 使编码更优雅
+
+[示例](JavaScript/promise/31.html)会在 `await` 这行暂停执行，直到等待 `promise` 返回结果后才继执行。
+
+一般 `await` 后面是外部其它的 `promise` 对象
+
+[示例](JavaScript/promise/33.html)是使用 `async` 设置定时器，并间隔时间来输出内容
+
+### 加载进度
+
+[示例](JavaScript/promise/34.html)是请求后台加载用户并通过进度条展示的效果
+
+### 类中使用
+
+和 `promise` 一样，`await` 也可以操作`thenables` 对象[示例](JavaScript/promise/35.html)
+
+类方法也可以通过 `async` 与 `await` 来操作 `promise` [示例](JavaScript/promise/36.html)
+
+### 其他声明
+
+[示例](JavaScript/promise/37.html)中有各种声明
+
+### 错误处理
+
+`async` 内部发生的错误，会将必变 `promise` 对象为 `rejected` 状态，所以可以使用`catch`
+来处理  [示例](JavaScript/promise/38.html)
+
+也可以使用 `try...catch` 特性忽略不必要的错误 [示例](JavaScript/promise/39.html)
+
+也可以将多个 `await` 放在 `try...catch` 中统一处理错误
+
+### 并发执行
+
+有时需要多个 `await` 同时执行，有几种方法处理，[示例](JavaScript/promise/40.html)多个 `await` 将产生等待
+
+使用 `Promise.all()` 处理多个 `promise` 并行执行
+
+```
+async function hd() {
+  await Promise.all([p1(), p2()]);
+}
+hd();
+```
+
+让 `promise` 先执行后再使用 `await` 处理结果
+
+```
+async function hd() {
+  let h1 = p1();
+  let h2 = p2();
+  await h1;
+  await h2;
+}
+hd();
+```
+
+# 任务管理
+
+JavaScript 语言的一大特点就是单线程，也就是说同一个时间只能处理一个任务。为了协调事件、用户交互、脚本、UI
+渲染和网络处理等行为，防止主线程的不阻塞，（事件循环）`Event Loop` 的方案应用而生。
+
+JavaScript 处理任务是在等待任务、执行任务 、休眠等待新任务中不断循环中，也称这种机制为事件循环。
+
+- 主线程中的任务执行完后，才执行任务队列中的任务
+- 有新任务到来时会将其放入队列，采取先进先执行的策略执行队列中的任务
+- 比如多个 `setTimeout` 同时到时间了，就要依次执行
+
+任务包括 script(整体代码)、 setTimeout、setInterval、DOM 渲染、DOM 事件、Promise、XMLHTTPREQUEST 等
+
+## 原理分析
+
+通过[示例](JavaScript/job/1.html)来了解宏任务与微任务执行顺序
+
+![](./imgs/1715347905664.png)
+
+## 脚本加载
+
+引擎在执行任务时不会进行 `DOM` 渲染，所以如果把`script` 定义在前面，要先执行完任务后再渲染 `DOM`，建议将`script`
+放在 `BODY` 结束标签前。
+
+## 定时器
+
+定时器会放入异步任务队列，也需要等待同步任务执行完成后执行。
+
+定时器设置了 2000 毫秒执行，如果主线程代码执行时间比这长，定时器要等主线程执行完才执行。  [示例](JavaScript/job/2.html)
+
+> 这是对定时器的说明，其他的异步操作如事件、XMLHTTPREQUEST 等逻辑是一样的
+
+## 微任务
+
+微任务一般由用户代码产生，微任务较宏任务执行优先级更高，`Promise.then` 是典型的微任务，实例化 `Promise`
+时执行的代码是同步的，便 `then` 注册的回调函数是异步微任务的。
+
+任务的执行顺序是同步任务、微任务、宏任务 [示例](JavaScript/job/3.html)
+

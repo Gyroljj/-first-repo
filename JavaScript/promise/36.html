@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    class User {
+        // constructor(name) {
+        //     this.name = name
+        // }
+        //
+        // then(resolve, reject) {
+        //     let user = this.name
+        //     resolve(user)
+        // }
+        async get(name) {
+            let user = await new Promise(resolve => {
+                resolve(name)
+            })
+            user += "houdunren"
+            return user;
+        }
+    }
+
+    new User().get("后盾人").then(user => {
+        console.log(user)
+    });
+    // async function get() {
+    //     await new User("后盾人");
+    //     console.log("houdunren")
+    // }
+    //
+    // get();
+</script>
+</html>

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    async function hd(name) {
+        try {
+            let user = await new Promise((resolve, reject) => {
+                // resolve(name);
+                reject("fail");
+            })
+            // throw new Error("fail")
+            return user;
+        } catch (error) {
+            console.log(error)
+        }
+        await Promise.resolve("success").then(value => {
+            console.log(value);
+        });
+
+        // let user = name;
+        // return user;
+    }
+
+    hd("后盾人").then(user => {
+        console.log(user)
+    })
+    //     .then(user => {
+    //         console.log(user)
+    //     }).catch(error => {
+    //     console.log(error)
+    // })
+</script>
+</html>
