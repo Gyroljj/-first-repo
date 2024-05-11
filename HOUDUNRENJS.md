@@ -8866,3 +8866,78 @@ JavaScript 处理任务是在等待任务、执行任务 、休眠等待新任�
 
 任务的执行顺序是同步任务、微任务、宏任务 [示例](JavaScript/job/3.html)
 
+## 实例操作
+
+### 进度条
+
+[示例](JavaScript/job/5.html)的定时器虽然都定时了一秒钟，但也是按先进行出原则，依次执行
+
+[示例](JavaScript/job/6.html)是一个进度条的示例，将每个数字放在一个任务中执行
+
+### 任务分解
+
+一个比较耗时的任务可能造成游览器卡死现象，所以可以将任务拆分为多小小异步小任务执行。  [示例](JavaScript/job/7.html)
+
+交给微任务处理是更好的选择 [示例](JavaScript/job/8.html)
+
+# Promise核心
+
+## 起步构建
+
+本章来自己开发一个 `Promise` 实现，提升异步编程的能力。
+
+首先声明定义类并声明 `Promise` 状态与值，有以下几个细节需要注意。 [示例](JavaScript/promise-core/HD.js)
+
+- `executor` 为执行者
+- 当执行者出现异常时触发**拒绝**状态
+- 使用静态属性保存状态值
+- 状态只能改变一次，所以在 `resolve` 与 `reject` 添加条件判断
+- 因为 `resolve`或`rejected`方法在 executor 中调用，作用域也是 `executor` 作用域，这会造成 `this` 指向 `window`
+  ，现在我们使用的是 `class` 定义，`this` 为 `undefined`。
+
+测试一下状态改变  [示例](JavaScript/promise-core/3.html)
+
+## THEN
+
+现在添加 then 方法来处理状态的改变，有以下几点说明
+
+- `then` 可以有两个参数，即成功和错误时的回调函数
+- `then` 的函数参数都不是必须的，所以需要设置默认值为函数，用于处理当没有传递时情况
+- 当执行 `then` 传递的函数发生异常时，统一交给 `onRejected` 来处理错误
+
+### 基础构建
+
+[示例](JavaScript/promise-core/HD.js)使用 `setTimeout` 来将 `onFulfilled` 与 `onRejected` 做为异步宏任务执行
+
+### PENDING 状态
+
+- 在构造函数中添加 `callbacks` 来保存 `pending` 状态时处理函数，当状态改变时循环调用
+- 将 `then` 方法的回调函数添加到 `callbacks` 数组中，用于异步执行
+- `resolve` 与 `reject` 中添加处理 `callback` 方法的代码
+
+[示例](JavaScript/promise-core/HD.js)
+
+### PENDING 异步
+
+在自建的Promise中的setTimeout的事件并不是异步操作，只需要将 `resolve` 与 `reject` 执行通过 `setTimeout`
+定义为异步任务 [示例](JavaScript/promise-core/HD.js)
+
+## 链式操作
+
+`Promise` 中的 `then` 是链式调用执行的，所以 `then` 也要返回 `Promise` 才能实现
+
+- `then` 的 `onReject` 函数是对前面 `Promise` 的 `rejected` 的处理
+- 但该 `Promise` 返回状态要为 `fulfilled`，所以在调用 `onRejected` 后改变当前 `promise` 为 `fulfilled` 状态
+
+完成[示例](JavaScript/promise-core/HD.js)
+
+执行[测试](JavaScript/promise-core/10.html)后，链式操作已经有效了
+
+## 返回类型
+
+如果 `then` 返回的是 `Promise` 呢？所以我们需要判断分别处理返回值为 `Promise` 与普通值的情况
+
+### 基本实现
+
+[示例](JavaScript/promise-core/HD.js)来实现不同类型不同处理机制
+

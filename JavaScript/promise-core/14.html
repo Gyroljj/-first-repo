@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="HD.js"></script>
+</head>
+<body>
+
+</body>
+<!--suppress JSVoidFunctionReturnValueUsed -->
+<script>
+    let p = new HD((resolve, reject) => {
+        // resolve("解决");
+        // reject("拒绝");
+        setTimeout(() => {
+            // resolve("解决了")
+            reject("拒绝了")
+        }, 1000)
+
+    }).then(value => {
+        return new HD((resolve, reject) => {
+            resolve("向军")
+            reject("拒绝")
+        })
+    }, reason => {
+        return new HD((resolve, reject) => {
+            // resolve("向军大叔")
+            reject("p2拒绝")
+        })
+    }).then(value => {
+        console.log("fulfilled: " + value)
+    }, reason => {
+        console.log("rejected: " + reason)
+    })
+    console.log("后盾人")
+</script>
+</html>

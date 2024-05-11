@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="HD.js"></script>
+</head>
+<body>
+
+</body>
+<!--suppress JSVoidFunctionReturnValueUsed -->
+<script>
+    let p = new HD((resolve, reject) => {
+        resolve("解决");
+        // reject("拒绝")
+    }).then(value => {
+        console.log(value)
+        return "向军大叔"
+    }, reason => {
+        console.log(reason)
+    }).then(value => {
+        console.log(value)
+    }, reason => {
+        console.log(reason)
+    })
+    console.log("后盾人")
+</script>
+</html>
