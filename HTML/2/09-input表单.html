@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>input表单</title>
+</head>
+
+<body>
+
+<form>
+
+    <!-- text 文本框   1. placeholder  占位文字-->
+    <label for="xingming">姓名:</label>
+    <input type="text" placeholder="请您输入姓名" id="xingming">
+
+    <br>
+
+    <!-- password 密码框 -->
+    <label>密码: <input type="password" placeholder="请您输入密码"></label>
+
+    <br>
+
+    <!-- radio 单选框   name属性 给相同的值就可以单选  checked 默认选中 -->
+    性别:
+    <label><input type="radio" name="sex"> 男</label>
+    <label><input type="radio" name="sex" checked> 女</label>
+
+    <br>
+
+    <!-- checkbox 多选框 复选框 -->
+    爱好: <input type="checkbox"> 舞蹈
+    <input type="checkbox"> 音乐
+    <input type="checkbox"> 游戏
+    <input type="checkbox" checked> 写代码 <br>
+
+    <!-- 文件域  上传文件表单 multiple 可以多选文件 -->
+    上传头像: <input type="file" multiple> <br>
+
+    <!-- 下拉表单  select 选择  option  选项   selected 默认选中 -->
+    籍贯：
+    
+    <select>
+        <option>北京</option>
+        <option selected>山东</option>
+        <option>天津</option>
+        <option>河北</option>
+    </select> <br>
+
+    <!-- 文本域   rows 行数   cols 列数 -->
+    请您留言：
+    <textarea name="" id="" cols="10" rows="4">评论</textarea> <br>
+
+    <!-- 梳理下： -->
+    <!-- 几个单标签： hr  br   img  input      -->
+
+
+    <!-- 按钮 -->
+    <!-- <button>搜索</button> -->
+    <button type="button">搜索</button>
+    <button type="submit">提交</button>
+    <button type="reset">重置</button>
+</form>
+</body>
+
+</html>

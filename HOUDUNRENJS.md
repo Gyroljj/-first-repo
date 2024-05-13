@@ -8941,3 +8941,25 @@ JavaScript 处理任务是在等待任务、执行任务 、休眠等待新任�
 
 [示例](JavaScript/promise-core/HD.js)来实现不同类型不同处理机制
 
+### 代码复用
+
+现在发现 `pendding`、`fulfilled`、`rejected` 状态的代码非常相似，所以可以提取出方法 `Parse`
+来复用  [示例](JavaScript/promise-core/HD.js)
+
+### 返回约束
+
+`then` 的返回的 `promise` 不能是 `then` 相同的 `Promise`，完善代码，添加当前 `promise` 做为 `parse`
+的第一个参数与函数结果比对  [示例](JavaScript/promise-core/HD.js)
+
+### RESOLVE和REJEDCT
+
+[示例](JavaScript/promise-core/HD.js) 定义 `Promise` 的 `resolve` 方法和 `rejecte` 方法
+
+### ALL
+
+[示例](JavaScript/promise-core/HD.js) 实现 `Promise` 的 `all` 方法
+
+### RACE
+
+[示例](JavaScript/promise-core/HD.js) 实现 `Promise` 的 `race` 方法
+

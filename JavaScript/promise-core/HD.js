@@ -50,68 +50,129 @@ class HD {
                 return this.value;
             }
         }
-        return new HD((resolve, reject) => {
+        let promise = new HD((resolve, reject) => {
             if (this.status == HD.PENDING) {
                 this.callbacks.push({
                     onFulfilled: value => {
-                        try {
-                            let result = onFulfilled(value);
-                            if (result instanceof HD) {
-                                result.then(resolve, reject);
-                            } else {
-                                resolve(result);
-                            }
-                        } catch (error) {
-                            reject(error);
-                        }
+                        // try {
+                        this.parse(promise, onFulfilled(value), resolve, reject)
+                        //     if (result instanceof HD) {
+                        //         result.then(resolve, reject);
+                        //     } else {
+                        //         resolve(result);
+                        //     }
+                        // } catch (error) {
+                        //     reject(error);
+                        // }
                     },
                     onRejected: value => {
-                        try {
-                            let result = onRejected(value);
-                            if (result instanceof HD) {
-                                result.then(resolve, reject);
-                            } else {
-                                resolve(result);
-                            }
-                        } catch (error) {
-                            reject(error);
-                        }
+                        // try {
+                        this.parse(promise, onRejected(value), resolve, reject)
+                        //     if (result instanceof HD) {
+                        //         result.then(resolve, reject);
+                        //     } else {
+                        //         resolve(result);
+                        //     }
+                        // } catch (error) {
+                        //     reject(error);
+                        // }
                     }
                 })
             }
             if (this.status == HD.FULFILLED) {
                 setTimeout(() => {
-                    try {
-                        let result = onFulfilled(this.value);
-                        if (result instanceof HD) {
-                            result.then(resolve, reject);
-                            // value => {
-                            //     resolve(value);
-                            // }, reason => {
-                            //     reject(reason);
-                            // })
-                        } else {
-                            resolve(result);
-                        }
-                    } catch (error) {
-                        reject(error)
-                    }
+                    // try {
+                    this.parse(promise, onFulfilled(this.value), resolve, reject)
+                    //     if (result instanceof HD) {
+                    //         result.then(resolve, reject);
+                    //         // value => {
+                    //         //     resolve(value);
+                    //         // }, reason => {
+                    //         //     reject(reason);
+                    //         // })
+                    //     } else {
+                    //         resolve(result);
+                    //     }
+                    // } catch (error) {
+                    //     reject(error)
+                    // }
                 })
             }
             if (this.status == HD.REJECTED) {
                 setTimeout(() => {
-                    try {
-                        let result = onRejected(this.value)
-                        if (result instanceof HD) {
-                            result.then(resolve, reject);
-                        } else {
-                            resolve(result);
-                        }
-                    } catch (error) {
-                        reject(error);
-                    }
+                    // try {
+                    this.parse(promise, onRejected(this.value), resolve, reject)
+                    //     if (result instanceof HD) {
+                    //         result.then(resolve, reject);
+                    //     } else {
+                    //         resolve(result);
+                    //     }
+                    // } catch (error) {
+                    //     reject(error);
+                    // }
                 })
             }
+        })
+        return promise;
+    }
+
+    parse(promise, result, resolve, reject) {
+        if (promise == result) {
+            throw new TypeError("Chaining cycle detected")
+        }
+        try {
+            if (result instanceof HD) {
+                result.then(resolve, reject);
+            } else {
+                resolve(result);
+            }
+        } catch (error) {
+            reject(error);
+        }
+    }
+
+    static resolve(value) {
+        return new HD((resolve, reject) => {
+            if (value instanceof HD) {
+                value.then(resolve, reject)
+            } else {
+                resolve(value)
+            }
+
+        })
+    }
+
+    static reject(value) {
+        return new HD((resolve, reject) => {
+            reject(value)
+        })
+    }
+
+    static all(promises) {
+        return new HD((resolve, reject) => {
+            const values = [];
+            promises.forEach(promise => {
+                promise.then(value => {
+                    values.push(value);
+                    if (values.length == promises.length) {
+                        resolve(values)
+                    }
+                }, reason => {
+                    reject(reason);
+                })
+            })
+        })
+    }
+
+    static race(promises) {
+        return new HD((resolve, reject) => {
+            promises.map(promise => {
+                promise.then(value => {
+                    resolve(value)
+                }, reason => {
+                    reject(reason)
+                })
+            })
         })
     }
 }
