@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* li {
+          color: red;
+        } */
+
+        /* .red {
+          color: red;
+        } */
+        /* 后代选择器 中间用空格隔开 */
+        /* ul li {
+          color: red;
+        } */
+
+        /* 只让第一组ul 里面的li变色 */
+        /* 可以是类名 标签名做后代 */
+        .first li {
+            color: red;
+        }
+
+        /* 1. 后代可以是儿子，孙子重孙子等等 */
+
+        /* div span {
+          color: red;
+        } */
+        /* 继承 */
+        /* 代码执行从右往左  要注意 */
+        ol li {
+            /* color: pink; */
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+<ul class="first">
+    <li>我是无序列表</li>
+    <li>我是无序列表</li>
+    <li>我是无序列表</li>
+    <li>我是无序列表</li>
+</ul>
+<ul>
+    <li>我是无序列表</li>
+    <li>我是无序列表</li>
+    <li>我是无序列表</li>
+    <li>我是无序列表</li>
+</ul>
+<ol>
+    <li>我是有序列表</li>
+    <li>我是有序列表</li>
+    <li>我是有序列表</li>
+    <li>我是有序列表</li>
+</ol>
+
+<div>
+    <p>
+      <span>
+        我是span
+      </span>
+    </p>
+</div>
+</body>
+
+</html>

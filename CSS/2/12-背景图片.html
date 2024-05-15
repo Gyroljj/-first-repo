@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 400px;
+            height: 400px;
+            background-color: pink;
+            /* 背景图片  bgi */
+            background-image: url(./images/1.png);
+            /* 背景平铺否？ */
+            /* background-repeat: repeat;  默认平铺*/
+            /* 不平铺 */
+            background-repeat: no-repeat;
+            /* background-repeat: repeat-x; */
+            /* background-repeat: repeat-y; */
+            /* 1. 背景位置  方位名词（关键字）  left  right  top  bottom center  没有顺序*/
+            /* background-position: center center; */
+            /* background-position: top right; */
+            /* 第二个值省略默认是 center */
+            /* background-position: right; */
+            /* background-position: top; */
+            /* 2. 背景位置  px 有严格顺序，第一个值一定是x， 第二个值一定是y   */
+            /* background-position: 10px 50px; */
+            /* background-position: 50px 10px; */
+            /* background-position: 50px center; */
+            /* background-position: center 50px; */
+            background-position: center;
+        }
+    </style>
+    ·
+</head>
+
+<body>
+<div class="box"></div>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 伪类选择器是状态 :hover  鼠标经过（悬停） */
+        a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        /* 标签名:hover 鼠标经过这个标签的时候，状态会变成什么样式 */
+        a:hover {
+            color: orange;
+            text-decoration: underline;
+        }
+
+        p {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+        }
+
+        p:hover {
+            background-color: hotpink;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+
+        }
+
+        .box:hover {
+            background-color: deeppink;
+            color: #fff;
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+<a href="#">百度一下</a>
+<p></p>
+<div class="box">我是盒子</div>
+
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* li的权重是1 ，比 0 高 */
+    li {
+      color: red;
+    }
+
+    /* 继承的权重是 0, 所以无法直接修改 li的样式 */
+    .box {
+      color: green !important;
+      width: 100px;
+      height: 100px;
+    }
+
+    /* 结论： 想要修改谁的样式，就要选择谁 */
+  </style>
+</head>
+
+<body>
+  <ul class="box">
+    <li>我是文字</li>
+  </ul>
+
+  <div></div>
+  <p></p>
+
+  <ul>
+    <li></li>
+  </ul>
+</body>
+
+</html>

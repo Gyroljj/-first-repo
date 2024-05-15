@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>继承性</title>
+    <style>
+        /* div {
+          color: red;
+          font-size: 30px;
+          height: 100px;
+        }
+
+        span {
+          color: green;
+        } */
+
+        p {
+            color: pink;
+        }
+
+        /* 特殊情况1： 链接不会继承颜色 */
+        a {
+            color: red;
+        }
+
+        div {
+            color: red;
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        /* 特殊情况2： 标题的字号和加粗不会继承 */
+        h1 {
+            font-weight: 400;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+<!-- <div>
+  <span>我是孩子</span>
+</div> -->
+<p>
+    <a href="#">我是链接</a>
+</p>
+<div>
+    <h1>一级标题</h1>
+</div>
+</body>
+
+</html>
