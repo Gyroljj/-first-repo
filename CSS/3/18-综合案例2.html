@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    li {
+      /* 取消小点 */
+      list-style: none;
+    }
+
+    .box {
+      width: 360px;
+      height: 190px;
+      /* background-color: pink; */
+      /* 块级盒子水平居中 */
+      margin: 100px auto;
+    }
+
+    .box-hd {
+      height: 34px;
+      background-color: #eeeeee;
+      border: 1px solid #dbdee1;
+      border-left: 0;
+    }
+
+    .box-hd a {
+      /* 转换为块级元素 */
+      display: block;
+      width: 50px;
+      height: 34px;
+      background-color: #fff;
+      text-align: center;
+      line-height: 31px;
+      font-size: 14px;
+      color: #333;
+      text-decoration: none;
+      border-top: 3px solid #ff8400;
+      border-right: 1px solid #dbdee1;
+      /* margin是负值，则盒子往上走 */
+      margin-top: -1px;
+    }
+
+    .box-bd {
+      margin-top: 3px;
+    }
+
+    .box-bd li {
+      line-height: 26px;
+      background: url(./images/square.png) no-repeat left center;
+      padding-left: 15px;
+    }
+
+    .box-bd li a {
+      font-size: 14px;
+      text-decoration: none;
+      color: #333;
+      background: url(./images/img.gif) no-repeat left center;
+      padding-left: 20px;
+    }
+
+    .box-bd li a:hover {
+      color: #ff8400;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <!-- 头部 hd  是 head的缩写 -->
+    <div class="box-hd">
+      <a href="#">新闻</a>
+    </div>
+
+    <!-- 身体部分  bd 是 body的缩写-->
+    <ul class="box-bd">
+      <li><a href="#">新农村人，温暖的身手</a></li>
+      <li><a href="#">新农村人，温暖的身手</a></li>
+      <li><a href="#">新农村人，温暖的身手</a></li>
+      <li><a href="#">新农村人，温暖的身手</a></li>
+      <li><a href="#">新农村人，温暖的身手</a></li>
+      <li><a href="#">新农村人，温暖的身手</a></li>
+    </ul>
+  </div>
+</body>
+
+</html>

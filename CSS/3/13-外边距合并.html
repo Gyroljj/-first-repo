@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* .nav ul li a {} */
+        .box1,
+        .box2 {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+        }
+
+        .box1 {
+            margin-bottom: 100px;
+        }
+
+        .box2 {
+            background-color: purple;
+            margin-top: 150px;
+        }
+
+        /* 结果是 100px， 外边距合并以较大外边距为准 */
+
+        .father {
+            /* 防止外边距塌陷 */
+            /* 1. 方案1  overflow: hidden; */
+            /* 2. 方案2  border-top: 1px solid red; */
+            /* transparent 颜色透明 */
+            border-top: 1px solid transparent;
+            width: 200px;
+            height: 200px;
+            background: pink;
+            /* 3. 方案3  padding-top: 20px; */
+        }
+
+        .son {
+            width: 100px;
+            height: 100px;
+            background-color: skyblue;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="box1">上</div>
+<div class="box2">下</div>
+
+<div class="father">
+    <div class="son"></div>
+</div>
+</body>
+
+</html>

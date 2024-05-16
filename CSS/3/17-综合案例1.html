@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 清除样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f1f1f1;
+        }
+
+        .card {
+            width: 270px;
+            height: 255px;
+            background-color: #fff;
+            border-radius: 15px;
+            /* 让块级盒子水平居中 左右margin是auto就可以了 */
+            margin: 100px auto 0;
+            /* 让里面的文字和图片水平居中 */
+            text-align: center;
+            padding-top: 40px;
+        }
+
+        .card h4 {
+            /* 不加粗 */
+            font-weight: 400;
+            /* 上 15 下 10  左右不要 */
+            margin: 15px 0 10px;
+        }
+
+        .card p {
+            font-size: 14px;
+        }
+
+        .card:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+<div class="card">
+    <img src="./images/liveSDK.svg" alt="">
+    <h4>抖音直播SDK</h4>
+    <p>包含抖音直播看播功能</p>
+</div>
+
+</body>
+
+</html>
