@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      /* 给父亲添加 flex */
+      display: flex;
+      /* 主轴的排列方式 */
+      /* justify-content: flex-start; */
+      /* justify-content: flex-end; */
+      /* 让子盒子居中对齐 */
+      /* justify-content: center; */
+      /* between  */
+      /* 两侧没缝隙 */
+      /* justify-content: space-between; */
+      /* 两倍缝隙 */
+      /* justify-content: space-around; */
+      justify-content: space-evenly;
+
+      /* 侧轴的对齐方式 */
+      /* 顶部对齐 */
+      /* align-items: flex-start; */
+      /* 底部对齐 */
+      /* align-items: flex-end; */
+      /* 居中对齐 */
+      /* align-items: center; */
+      /* 默认的 拉伸和父亲一样 */
+      align-items: stretch;
+      width: 900px;
+      height: 500px;
+      background-color: pink;
+    }
+
+    .box div {
+      width: 249px;
+      /* height: 200px; */
+      background-color: skyblue;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+  </div>
+</body>
+
+</html>

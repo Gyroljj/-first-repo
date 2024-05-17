@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .mi {
+            width: 1226px;
+            height: 614px;
+            /* background-color: pink; */
+            margin: 100px auto 0;
+        }
+
+        .left {
+            float: left;
+            width: 234px;
+            height: 614px;
+            background-color: skyblue;
+        }
+
+        .right {
+            overflow: hidden;
+            float: right;
+            width: 978px;
+            height: 614px;
+            /* background-color: purple; */
+        }
+
+        .right li {
+            float: left;
+            width: 234px;
+            height: 300px;
+            background-color: pink;
+            margin-bottom: 14px;
+            margin-right: 14px;
+        }
+
+        /* 让第4,8 个li 去掉外边距 */
+        .right li:nth-child(4n) {
+            margin-right: 0;
+        }
+
+        /*.right li:nth-child(n+4) {*/
+        /*    margin-bottom: 0;*/
+        /*}*/
+
+
+    </style>
+</head>
+
+<body>
+<div class="mi">
+    <div class="left">左侧</div>
+    <div class="right">
+        <ul>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+        </ul>
+    </div>
+</div>
+123123123123123123123123123123123123123123123123123123123123123
+</body>
+
+</html>

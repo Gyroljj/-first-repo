@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            overflow: hidden;
+            width: 500px;
+            background-color: pink;
+        }
+
+        .dason {
+            float: left;
+            width: 200px;
+            height: 200px;
+            background-color: skyblue;
+        }
+
+        .erson {
+            float: left;
+            width: 200px;
+            height: 200px;
+            background-color: purple;
+        }
+
+        .bottom {
+            height: 100px;
+            background-color: black;
+        }
+        
+
+        /* 2. 单伪元素 */
+        /* .box::after {
+          content: "";
+          display: block;
+          clear: both;
+        } */
+
+        /* 3. 双伪元素 */
+        /* .box::before,
+        .box::after {
+          content: "";
+          display: table;
+        }
+    
+        .box::after {
+          clear: both;
+        } */
+        /* .clearfix::before,
+        .clearfix::after {
+          content: "";
+          display: table;
+        }
+    
+        .clearfix::after {
+          clear: both;
+        } */
+    </style>
+</head>
+
+<body>
+<div class="box ">
+    <div class="dason">大儿子</div>
+    <div class="erson">二儿子</div>
+
+</div>
+<div class="bottom">底部盒子</div>
+
+<div class="box clearfix">
+    <div class="dason">大儿子</div>
+    <div class="erson">二儿子</div>
+
+</div>
+</body>
+
+</html>
