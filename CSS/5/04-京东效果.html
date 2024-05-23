@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    img {
+      /* 可以去除图片底部有缝隙的问题 */
+      display: block;
+    }
+
+    .jd {
+      display: flex;
+      /* 主轴两侧对齐 */
+      justify-content: space-between;
+      width: 1150px;
+      height: 390px;
+      /* background-color: pink; */
+      margin: 100px auto;
+    }
+
+    .jd>div {
+      width: 350px;
+      height: 390px;
+    }
+
+    .left {
+      background-color: pink;
+    }
+
+    /* 并集选择器 */
+    /* 因为左侧和右侧的布局完全一致，这里我们可以这， 左侧的ul 和(,) 右侧的ul 样式一起写 */
+    .left ul,
+    .right ul {
+      display: flex;
+      /* 自动换行 */
+      flex-wrap: wrap;
+      /* 主轴两侧对齐 */
+      justify-content: space-between;
+      /* 多行侧轴两侧对齐 */
+      align-content: space-between;
+      height: 390px;
+    }
+
+    .center {
+      background-color: skyblue;
+    }
+
+    .right {
+      background-color: purple;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="jd">
+    <div class="left">
+      <ul>
+        <li> <img src="./images/left01.png" alt=""> </li>
+        <li> <img src="./images/left02.png" alt=""> </li>
+        <li> <img src="./images/left03.png" alt=""> </li>
+        <li> <img src="./images/left04.png" alt=""> </li>
+      </ul>
+    </div>
+    <div class="center">
+      <img src="./images/center.png" alt="">
+    </div>
+    <div class="right">
+      <ul>
+        <li> <img src="./images/right01.png" alt=""> </li>
+        <li> <img src="./images/right02.png" alt=""> </li>
+        <li> <img src="./images/right03.png" alt=""> </li>
+        <li> <img src="./images/right04.png" alt=""> </li>
+      </ul>
+    </div>
+  </div>
+</body>
+
+</html>

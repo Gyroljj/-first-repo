@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      /* 1. 定位模式 什么定位 */
+      position: relative;
+      /*2. 边偏移 怎么移动  不会影响其他盒子 保留位置*/
+      /* float: left; */
+      /* left: 100px;*/
+      top: 100px;
+
+      width: 300px;
+      height: 100px;
+      /* margin-top: 100px; 会影响其他盒子 */
+      background-color: pink;
+    }
+
+    .b {
+      height: 200px;
+      background-color: black;
+    }
+
+    /* 演示怎么移动的 */
+    .re {
+      position: relative;
+      left: 100px;
+      width: 200px;
+      height: 200px;
+      background-color: skyblue;
+      margin: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box"></div>
+  <div class="b"></div>
+
+  <div class="re"></div>
+</body>
+
+</html>

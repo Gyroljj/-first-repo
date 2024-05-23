@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            display: flex;
+            width: 80%;
+            height: 150px;
+            border: 1px solid #000;
+            margin: 50px auto;
+        }
+
+        .box div {
+            background-color: pink;
+            /* 给子盒子 */
+            /* 1 就是占 1份 */
+            flex: 1;
+        }
+
+        .box div:nth-child(2) {
+            background-color: purple;
+            flex: 2;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="box">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+</div>
+</body>
+
+</html>

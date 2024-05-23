@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div {
+      position: absolute;
+      top: 0;
+      left: 0;
+      /* 默认的层级 z-index: auto; */
+      /* 根据标签的书写顺序排列 */
+      /* 越往后，层级越高 */
+      width: 200px;
+      height: 200px;
+    }
+
+    .box1 {
+      background-color: red;
+      /* 层级属性  整数 不要跟单位*/
+      /* 数字越大，层级越高 */
+      z-index: 1;
+    }
+
+    .box2 {
+      background-color: green;
+      left: 20px;
+      top: 20px;
+      z-index: 2;
+    }
+
+    .box3 {
+      background-color: blue;
+      left: 40px;
+      top: 40px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box1"></div>
+  <div class="box2"></div>
+  <div class="box3"></div>
+</body>
+
+</html>

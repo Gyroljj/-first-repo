@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      display: flex;
+      width: 80%;
+      height: 200px;
+      border: 1px solid #000;
+    }
+
+    .box span {
+      /* 不会区分原来属于什么模式 */
+      /* width: 100px;
+      height: 100px;
+      background-color: pink; */
+      flex: 1;
+      background-color: pink;
+    }
+
+    /* 圣杯布局两侧固定，中间自适应 */
+    .left,
+    .right {
+      width: 100px;
+      background-color: skyblue;
+    }
+
+    .center {
+      flex: 1;
+      background-color: purple;
+    }
+
+    .center1 {
+      flex: 2;
+      background-color: pink;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <span>1</span>
+    <span>2</span>
+    <span>3</span>
+    <span>4</span>
+  </div>
+
+  <div class="box">
+    <div class="left">左</div>
+    <div class="center">中</div>
+    <div class="center1">中</div>
+    <div class="right">右</div>
+  </div>
+</body>
+
+</html>

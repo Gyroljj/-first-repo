@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 让绝对定位的盒子水平和垂直居中 */
+
+        .box {
+            position: absolute;
+            /* 移动父亲的50% */
+            left: 50%;
+            /* 往左走自己宽度的一半 */
+            /* margin-left: -100px; */
+            top: 50%;
+            /* margin-top: -100px; */
+            /* 让子盒子走自己宽度和高度的一半 */
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+            /* 绝对定位让margin 0 auto 失效 */
+            /* margin: 0 auto; */
+        }
+
+        img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            /* 让子盒子走自己宽度和高度的一半 */
+            transform: translate(-50%, -50%);
+            /* 注意，translate 百分比相对于盒子自身的宽度和高度来说 */
+        }
+    </style>
+</head>
+
+<body>
+<!-- <div class="box"></div> -->
+<img src="./images/down-open.png" alt="">
+</body>
+
+</html>

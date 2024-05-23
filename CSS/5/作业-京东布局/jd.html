@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>京东</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .box {
+      display: flex;
+      /* 两侧对齐 */
+      justify-content: space-between;
+      width: 1150px;
+      height: 390px;
+      margin: 100px auto;
+    }
+
+    .box div {
+      width: 350px;
+      height: 390px;
+    }
+
+
+
+    .box .left ul,
+    .box .right ul {
+      display: flex;
+      /* 因为有多个盒子，需要自动换行 */
+      flex-wrap: wrap;
+    }
+
+    .box .left li,
+    .box .right li {
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    .box .left li:nth-child(2n),
+    .box .right li:nth-child(2n) {
+      margin-right: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <!-- 左侧 -->
+    <div class="left">
+      <ul>
+        <li><a href="#"><img src="./images/left01.png"></a></li>
+        <li><a href="#"><img src="./images/left02.png" /></a></li>
+        <li><a href="#"><img src="./images/left03.png" /></a></li>
+        <li><a href="#"><img src="./images/left04.png" /></a></li>
+      </ul>
+    </div>
+    <!-- 中间 -->
+    <div class="center"><a href="#"><img src="./images/center.png" /></a></div>
+    <!-- 右侧 -->
+    <div class="right">
+      <ul>
+        <li><a href="#"><img src="./images/right01.png" /></a></li>
+        <li><a href="#"><img src="./images/right02.png" /></a></li>
+        <li><a href="#"><img src="./images/right03.png" /></a></li>
+        <li><a href="#"><img src="./images/right04.png" /></a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+
+</html>

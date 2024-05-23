@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            display: flex;
+            /* 主轴两侧对齐 */
+            justify-content: space-between;
+            /* 侧轴都移动 */
+            /* align-items: center; */
+            width: 600px;
+            height: 600px;
+            border: 1px solid #000;
+            margin: 100px auto;
+        }
+
+        .box div {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            border-radius: 50%;
+        }
+
+        .box div:nth-child(2) {
+            /* 只移动某一个盒子 给子盒子添加 */
+            align-self: center;
+        }
+
+        .box div:nth-child(3) {
+            /* 只移动自己 */
+            align-self: flex-end;
+        }
+    </style>
+</head>
+
+<body>
+<div class="box">
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+</body>
+
+</html>
