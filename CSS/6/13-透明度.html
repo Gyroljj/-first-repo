@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      background: url(./images/huawei.jpg);
+    }
+
+    .box1 {
+      width: 200px;
+      height: 200px;
+      background-color: pink;
+      /* 盒子包括内容都是半透明 */
+      /* 0 是完全透明 */
+      /* 1 是完全不透明 */
+      opacity: 0.2;
+    }
+
+    .box2 {
+      width: 200px;
+      height: 200px;
+      /* 背景半透明只是盒子背景透明，而里面的内容不透明 */
+      background-color: rgba(0, 0, 0, 0.3);
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box1">
+    里面的文字也会半透明
+  </div>
+  <div class="box2">
+    里面的文字不半透明
+  </div>
+</body>
+
+</html>
