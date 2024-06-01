@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./fonts/iconfont.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    .banner {
+      position: relative;
+      /* 溢出隐藏 */
+      /* overflow: hidden; */
+      width: 564px;
+      height: 315px;
+      margin: 100px auto;
+      border-radius: 15px;
+    }
+
+
+    /* 1. 鼠标经过谁（最大的盒子）， 然后谁（左右按钮）显示 */
+
+    /* 鼠标经过banner， 然后是banner里面的孩子 左右按钮显示 */
+    .banner:hover .prev,
+    .banner:hover .next {
+      /* 显示 */
+      display: block;
+    }
+
+    .banner ul li {
+      width: 564px;
+      height: 315px;
+    }
+
+    .banner ul li img {
+      width: 100%;
+    }
+
+    /* 把左侧和右侧公共的部分拿出来  并集选择器  和 的意思 */
+    .prev,
+    .next {
+      /* 隐藏元素 */
+      display: none;
+      /* 1. 加了绝对定位，具备行内块的特性 */
+      position: absolute;
+      top: 50%;
+      /* transform: translate(x, y); */
+      /* transform: translate(0, -50%); */
+      transform: translateY(-50%);
+      width: 20px;
+      height: 30px;
+      color: #fff;
+      text-decoration: none;
+      line-height: 30px;
+      background-color: rgba(0, 0, 0, .4);
+    }
+
+    .prev {
+      left: 0;
+      text-align: left;
+      /* 圆角 左上  右上  右下  左下 */
+      border-radius: 0 15px 15px 0;
+    }
+
+    .next {
+      right: 0;
+      text-align: right;
+      /* 圆角 左上  右上  右下  左下 */
+      border-radius: 15px 0 0 15px;
+    }
+
+    .banner ol {
+      display: flex;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 20px;
+      background-color: rgba(255, 255, 255, .4);
+      border-radius: 6px;
+    }
+
+    .banner ol li {
+      width: 8px;
+      height: 8px;
+      background-color: #fff;
+      margin: 3px;
+      border-radius: 50%;
+      /* 鼠标变成小手 */
+      cursor: pointer;
+    }
+
+    .banner .active {
+      background-color: orangered;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="banner">
+    <!-- 图片内容 -->
+    <ul>
+      <li>
+        <a href="#">
+          <img src="./images/tb.jpg" alt="">
+        </a>
+      </li>
+    </ul>
+
+    <!-- 左按钮  不会跳到顶部 -->
+    <a href="javascript:;" class="prev">
+      <i class="iconfont icon-arrow-right-bold"></i>
+    </a>
+    <!-- 右按钮  不会跳到顶部 -->
+    <a href="javascript:;" class="next">
+      <i class="iconfont icon-arrow-right-bold"></i>
+    </a>
+
+    <ol>
+      <li class="active"></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ol>
+  </div>
+
+</body>
+
+</html>

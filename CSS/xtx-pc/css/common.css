@@ -1,0 +1,282 @@
+/*公共的样式  页面头部和底部*/
+.wrapper {
+    width: 1240px;
+    margin: 0 auto;
+}
+
+/*变量*/
+:root {
+    /*灰色变量*/
+    --hui: #a1a1a1;
+    /*绿色*/
+    --lv: #00BE9A;
+}
+
+/*头部开始*/
+
+/*快捷导航栏*/
+.shortcut {
+    height: 52px;
+    background-color: #333;
+}
+
+.shortcut .wrapper {
+    display: flex;
+    line-height: 52px;
+    /*让盒子里面的ul走到右侧*/
+    justify-content: flex-end;
+}
+
+.shortcut .wrapper ul {
+    display: flex;
+}
+
+.shortcut li a {
+    font-size: 14px;
+    color: #fff;
+    padding: 0 15px;
+    border-right: 1px solid #999999;
+}
+
+.shortcut li a i {
+    font-size: 20px;
+    vertical-align: bottom;
+}
+
+.shortcut li:last-child a {
+    border-right: none;
+}
+
+.shortcut li:hover a {
+    /*变量绿色*/
+    color: var(--lv);
+}
+
+/*header模块*/
+.header {
+    display: flex;
+    padding: 22px 0;
+}
+
+.logo {
+    width: 200px;
+    height: 88px;
+}
+
+.logo a {
+    display: block;
+    height: 88px;
+    background: url(../images/logo.png);
+    /*1.隐藏文字*/
+    /*font-size: 0;*/
+    /*2.隐藏文字 淘宝、小米方法*/
+    text-indent: -9999em;
+    overflow: hidden;
+}
+
+/*nav*/
+.header .nav ul {
+    display: flex;
+    margin: 23px 0 0 41px;
+}
+
+.header .nav ul li a {
+    display: block;
+    line-height: 42px;
+    margin-right: 42px;
+}
+
+.header .nav ul li a:hover {
+    color: var(--lv);
+    border-bottom: 2px solid var(--lv);
+}
+
+/*search*/
+.search {
+    position: relative;
+    width: 220px;
+    height: 40px;
+    margin-top: 22px;
+}
+
+.search i {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    color: #ccc;
+    /*鼠标变成小手*/
+    cursor: pointer;
+}
+
+.search input {
+    width: 170px;
+    height: 40px;
+    padding-left: 28px;
+    border-bottom: 1px solid #F4F4F4;
+    transition: all .3s;
+}
+
+/*修改 placeholder 里面的文字样式*/
+.search input::placeholder {
+    color: #ccc;
+}
+
+.search input:focus {
+    width: 220px;
+}
+
+/*car*/
+.car {
+    position: relative;
+    margin: 16px 0 0 10px;
+}
+
+.car i {
+    font-size: 36px;
+}
+
+.car span {
+    position: absolute;
+    top: 3px;
+    left: 20px;
+    font-size: 12px;
+    padding: 0 8px;
+    background-color: #E26237;
+    color: #fff;
+    border-radius: 10px;
+}
+
+/*头部结束*/
+
+/*底部开始*/
+.footer {
+    height: 582px;
+    background-color: #F5F5F5;
+}
+
+/*服务*/
+.service {
+    padding: 60px 0;
+    border-bottom: 1px solid #E8E8E8;
+}
+
+.service ul {
+    display: flex;
+    /*缝隙相同*/
+    justify-content: space-evenly;
+}
+
+.service li {
+    display: flex;
+    justify-content: space-between;
+    /*width: 190px;*/
+    height: 58px;
+}
+
+.service li h5 {
+    overflow: hidden;
+    width: 58px;
+    height: 58px;
+    margin-right: 20px;
+    background: url("../images/sprite.png");
+    text-indent: -9999em;
+    transition: all .3s;
+}
+
+.service li p {
+    line-height: 58px;
+    font-size: 28px;
+}
+
+.service li:nth-child(2) h5 {
+    background-position: 0 -58px;
+}
+
+.service li:nth-child(2) h5:hover {
+    background-position: 0 -116px;
+}
+
+.service li:nth-child(3) h5 {
+    background-position: 0 -116px;
+}
+
+.service li:nth-child(4) h5 {
+    background-position: 0 -174px;
+}
+
+/*帮助*/
+.help {
+    display: flex;
+    justify-content: space-between;
+    height: 300px;
+    padding-top: 60px;
+}
+
+.help .left {
+    display: flex;
+}
+
+.help .left dl {
+    margin-right: 80px;
+}
+
+.help .left dt {
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+
+.help .left dd {
+    margin-bottom: 10px;
+}
+
+.help .left dd a {
+    color: var(--hui);
+}
+
+.help .left dd a:hover {
+    text-decoration: underline;
+}
+
+.help .left dd i {
+    color: var(--lv);
+}
+
+.help .right ul {
+    display: flex;
+}
+
+.help .right li:last-child {
+    margin-left: 55px;
+}
+
+.help .right li img {
+    width: 120px;
+    height: 120px;
+}
+
+.help .right p {
+    margin-top: 10px;
+    color: var(--hui);
+    text-align: center;
+}
+
+.copyright {
+    text-align: center;
+    line-height: 30px;
+    color: var(--hui);
+}
+
+.copyright a {
+    color: var(--hui);
+}
+
+.copyright a:hover {
+    color: var(--lv);
+}
+
+.copyright span {
+    margin: 0 5px;
+}
+
+/*底部结束*/

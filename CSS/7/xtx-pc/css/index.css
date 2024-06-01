@@ -1,0 +1,412 @@
+/*banner开始*/
+.banner {
+    height: 500px;
+    background-color: #f5f5f5;
+}
+
+.banner .wrapper {
+    position: relative;
+    /*溢出隐藏*/
+    overflow: hidden;
+    height: 500px;
+}
+
+.banner .wrapper > ul {
+    display: flex;
+    width: 300%;
+    /*width: 3720px;*/
+}
+
+.banner .circle {
+    display: flex;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.banner .circle li {
+    width: 22px;
+    height: 22px;
+    padding: 4px;
+    margin-left: 10px;
+    border-radius: 50%;
+    /*鼠标变成小手*/
+    cursor: pointer;
+}
+
+.banner .circle li::after {
+    content: "";
+    display: block;
+    width: 14px;
+    height: 14px;
+    background-color: rgba(255, 255, 255, .5);
+    border-radius: 50%;
+}
+
+.banner .circle .active::after {
+    content: "";
+    /*转换块级才有大小*/
+    display: block;
+    width: 14px;
+    height: 14px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+
+.banner .circle .active {
+    background-color: rgba(255, 255, 255, .5);
+}
+
+.banner .subnav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 500px;
+    background-color: rgba(0, 0, 0, .42);
+}
+
+.banner .subnav li {
+    position: relative;
+    height: 50px;
+    padding-left: 29px;
+    line-height: 50px;
+}
+
+.banner .subnav li::after {
+    /*到 iconfont.css 里面去复制*/
+    content: "\e687";
+    position: absolute;
+    top: 0;
+    right: 29px;
+    color: #fff;
+    /*声明字体图标的字体*/
+    font-family: iconfont;
+}
+
+.banner .subnav li:hover {
+    background-color: var(--lv);
+}
+
+.banner .subnav li a {
+    color: #fff;
+    font-size: 14px;
+}
+
+.banner .subnav li a:first-child {
+    font-size: 16px;
+    margin-right: 5px;
+}
+
+/*新鲜好物*/
+.hd {
+    display: flex;
+    justify-content: space-between;
+    /*侧轴垂直居中*/
+    align-items: center;
+    padding: 40px 0 30px;
+
+}
+
+.hd h2 {
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.hd h2 span {
+    margin-left: 30px;
+    font-size: 16px;
+    color: var(--hui);
+}
+
+.hd .all {
+    color: var(--hui);
+}
+
+.hd .all:hover {
+    color: var(--lv);
+}
+
+.bd ul {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bd ul li {
+    width: 304px;
+    height: 404px;
+    background-color: #EEF9F4;
+    text-align: center;
+    transition: all .3s;
+}
+
+.bd ul li:hover {
+    margin-top: -5px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, .42);
+}
+
+.bd ul li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.bd ul li .pic {
+    width: 304px;
+    height: 304px;
+    background-color: skyblue;
+}
+
+.bd ul li h4 {
+    margin: 18px 15px 9px;
+    font-size: 20px;
+}
+
+.bd ul li p {
+    color: #AA2113;
+    font-size: 18px;
+}
+
+.bd ul li p span {
+    font-size: 22px;
+}
+
+.recommend .bd ul li {
+    background-color: #fff;
+}
+
+.recommend .bd ul li p {
+    font-size: 16px;
+    color: var(--hui);
+}
+
+/*热门品牌*/
+.brand {
+    margin-top: 60px;
+    margin-bottom: 20px;
+    height: 468px;
+    background-color: #f5f5f5;
+}
+
+.brand .hd {
+    position: relative;
+}
+
+.brand .btn {
+    display: flex;
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+}
+
+.brand .btn a {
+    width: 20px;
+    height: 20px;
+    background-color: #e2e2e2;
+    margin-left: 12px;
+    text-align: center;
+    line-height: 20px;
+    color: #fff;
+}
+
+.brand .btn .btnright {
+    background-color: var(--lv);
+}
+
+.brand .bd li {
+    width: 244px;
+    height: 306px;
+}
+
+.hd ul {
+    display: flex;
+    margin-right: 65px;
+}
+
+.hd ul li {
+    margin-right: 6px;
+}
+
+.fresh .hd h2 {
+    flex: 1;
+}
+
+.hd ul li a {
+    padding: 0 7px;
+}
+
+.hd ul li a:hover {
+    background-color: var(--lv);
+    color: #fff;
+}
+
+/*内容区域*/
+
+.fresh .content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.fresh .content .left {
+    width: 248px;
+    height: 610px;
+
+}
+
+.fresh .content .right {
+    width: 968px;
+    height: 610px;
+}
+
+.fresh .content .right ul {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.fresh .content .right ul li {
+    position: relative;
+    width: 242px;
+    height: 305px;
+    /*颜色透明 transparent*/
+    border: 2px solid transparent;
+    transition: all .3s;
+    overflow: hidden;
+}
+
+.fresh .content .right ul li:hover {
+    border-color: var(--lv);
+}
+
+.fresh .content .right ul li > a {
+    display: block;
+    height: 100%;
+    padding: 10px 21px 0;
+}
+
+.fresh .content .pic {
+    width: 200px;
+    height: 180px;
+}
+
+.fresh .content .info {
+    margin: 10px 0 7px;
+    line-height: 19px;
+}
+
+.fresh .content .info h5 {
+    font-size: 16px;
+}
+
+.fresh .content .price {
+    color: #AF2F22;
+}
+
+.fresh .content .price span {
+    font-size: 22px;
+}
+
+.fresh .content .find {
+    position: absolute;
+    bottom: 0;
+    transform: translateY(100%);
+    width: 242px;
+    height: 84px;
+    background-color: var(--lv);
+    padding: 15px 55px 0;
+    text-align: center;
+    transition: all .3s;
+}
+
+.fresh .content .right li:hover .find {
+    transform: translateY(0);
+}
+
+.fresh .content .find h4 {
+    font-size: 18px;
+    color: #fff;
+    padding-bottom: 4px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.11);
+}
+
+.fresh .content .find a {
+    font-size: 13px;
+    color: #fff;
+}
+
+.fresh .content .find a i {
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+/*最新专题*/
+.news {
+    margin-top: 60px;
+    margin-bottom: 40px;
+}
+
+.news .bd ul li {
+    width: 405px;
+    height: 355px;
+    background-color: #fff;
+}
+
+.news .bd .pic {
+    position: relative;
+    width: 405px;
+    height: 288px;
+}
+
+.news .pic .txt {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 405px;
+    height: 90px;
+    padding: 20px 15px 0;
+    text-align: left;
+    /*渐变色 从红色到绿色 竖着*/
+    /*background-image: linear-gradient(red, green);*/
+    /*background-image: linear-gradient(transparent, rgba(0, 0, 0, .6));*/
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .6));
+}
+
+
+.news .txt .left h5 {
+    font-size: 20px;
+    color: #fff;
+    margin-bottom: 6px;
+}
+
+.news .txt .left p {
+    font-size: 16px;
+    color: #fff;
+}
+
+.news .txt .right {
+    width: 80px;
+    height: 25px;
+    background-color: #fff;
+    margin-top: 15px;
+    color: #AA2113;
+    line-height: 25px;
+    text-align: center;
+}
+
+.news .bd .desc {
+    display: flex;
+    justify-content: space-between;
+    padding: 23px 15px 0;
+}
+
+.news .bd .desc p span {
+    color: #666666;
+    font-size: 14px;
+
+}
+
+.news .bd .desc p:first-child span {
+    margin-right: 20px;
+}
