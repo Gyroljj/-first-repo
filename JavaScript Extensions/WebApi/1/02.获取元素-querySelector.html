@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>querySelector</title>
+    <style>
+      /* .box {} */
+      /* .nav li:last-child {} */
+      /* :nth-child(3) */
+      /* .nav li */
+
+      /* 属性选择器  input 用*/
+
+      /* [属性名=属性值] {} */
+      /* input[value=哈哈哈] {
+      background-color: #8df;
+    } */
+
+      /* 获取焦点 */
+      :focus {
+        color: red;
+      }
+
+      /* 单选或多选的默认选中项 */
+      input:checked {
+        width: 80px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <input type="text" value="哈哈哈" />
+    <input type="text" value="" />
+    <input type="radio" checked />
+
+    <div class="box">我是一个盒子</div>
+    <p class="box tit">
+      我是一个p标签
+      <span>123</span>
+    </p>
+    <div>---------------------</div>
+    <ul class="nav">
+      <li>第一个li</li>
+      <li>第二个li</li>
+      <li>第三个li</li>
+    </ul>
+    <script>
+      // 1. 通过css选择器获取元素
+      // document.querySelector('css选择器')
+      const box = document.querySelector(".box");
+      const p = document.querySelector("p");
+      const tit = document.querySelector(".box.tit");
+      const span = document.querySelector(".tit span");
+      console.log(tit); // 只能单纯输出内容
+      console.dir(box); // 用来输出对象格式数据
+      console.log("---------------------------");
+      // 获取最后一个li方法
+      const lastLi = document.querySelector(".nav li:last-child");
+      console.log(lastLi);
+    </script>
+  </body>
+</html>

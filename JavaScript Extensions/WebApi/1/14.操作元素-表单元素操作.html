@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="text">
+  <br>
+  <input type="password" value="123456">
+  <br>
+  <input type="radio"> 男
+  <br>
+  <button>按钮</button>
+
+  <br>
+  <select name="" id="">
+    <option value="" selected>北京</option>
+    <option value="">上海</option>
+  </select>
+  <script>
+    // 操作表单属性
+    // √ 1. value属性 => 收集用户输入的值 
+    // const uname = document.querySelector('[type="text"]')
+    // 获取  对象.value
+    // 设置 对象的value属性 对象.value = 值
+    // uname.value = '狗哥'
+
+    // √ 2. type属性 => 规定input的类型
+    // const pwd = document.querySelector('[value="123456"]')
+    // console.log(pwd.type)
+    // pwd.type = 'text'
+
+    // √ 3. 修改 单选或复选按钮的选中 checked
+    // const radio = document.querySelector('[type="radio"]')
+    // 获取
+    // console.log(radio.checked)
+    // 设置 false就是不选中  true就是选中
+    // radio.checked = true
+
+    // √ 4. 禁止使用表单按钮 => 按钮类
+    // const btn = document.querySelector('button')
+    // 获取
+    // console.log(btn.disabled)
+    // 设置
+    // btn.disabled = false
+
+    // 5. 判断当前option是不是选中项
+    const option = document.querySelector('select option:last-child')
+    console.log(option.selected)
+  </script>
+</body>
+
+</html>

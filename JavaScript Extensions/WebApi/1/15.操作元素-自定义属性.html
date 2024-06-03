@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div data-index="0" data-id="abc">你好</div>
+  <script>
+    // 自定义属性 => 保存某些数据,后续使用
+    // 设置 => 在标签上 使用 data-名字="值"
+    // 获取 => 对象.dataset => 对象集合
+    // 对象.属性名 就能获取到属性值
+    const div = document.querySelector('div')
+    console.log(div.dataset) // { index: 0, id: 'abc' }
+    console.log(div.dataset.index)
+  </script>
+</body>
+
+</html>

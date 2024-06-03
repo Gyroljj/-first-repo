@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      width: 200px;
+      height: 200px;
+      color: #8df;
+      font-size: 30px;
+      border: 1px solid red;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="title">文字描述</div>
+  <script>
+    // 需求: 通过 className属性 的形式设置样式
+    const box = document.querySelector('div')
+    box.className = 'title box'
+    // 原因: 如果我们要操作很多样式,style就不方便了
+    // 问题: 用新值换旧值
+    // 场景: 获取类名, 但是不多
+    console.log(box.className)
+  </script>
+</body>
+
+</html>

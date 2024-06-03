@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    img {
+      width: 800px;
+    }
+  </style>
+</head>
+
+<body>
+  <img src="./images/1.png" alt="这是波仔">
+  <script>
+    // 设置常用属性 对象.属性 = 值
+    const img = document.querySelector('img')
+    // 1. 获取属性值
+    // console.log(img.src)
+    // console.log(img.alt)
+    // 2. 设置属性值
+    // img.src = './images/2.png'
+
+    // 案例-随机跟换图片地址
+    // 1. 定义数组,保存图片地址
+    const arr = [
+      './images/1.png',
+      './images/2.png',
+      './images/3.png',
+      './images/4.png'
+    ]
+    // 2. 随机获取一个图片数组的索引
+    const random = Math.floor(Math.random() * arr.length)
+    // 3. 根据索引获取数组元素
+    console.log(arr[random])
+    // 4. 更换 img 标签的 src 属性值
+    img.src = arr[random]
+  </script>
+</body>
+
+</html>

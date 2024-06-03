@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div>
+    我是div
+    <em>我是狗哥</em>
+  </div>
+  <script>
+    // 操作元素内容属性
+    const box = document.querySelector('div')
+    // 1. innerText
+    // 获取内容 => 只会获取文本 
+    console.log(box.innerText)
+    // 设置内容
+    // box.innerText = '新值'
+    // box.innerText = '<strong>新值</strong>'
+    // 注意: 该属性 不解析标签(不认识), 会原样输出
+
+    // 2. innerHTML
+    // 获取内容 => 会把嵌套的标签获取到
+    console.log(box.innerHTML)
+    // 设置内容
+    // box.innerHTML = '新值'
+    // box.innerHTML = '<strong>新值</strong>'
+    // 注意: 该属性 解析标签,会把字符串的标签解析成真的标签
+  </script>
+</body>
+
+</html>

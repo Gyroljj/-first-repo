@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #box {
+        color: red;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 通过id获取 -->
+    <!-- id是唯一的 js中 会把id当做唯一标识符 -->
+    <div id="box">第1个div</div>
+    <!-- 通过标签名获取 -->
+    <span>我是span1</span>
+    <span>我是span2</span>
+    <!-- 通过类名获取 -->
+    <div class="nav">nav1</div>
+    <div class="nav">nav2</div>
+    <!-- 通过name名获取 -->
+    <input type="text" name="uname" id="" />
+    <script>
+      // 1. 通过id获取元素 document.getElementById('id')
+      // const box = document.getElementById('box')
+      // console.log(box)
+      // 2. 通过类名获取元素 document.getElementsByClassName()
+      // const navs = document.getElementsByClassName('nav')
+      // console.log(navs)
+      // 3. 通过标签名获取元素  document.getElementsByTagName()
+      // const spans = document.getElementsByTagName('span')
+      // console.log(spans)
+      // 4. 通过 name属性获取元素 document.getElementsByName()
+      const uname = document.getElementsByName("uname");
+      console.log(uname);
+    </script>
+  </body>
+</html>

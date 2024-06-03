@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>02.获取元素-querySelectorAll</title>
+</head>
+
+<body>
+  <ul>
+    <li>我是第01个li</li>
+    <li>我是第02个li</li>
+    <li>我是第03个li</li>
+  </ul>
+  <ol>
+    <li>我是第01个li</li>
+    <li>我是第02个li</li>
+    <li>我是第03个li</li>
+  </ol>
+  <div>我是div</div>
+  <script>
+    // 获取多个元素 document.querySelectorAll('css选择器')
+    // 需求: 所有的 ol 的后代 li  => ol li
+    const lis = document.querySelectorAll('ol li')
+    console.log(lis) // 伪数组
+    // All 方法获取到的是一个伪数组 => 具备数组的长度和索引
+    // 所以可以通过循环遍历的方式拿到每一个,但是不能使用数组的方法 push()
+    for (let i = 0; i < lis.length; i++) {
+      console.log(lis[i])
+    }
+    // lis.push('3') 但是不能使用数组的方法 push()
+    // const lis1 = document.querySelectorAll('li')
+    // console.log(lis1)
+    const div = document.querySelectorAll('div')
+    console.log(div)
+    // 注意: 如果获取的元素只有一个,那么querySelectorAll 获取的也是伪数组形式
+  </script>
+</body>
+
+</html>

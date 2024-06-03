@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .nav {
+        width: 300px;
+        height: 300px;
+        background-color: #8df;
+        color: red;
+      }
+
+      .box {
+        font-size: 30px;
+        text-align: center;
+        line-height: 300px;
+        border: 10px solid pink;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="nav">文本描述</div>
+    <script>
+      // 需求: 利用 classList 追加 删除 切换类名
+      const div = document.querySelector("div");
+      // 1. 追加类名 => 在原类名的基础上,追加新类名
+      div.classList.add("box");
+      // 2. 删除类名
+      div.classList.remove("nav");
+      // 3. 切换类名 => 有则删除, 没有则添加
+      div.classList.toggle("nav");
+      // 4. 拓展 => 判断是否存在某个类名 =>
+      //    会返回一个布尔值, true 存在类名, false 不存在类名
+      console.log(div.classList.contains("abc")); // false
+      console.log(div.classList.contains("nav")); // true
+      // 注意: 他不会影响已经存在的类名.他是在原来的基础上添加
+    </script>
+  </body>
+</html>
