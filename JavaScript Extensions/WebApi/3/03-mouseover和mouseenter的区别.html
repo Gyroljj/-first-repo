@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mouseover和mouseenter的区别</title>
+    <style>
+      .father {
+        overflow: hidden;
+        width: 400px;
+        height: 400px;
+        background-color: pink;
+      }
+
+      .son {
+        width: 200px;
+        height: 200px;
+        margin: 50px auto;
+        background-color: purple;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="father">
+      <div class="son"></div>
+    </div>
+    <script>
+      const father = document.querySelector(".father");
+      const son = document.querySelector(".son");
+
+      // 1. 鼠标进入事件 mouseover => 存在事件冒泡
+      // father.addEventListener('mouseover', function () {
+      //   console.log('鼠标进入 father')
+      // })
+      // son.addEventListener('mouseover', function () {
+      //   console.log('鼠标进入 son')
+      // })
+
+      // 2. 鼠标进入事件 mouseenter  => 不存在事件冒泡(使用较多)
+      father.addEventListener("mouseenter", function () {
+        console.log("鼠标进入 father");
+      });
+      son.addEventListener("mouseenter", function () {
+        console.log("鼠标进入 son");
+      });
+    </script>
+  </body>
+</html>

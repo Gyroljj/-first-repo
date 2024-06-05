@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>评论回车发布</title>
+    <style>
+      .wrapper {
+        min-width: 400px;
+        max-width: 800px;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .avatar {
+        overflow: hidden;
+        width: 48px;
+        height: 48px;
+        margin-right: 20px;
+        border-radius: 50%;
+        background: url(./images/avatar.jpg) no-repeat center / cover;
+      }
+
+      .wrapper textarea {
+        flex: 1;
+        height: 30px;
+        padding: 10px;
+        border-color: transparent;
+        outline: none;
+        resize: none;
+        background: #f5f5f5;
+        border-radius: 4px;
+        transition: all 0.5s;
+      }
+
+      .wrapper textarea:focus {
+        height: 50px;
+        border-color: #e4e4e4;
+        background: #fff;
+      }
+
+      .wrapper button {
+        width: 70px;
+        margin-left: 10px;
+        border: none;
+        color: #fff;
+        background: #00aeec;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .wrapper .total {
+        margin-right: 80px;
+        margin-top: 5px;
+        color: #999;
+        opacity: 0;
+        transition: all 0.5s;
+      }
+
+      .list {
+        display: flex;
+        min-width: 400px;
+        max-width: 800px;
+      }
+
+      .list .item {
+        display: flex;
+        width: 100%;
+      }
+
+      .list .item .info {
+        flex: 1;
+        border-bottom: 1px dashed #e4e4e4;
+        padding-bottom: 10px;
+      }
+
+      .list .item p {
+        margin: 0;
+      }
+
+      .list .item .name {
+        color: #fb7299;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .list .item .text {
+        padding: 10px 0;
+        color: #333;
+        font-size: 13px;
+      }
+
+      .list .item .time {
+        color: #999;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <i class="avatar"></i>
+      <textarea
+        id="tx"
+        placeholder="发一条友善的评论"
+        rows="2"
+        maxlength="200"
+      ></textarea>
+      <button>发布</button>
+    </div>
+    <div class="wrapper">
+      <span class="total">0/200字</span>
+    </div>
+    <div class="list">
+      <div class="item" style="display: none">
+        <i class="avatar"></i>
+        <div class="info">
+          <p class="name">清风徐来</p>
+          <p class="text">
+            大家都辛苦啦，感谢各位大大的努力，能圆满完成真是太好了[笑哭][支持]
+          </p>
+          <p class="time">2099-10-10 20:29:21</p>
+        </div>
+      </div>
+    </div>
+    <script>
+      // 需求: 文本域获取到焦点显示统计字数,失去焦点隐藏统计字数
+      // 1. 获取元素 textarea id="tx"
+      const tx = document.querySelector("#tx");
+      const total = document.querySelector(".total");
+      // 2. 给元素注册事件 获取焦点事件
+      tx.addEventListener("focus", function () {
+        // 2.1 显示统计字数的盒子 opacity: 0;
+        total.style.opacity = 1;
+      });
+      // 3. 给元素注册事件 失去焦点事件
+      tx.addEventListener("blur", function () {
+        // 3.1 隐藏统计字数的盒子 opacity: 0;
+        total.style.opacity = 0;
+      });
+      // 4. 统计字数 input文本事件
+      tx.addEventListener("input", function () {
+        // 字符串也有长度,我们可以通过 字符串.length属性拿到字符串的长度
+        // console.log(tx.value)
+        // trim() 方法能够去除 字符串两端的空格
+        console.log(tx.value.trim().length);
+        // 拿到长度后,替换total的文字
+        total.innerHTML = `${tx.value.trim().length}/200字`;
+      });
+    </script>
+  </body>
+</html>

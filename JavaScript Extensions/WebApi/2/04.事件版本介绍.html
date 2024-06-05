@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <button>按钮</button>
+    <script>
+      // 事件版本介绍
+      const btn = document.querySelector("button");
+      // 1. L0 事件源.on事件类型 = 事件处理函数
+      // 注意: 他会覆盖同名事件
+      // btn.onclick = function () {
+      //   console.log('狗哥无敌')
+      // }
+      // btn.onclick = function () {
+      //   console.log('狗哥666')
+      // }
+      // let num = 10
+      // num = 20
+
+      // 2. L2 事件监听
+      // 不会覆盖同名事件
+      btn.addEventListener("click", function () {
+        console.log("狗哥无敌");
+      });
+      btn.addEventListener("click", function () {
+        console.log("狗哥666");
+      });
+    </script>
+  </body>
+</html>

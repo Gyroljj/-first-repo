@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="text">
+  <script>
+    const inp = document.querySelector('input')
+    // 1. input 事件 文本事件 => 输入框的value发生改变就会触发
+    inp.addEventListener('input', function () {
+      // console.log('我触发了')
+      console.log(inp.value)
+    })
+    // 2. 键盘事件
+    // 2.1 键盘按下 => 会忽略最后一次输入值
+    inp.addEventListener('keydown', function () {
+      // console.log('按下')
+      // console.log(inp.value)
+    })
+    // 2.2 键盘弹起
+    inp.addEventListener('keyup', function () {
+      // console.log('弹起')
+      console.log(inp.value)
+    })
+  </script>
+</body>
+
+</html>

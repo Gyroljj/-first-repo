@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .father {
+      position: absolute;
+      overflow: hidden;
+      width: 500px;
+      height: 500px;
+      padding: 10px;
+      border: 1px solid #000;
+      margin: 50px auto;
+      background-color: #8df;
+    }
+
+    .son {
+      width: 300px;
+      height: 300px;
+      margin: 50px auto;
+      background-color: #ff8500;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="father">
+    <div class="son"></div>
+  </div>
+  <script>
+    // 需求: 要获取到 father的宽度和高度
+    const father = document.querySelector('.father')
+    // 1. offset系列获取宽高 => offsetWidth offsetHeight(包含padding和border)
+    console.log(father.offsetWidth + '  offsetWidth')
+    console.log(father.offsetHeight + '  offsetHeight')
+    // 2. offset系列获取位置 => offsetLeft offsetTop
+    //   如果父级有定位,则根据父级获取
+    //   如果父级没定位,则根据浏览器获取
+    console.log(father.offsetLeft + '  父级的offsetLeft')
+    console.log(father.offsetTop + ' 父级的offsetTop')
+    // 获取子元素的位置 => 跟父级有没有定位有关系
+    const son = document.querySelector('.son')
+    console.log(son.offsetLeft + '  子级的offsetLeft')
+    console.log(son.offsetTop + '   子级的offsetTop')
+
+
+    /*
+      获取位置
+      scrollLeft  和 scrollTop	  页面/元素被卷去的头部和左侧（滚动），可读写
+      offsetLeft  和 offsetTop	  元素位置距离定位父级左上距离，只读
+
+      获取大小
+      clientWidth 和 clientHeight	元素大小，不包含border、margin等，只读
+      offsetWidth 和 offsetHeight	元素大小，包含border、padding等，只读
+    */
+  </script>
+</body>
+
+</html>

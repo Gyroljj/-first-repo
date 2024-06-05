@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <button>按钮</button>
+    <script>
+      // 粗略的规则: 谁调用函数, this指向谁
+      /* 
+      1. 普通函数和间歇函数中的this指向 window
+      2. 对象方法中的this指向 这个对象
+      3. 事件函数中的this指向 事件源
+    */
+      // 1. 如果是全局的函数调用那么 this指向window
+      // function fn() {
+      //   console.log(this)
+      // }
+      // window.fn()
+      // 2. 对象中的方法 => 方法中的this指向了这个对象
+      // const obj = {
+      //   uname: '狗哥',
+      //   sing: function () {
+      //     console.log(this.uname + '算了')
+      //   }
+      // }
+      // obj.sing()
+      // 3. 间歇函数  => this指向window
+      // window.setInterval(function () {
+      //   console.log(this)
+      // }, 1000)
+      // 4. 事件 => this指向 事件源
+      const btn = document.querySelector("button");
+      btn.addEventListener("click", function () {
+        console.log(this);
+      });
+    </script>
+  </body>
+</html>

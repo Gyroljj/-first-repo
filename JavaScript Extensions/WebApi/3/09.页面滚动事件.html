@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        min-height: 3000px;
+      }
+
+      div {
+        width: 300px;
+        height: 100px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      1
+      <br />
+      1
+      <br />
+      1
+      <br />
+      1
+      <br />
+      1
+      <br />
+      1
+      <br />
+      1
+      <br />
+      1
+      <br />
+      1
+      <br />
+      1
+      <br />
+    </div>
+    <script>
+      // 1. 页面滚动事件 (window)
+      window.addEventListener("scroll", function () {
+        // document.documentElement.scrollTop = 1500
+        // console.log(1)
+        // document.documentElement => html标签
+        // scrollTop / scrollLeft 获取页面卷曲的左侧或头部
+        const top = document.documentElement.scrollTop;
+        console.log(top);
+      });
+      // // 2. 给元素添加滚动事件
+      // const div = document.querySelector('div')
+      // div.addEventListener('scroll', function () {
+      //   console.log(2)
+      // })
+    </script>
+  </body>
+</html>

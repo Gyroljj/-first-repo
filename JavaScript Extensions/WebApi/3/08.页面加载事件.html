@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>页面加载</title>
+    <script>
+      // 1. 页面加载事件: load 当页面所有的资源加载完毕后, 触发这个事件
+      // window.addEventListener('load', function () {
+      //   // 需求: 获取div设置内容为: 你好狗哥
+      //   const div = document.querySelector('div')
+      //   div.innerHTML = '你好狗哥'
+      //   // Cannot set properties of null (setting 'innerHTML')
+      //   // 不能设置null的innerHTML => 错误点: 元素没有获取到
+      // })
+
+      // 2. 页面加载事件: DOMContentLoaded `
+      // 只要HTML标签加载完成了,机会触发这个事件,他不会等待 Css Js 图片 视频音频等素材
+      document.addEventListener("DOMContentLoaded", function () {
+        // 需求: 获取div设置内容为: 你好狗哥
+        const div = document.querySelector("div");
+        div.innerHTML = "你好狗哥";
+        // Cannot set properties of null (setting 'innerHTML')
+        // 不能设置null的innerHTML => 错误点: 元素没有获取到
+      });
+    </script>
+  </head>
+
+  <body>
+    <!-- 
+    鼠标事件 => 点击 鼠标经过和离开(两套)
+    焦点事件 => 获取焦点,失去焦点
+    文本事件 => input => value值改变后就会触发
+    键盘事件 => 按下和弹起
+    其他事件 => 
+      页面加载事件
+      页面滚动事件
+      页面尺寸事件
+  -->
+
+    <div>文本</div>
+  </body>
+</html>

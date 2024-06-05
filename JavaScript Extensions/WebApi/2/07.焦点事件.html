@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <input type="text" class="one" />
+    <br />
+    <br />
+    <input type="text" class="two" />
+    <script>
+      // 焦点事件 => 输入框,文本域
+      const one = document.querySelector(".one");
+      // 1. 获取焦点事件 => 当输入框获取了焦点就会执行这个函数
+      one.addEventListener("focus", function () {
+        console.log("狗哥666");
+      });
+      // 2. 失去焦点事件 =>  当输入框失去了焦点就会执行这个函数
+      one.addEventListener("blur", function () {
+        console.log("狗哥失宠了");
+      });
+
+      // 让 two 盒子自动获取焦点
+      const two = document.querySelector(".two");
+      two.focus();
+    </script>
+  </body>
+</html>

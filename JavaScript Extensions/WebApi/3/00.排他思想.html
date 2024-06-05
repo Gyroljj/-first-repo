@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .active {
+      background-color: #8df;
+    }
+  </style>
+</head>
+
+<body>
+  <button class="active">按钮1</button>
+  <button>按钮2</button>
+  <button>按钮3</button>
+  <button>按钮4</button>
+  <button>按钮5</button>
+  <script>
+    // 排他思想 => 1. 去掉所有人的样式 2. 留下我自己的样式
+    // 我们不确定下一个到底是谁高亮
+    // 需求: 点击那个盒子,那个高亮显示
+    const btns = document.querySelectorAll('button')
+    // 循环遍历找到每一个添加点击事件
+    for (let i = 0; i < btns.length; i++) {
+      // console.log(btns[i].innerHTML)
+      btns[i].addEventListener('click', function () {
+        // console.log(btns[i], i)
+        console.log(this)
+        // 排他
+        // 1. 去掉所有人的样式
+        for (let j = 0; j < btns.length; j++) {
+          btns[j].classList.remove('active')
+        }
+        // 2. 留下我自己的样式
+        this.classList.add('active')
+      })
+    }
+  </script>
+</body>
+
+</html>

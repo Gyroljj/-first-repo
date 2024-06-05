@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <ul>
+      <li>我是第1个li</li>
+      <li>我是第2个li</li>
+      <li>我是第3个li</li>
+      <li>我是第4个li</li>
+      <li>我是第5个li</li>
+    </ul>
+    <script>
+      // 事件委托
+      //   事件绑定给父级,父级触发事件
+      const ul = document.querySelector("ul");
+      ul.addEventListener("click", function (e) {
+        // this.style.color = '#8df'
+        // 需要通过事件对象,得到事件源 e.target
+        // console.log(e.target)
+        // 通过事件源的tagName 能够拿到 当前事件源的标签名字
+        // console.log(e.target.tagName)
+        // 通过 e.target.tagName 得到事件源的标签名
+        if (e.target.tagName === "LI") {
+          // 是不是你要点击的元素,如果是,则处理,否则不处理
+          e.target.style.color = "#8df";
+        }
+      });
+    </script>
+  </body>
+</html>

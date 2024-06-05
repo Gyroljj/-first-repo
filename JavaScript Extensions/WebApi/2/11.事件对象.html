@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <input type="text" />
+    <script>
+      // 事件对象介绍
+      const inp = document.querySelector("input");
+      // 1. key属性 => 键盘事件的事件对象携带的属性
+      inp.addEventListener("keydown", function (e) {
+        // console.log(e) // 事件对象
+        // console.log(e.key) // 获取当前按下的按键的名字
+        // e.key 判断用户按下了那个键
+        if (e.key === "Enter") {
+          console.log("按下了回车键");
+        }
+        // e.targte  得到触发事件的元素
+        console.log(e.target);
+      });
+    </script>
+  </body>
+</html>

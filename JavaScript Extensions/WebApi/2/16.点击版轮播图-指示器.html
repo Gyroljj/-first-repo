@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>轮播图点击切换</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      .slider {
+        width: 560px;
+        height: 400px;
+        overflow: hidden;
+      }
+
+      .slider-wrapper {
+        width: 100%;
+        height: 320px;
+      }
+
+      .slider-wrapper img {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      .slider-footer {
+        position: relative;
+        height: 80px;
+        padding: 12px 12px 0 12px;
+        background-color: rgb(37, 41, 60);
+      }
+
+      .slider-footer .toggle {
+        display: flex;
+        position: absolute;
+        right: 0;
+        top: 12px;
+      }
+
+      .slider-footer .toggle button {
+        width: 28px;
+        height: 28px;
+        margin-right: 12px;
+        appearance: none;
+        border: none;
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .slider-footer .toggle button:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .slider-footer p {
+        margin: 0;
+        margin-bottom: 10px;
+        color: #fff;
+        font-size: 18px;
+      }
+
+      .slider-indicator {
+        display: flex;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        align-items: center;
+      }
+
+      .slider-indicator li {
+        width: 8px;
+        height: 8px;
+        margin: 4px;
+        border-radius: 50%;
+        background: #fff;
+        opacity: 0.4;
+        cursor: pointer;
+      }
+
+      .slider-indicator li.active {
+        width: 12px;
+        height: 12px;
+        opacity: 1;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="slider">
+      <!-- 图片 -->
+      <div class="slider-wrapper">
+        <img src="./images/slider01.jpg" alt="" />
+      </div>
+      <!-- 底部 => 背景颜色 -->
+      <div class="slider-footer">
+        <!-- 文本 -->
+        <p>奔涌吧，后浪！</p>
+        <!-- 指示器 => 小圆点 -->
+        <ul class="slider-indicator">
+          <li class="active"></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+        <!-- 左右按钮 -->
+        <div class="toggle">
+          <button class="prev">&lt;</button>
+          <button class="next">&gt;</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      // 1. 初始数据
+      const data = [
+        {
+          url: "./images/slider01.jpg",
+          title: "奔涌吧，后浪！",
+          color: "rgb(37, 41, 60)",
+        },
+        {
+          url: "./images/slider02.jpg",
+          title: "开启剑与雪的黑暗传说！",
+          color: "rgb(43, 35, 26)",
+        },
+        {
+          url: "./images/slider03.jpg",
+          title: "八年的怀旧游戏",
+          color: "rgb(47, 23, 100)",
+        },
+        {
+          url: "./images/slider04.jpg",
+          title: "真正的jo厨出现了！",
+          color: "rgb(36, 31, 33)",
+        },
+        {
+          url: "./images/slider05.jpg",
+          title: "让世界通过B站看到东方大国文化",
+          color: "rgb(58, 91, 216)",
+        },
+        {
+          url: "./images/slider06.jpg",
+          title: "快来分享你的寒假日常吧~",
+          color: "rgb(67, 90, 92)",
+        },
+        {
+          url: "./images/slider07.jpg",
+          title: "哔哩哔哩小年YEAH",
+          color: "rgb(166, 131, 143)",
+        },
+        {
+          url: "./images/slider08.jpg",
+          title: "一站式解决你的电脑配置问题！！！",
+          color: "rgb(53, 29, 25)",
+        },
+      ];
+      let i = 0; // 定义计数器
+      const img = document.querySelector(".slider-wrapper img"); // 图片
+      const footer = document.querySelector(".slider-footer"); // 底部
+      const p = footer.querySelector("p"); // 文本盒子
+      // 2. 点击右侧按钮, 顺序播放下一张, 无缝衔接播放
+      // 2.1 获取元素
+      const next = document.querySelector(".next");
+      // 2.2 绑定事件 事件注册
+      next.addEventListener("click", function () {
+        // 2.3 每次点击右侧按钮,让计数器++
+        i++;
+        // 2.6 无缝衔接播放
+        // if (i >= data.length) {
+        //   i = 0
+        // }
+        // i = i % data.length
+        // i = (i + data.length) % data.length
+        // 公共函数替换
+        toggle();
+      });
+
+      // 3. 点击左侧按钮, 顺序播放上一张, 无缝衔接播放
+      // 3.1 获取元素 左侧按钮 prev
+      const prev = document.querySelector(".prev");
+      // 3.2 事件监听
+      prev.addEventListener("click", function () {
+        // 3.3 点击左侧按钮 计数器 --
+        i--;
+        // 如果 i 是 0 了--完 -1
+        // if (i < 0) {
+        //   i = data.length - 1
+        // }
+        // 小技巧: i = (i + 长度) % 长度
+        // i = (i + data.length) % data.length
+        // 3.4 无缝衔接播放
+        toggle();
+      });
+
+      // 4. 开启定时器,自动轮播
+      let timerId = setInterval(function () {
+        // 自动轮播 执行的事件和next执行的事件是一样
+        // 所以我就想办法调用next的点击事件 对象.click()
+        // js调用某个元素的点击事件
+        next.click();
+      }, 1000);
+
+      // 5. 鼠标经过暂停播放, 鼠标离开继续播放
+      // 5.1 获取元素 slider
+      const slider = document.querySelector(".slider");
+      // 5.2 给元素事件监听
+      // - 鼠标经过
+      slider.addEventListener("mouseenter", function () {
+        // 5.3 停止轮播 => 关闭定时器
+        clearInterval(timerId);
+      });
+      // - 鼠标离开
+      slider.addEventListener("mouseleave", function () {
+        // 只要鼠标离开了, 就先清除之前的定时器, 我不管有没有
+        clearInterval(timerId);
+        // 5.4 开始轮播 => 开启定时器
+        timerId = setInterval(function () {
+          // 自动轮播 执行的事件和next执行的事件是一样
+          // 所以我就想办法调用next的点击事件 对象.click()
+          // js调用某个元素的点击事件
+          next.click();
+        }, 1000);
+      });
+
+      // 6. 点击小圆点切换图片
+      // 6.1 给所有的小圆点添加点击事件
+      const lis = document.querySelectorAll(".slider-indicator li");
+      for (let index = 0; index < lis.length; index++) {
+        // 添加点击事件
+        lis[index].addEventListener("click", function () {
+          // 6.2 给计数器i重新赋值
+          i = index;
+          toggle();
+        });
+      }
+
+      // 封装函数 修改页面内容
+      function toggle() {
+        // 判断 计数器阈值
+        i = (i + data.length) % data.length;
+        // 2.4 通过计数器找到对象数组中需要的对象
+        // console.log(data[i])
+        const obj = data[i];
+        // 2.5 修改页面内容
+        // 图片 操作元素属性 src
+        img.src = obj.url;
+        // 背景颜色 操作样式属性 style
+        footer.style.backgroundColor = obj.color;
+        // 文字 操作内容
+        p.innerHTML = obj.title;
+        // 小圆点
+        // - 先清除之前的
+        document.querySelector(".active").classList.remove("active");
+        // - 再给下一个添加
+        const li = document.querySelector(
+          `.slider-indicator li:nth-child(${i + 1})`
+        );
+        li.classList.add("active");
+      }
+    </script>
+  </body>
+</html>

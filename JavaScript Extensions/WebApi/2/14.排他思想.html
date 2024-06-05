@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .active {
+        background-color: #8df;
+      }
+    </style>
+  </head>
+
+  <body>
+    <button class="active">按钮1</button>
+    <button>按钮2</button>
+    <button>按钮3</button>
+    <button>按钮4</button>
+    <button>按钮5</button>
+    <script>
+      // 需求: 鼠标经过每一个小盒子, 当前盒子高亮显示
+      // 1. 先获取全部小盒子, 给每一个小盒子添加事件(遍历)
+      const btns = document.querySelectorAll("button");
+      for (let i = 0; i < btns.length; i++) {
+        // console.log(btns[i])
+        // 2. 给每一个小盒子添加鼠标经过事件
+        btns[i].addEventListener("mouseenter", function () {
+          // 3. 让当前这个小盒子高亮 this
+          // 3.1 先清除所有人的样式
+          for (let j = 0; j < btns.length; j++) {
+            btns[j].classList.remove("active");
+          }
+          // 3.2 给当前的添加
+          this.classList.add("active");
+        });
+      }
+    </script>
+  </body>
+</html>
