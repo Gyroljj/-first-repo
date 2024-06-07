@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div class="father">
+      <div class="son">文字描述</div>
+    </div>
+    <script>
+      // 通过节点的方式获取 父级元素  子元素.parentNode
+      const son = document.querySelector(".son");
+
+      // const father = document.querySelector('.father')
+      console.log(son.parentNode.parentNode);
+      // 如果有父级就能获取
+      // 如果没有父级则会获取到 null
+    </script>
+  </body>
+</html>

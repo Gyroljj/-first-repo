@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div>昨天见到狗哥了</div>
+    <script>
+      // 需求: 页面显示时间(变化的)
+      // 1. 封装函数,格式化时间日期
+      function getDatetime() {
+        // 格式化时间日期
+        const date = new Date();
+        // 格式化日期
+        const year = date.getFullYear(); // 得到年份
+        const month = date.getMonth() + 1; // 月份从0 开始
+        const day = date.getDate(); // 获取日期
+        // 格式化时间
+        let h = date.getHours();
+        let m = date.getMinutes();
+        let s = date.getSeconds();
+        // 2. 时间要补零
+        h = h < 10 ? "0" + h : h;
+        m = m < 10 ? "0" + m : m;
+        s = s < 10 ? "0" + s : s;
+        return `${year}年${month}月${day}号 ${h}:${m}:${s}`;
+      }
+      // const result = getDatetime()
+      const div = document.querySelector("div");
+      // 在外面先执行一次函数,让页面的元素变成函数的返回值
+      div.innerHTML = getDatetime();
+      // 3. 定时执行函数
+      setInterval(function () {
+        div.innerHTML = getDatetime();
+      }, 1000);
+    </script>
+  </body>
+</html>

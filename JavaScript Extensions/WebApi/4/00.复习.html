@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .father {
+      /* position: absolute; */
+      /* left: 100px; */
+      /* top: 100px; */
+      width: 500px;
+      height: 500px;
+      border: 1px solid #000;
+      padding: 10px;
+      margin: 50px;
+      background-color: #8df;
+    }
+
+    .son {
+      width: 200px;
+      height: 200px;
+      margin: 150px auto;
+      background-color: #f80;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="father">
+    <div class="son"></div>
+  </div>
+  <script>
+    // 元素尺寸属性
+    const father = document.querySelector('.father')
+    // offsetWidth offsetHeight => 包括 边框 padding
+    console.log(father.offsetWidth)
+
+    // 元素位置的属性
+    //  如果有父级有定位,则获取根据定位父级的位置
+    //  如果父级没定位,则获取向相对浏览器的位置
+    console.log(father.offsetLeft, father.offsetTop)
+
+    const son = document.querySelector('.son')
+    console.log(son.offsetLeft, son.offsetTop)
+
+    // 页面卷去的距离
+  </script>
+</body>
+
+</html>

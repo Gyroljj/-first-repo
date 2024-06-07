@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <ul>
+      <li>我是第1个li</li>
+      <li>我是第2个li</li>
+      <li>我是第3个li</li>
+      <li>我是第4个li</li>
+      <li>我是第5个li</li>
+    </ul>
+    <script>
+      // 1. 通过节点操作  获取子元素 元素.children
+      const ul = document.querySelector("ul");
+      console.log(ul.children);
+      const li3 = ul.children[2];
+      // 2. 通过节点操作获取兄弟元素
+      // 前一个兄弟
+      console.log(li3.previousElementSibling);
+      // 后一个兄弟
+      console.log(li3.nextElementSibling);
+    </script>
+  </body>
+</html>

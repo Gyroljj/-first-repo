@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div class="father">
+      <div class="son1">son1</div>
+      <div class="son2">son2</div>
+    </div>
+    <script>
+      const son1 = document.querySelector(".son1");
+      // 删除节点 => 会从DOM数中删除这个节点
+      son1.remove();
+      // document.querySelector('.son2').remove()
+      // document.querySelector('.son2').addEventListener('click', function () {})
+    </script>
+  </body>
+</html>

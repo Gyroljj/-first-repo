@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      // 获取时间戳
+      const date = new Date();
+      // 1. 时间对象.getTime()
+      console.log(date.getTime());
+      // 2. Date.now() 缺陷 => 只能获取当前的时间戳
+      console.log(Date.now());
+      // 3. 推荐 +new Date()
+      console.log(+new Date());
+      console.log(+new Date("2024-6-17"));
+    </script>
+  </body>
+</html>

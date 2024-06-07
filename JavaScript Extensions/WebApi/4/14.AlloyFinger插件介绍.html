@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      div {
+        width: 300px;
+        height: 200px;
+        background-color: #8df;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div></div>
+    <script src="https://unpkg.com/alloyfinger@0.1.16/alloy_finger.js"></script>
+    <script>
+      const div = document.querySelector("div");
+      new AlloyFinger(div, {
+        // 触摸事件
+        swipe: function (e) {
+          // evt 事件对象
+          // e.direction 那个方向 手指滑动的方向
+          if (e.direction === "Left") {
+            // console.log("swipe:  " + e.direction)
+            alert("向左侧滑动");
+          }
+        },
+      });
+    </script>
+  </body>
+</html>

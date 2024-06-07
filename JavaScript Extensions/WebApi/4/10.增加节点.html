@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div>
+      <i>我是第一个</i>
+    </div>
+    <script>
+      // 增加节点操作
+      // 1. 创建节点
+      const span = document.createElement("span");
+      // console.log(span)
+      span.innerHTML = "你好呀";
+
+      // 2. 追加节点到DOM中
+      const div = document.querySelector("div");
+      // 追加到元素的最后
+      // div.append(span)
+      // 追加到元素的最前面
+      div.prepend(span);
+    </script>
+  </body>
+</html>

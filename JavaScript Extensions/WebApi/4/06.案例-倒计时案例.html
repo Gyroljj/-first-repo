@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .countdown {
+        width: 240px;
+        height: 305px;
+        text-align: center;
+        line-height: 1;
+        color: #fff;
+        background-color: brown;
+        /* background-size: 240px; */
+        /* float: left; */
+        overflow: hidden;
+      }
+
+      .countdown .next {
+        font-size: 16px;
+        margin: 25px 0 14px;
+      }
+
+      .countdown .title {
+        font-size: 33px;
+      }
+
+      .countdown .tips {
+        margin-top: 80px;
+        font-size: 23px;
+      }
+
+      .countdown small {
+        font-size: 17px;
+      }
+
+      .countdown .clock {
+        width: 142px;
+        margin: 18px auto 0;
+        overflow: hidden;
+      }
+
+      .countdown .clock span,
+      .countdown .clock i {
+        display: block;
+        text-align: center;
+        line-height: 34px;
+        font-size: 23px;
+        float: left;
+      }
+
+      .countdown .clock span {
+        width: 34px;
+        height: 34px;
+        border-radius: 2px;
+        background-color: #303430;
+      }
+
+      .countdown .clock i {
+        width: 20px;
+        font-style: normal;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="countdown">
+      <p class="next">今天是2222年2月22日</p>
+      <p class="title">下班倒计时</p>
+      <p class="clock">
+        <span id="hour">00</span>
+        <i>:</i>
+        <span id="minutes">25</span>
+        <i>:</i>
+        <span id="second">20</span>
+      </p>
+      <p class="tips">18:30:00下课</p>
+    </div>
+    <script>
+      // 倒计时案例 当前距离  2023年1月28日 18:30 还剩多少时间
+      // 步骤:
+      // 1. 封装函数, 用 将来的时间戳(传进来) 减去 现在的时间戳
+      function getTimer(dateNew) {
+        // 2. 获取现在的时间戳
+        // const date =  +new Date()
+        const time = (dateNew - +new Date()) / 1000;
+        // console.log(time)
+        // 3. 将得到的毫秒转换为时分秒
+        let h = parseInt((time / 60 / 60) % 24); // 计算小时
+        let m = parseInt((time / 60) % 60); // 计算分数
+        let s = parseInt(time % 60); // 计算当前秒数
+        // 补零
+        h = h < 10 ? "0" + h : h;
+        m = m < 10 ? "0" + m : m;
+        s = s < 10 ? "0" + s : s;
+        hour.innerHTML = h;
+        minutes.innerHTML = m;
+        second.innerHTML = s;
+      }
+      // 获取将来的时间
+      const dateNew = +new Date("2024-6-7 18:30:00");
+      // 获取标签
+      const hour = document.querySelector("#hour");
+      const minutes = document.querySelector("#minutes");
+      const second = document.querySelector("#second");
+      // 函数调用
+      getTimer(dateNew);
+      // 4.开启定时器,做倒计时
+      setInterval(function () {
+        getTimer(dateNew);
+      }, 1000);
+      // 思路:
+      //  1. 封装函数,传入将来的时间
+      //  2. 函数内部用将来时间戳 - 现在的时间戳,获取剩余时间
+      //  3. 得到剩余时间毫秒值后 / 1000 得到秒数
+      //  4. 通过公式得到 时 分 秒(补零)
+      //  5. 获取时分秒的标签,设置内容(innerHTML)
+      //  6. 定时器中调用函数完成倒计时
+    </script>
+  </body>
+</html>
