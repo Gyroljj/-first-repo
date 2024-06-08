@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      // location 对象介绍
+      // 1. href 属性 =>
+      // 1.1 获取整个地址栏内容
+      console.log(location.href);
+      // 1.2 赋值 => 跳转页面 **重点**
+      // location.href = "http://www.itcast.cn";
+
+      // 2. search 属性
+      //   =>  获取查询参数 => 在地址栏后面 采用 ?键=值&键=值
+      //  ?uname=red&pwd=123
+      console.log(location.search);
+
+      // 3. hash 属性 => 获取的是地址栏中的hash值 #
+      //   后续vue中会用
+      console.log(location.hash);
+
+      // 4. reload 方法 => 刷新页面
+      //   如果传参数 true 则代表 强制刷新 => 从服务器获取最新的数据
+      // location.reload(true);
+    </script>
+  </body>
+</html>

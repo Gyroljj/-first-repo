@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <button>我是拆弹专家</button>
+    <script>
+      // 1. 开启延时函数
+      // setTimeout(回调函数,延迟时间)
+      // 只执行一次,不会重复执行
+      // setTimeout(function () {
+      //   console.log('我是输出')
+      // }, 1000)
+      // console.log('我是延迟函数后面的代码')
+
+      // 注意: 他会延迟执行代码, 但是不会阻拦后续代码执行(异步任务~)
+
+      // 2. 关闭延迟函数
+      const btn = document.querySelector("button");
+      btn.addEventListener("click", function () {
+        // 关闭延迟函数
+        clearTimeout(timerid);
+      });
+      let timerid = setTimeout(function () {
+        console.log("炸弹爆炸了~");
+      }, 3000);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>5秒钟自动关闭广告</title>
+    <style>
+      body {
+        background-color: #07090c;
+      }
+
+      .ad {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .close {
+        position: absolute;
+        top: 95px;
+        right: 4px;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="ad">
+      <img src="./images/ad.png" alt="" />
+      <span class="close"></span>
+    </div>
+    <script>
+      // 1. 点击按钮可以关闭广告
+      const btn = document.querySelector(".close");
+      // 1.1 给按钮注册事件
+      btn.addEventListener("click", function () {
+        // 1.2 在事件中关闭广告 (当前事件源的父级)
+        this.parentNode.style.display = "none";
+      });
+      // 2. 延时函数可以关闭广告
+      setTimeout(function () {
+        // 关闭广告 => 点击关闭 => 调用点击事件
+        btn.click();
+      }, 5000);
+    </script>
+  </body>
+</html>

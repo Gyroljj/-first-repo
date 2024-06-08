@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <a href="http://www.itcast.cn">传智首页</a>
+  <button>前进</button>
+  <input type="button" value="后退">
+  <button class="btn">go方法</button>
+  <script>
+    // history 了解
+    // 前进功能
+    document.querySelector('button').addEventListener('click', function () {
+      history.forward() // 能够让我们的页面 前面(去之前访问的页面中)
+    })
+
+    // 后退功能
+    document.querySelector('input').addEventListener('click', function () {
+      history.back() // 能够让我们的页面 回退到之前的
+    })
+
+    // go(数字) 如果是正数 则代表前进 如果是负数则代表后退
+    document.querySelector('.btn').addEventListener('click', function () {
+      history.go(1)
+    })
+  </script>
+</body>
+
+</html>

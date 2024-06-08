@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <a href="http://www.itcast.cn">5秒后跳转至首页</a>
+    <script>
+      // 需求: 如果点击链接,跳转到首页 如果不从点,则5秒后自动跳转首页
+      const a = document.querySelector("a");
+      let num = 5; // 计数器
+      let timerId = setInterval(function () {
+        // 就让计数器--
+        num--;
+        a.innerHTML = `${num}秒后跳转至首页`;
+        // 判断计数器的值是不是到0了
+        if (num <= 0) {
+          // 清除定时器
+          clearInterval(timerId);
+          // 跳转
+          location.href = a.href;
+        }
+      }, 1000);
+    </script>
+  </body>
+</html>

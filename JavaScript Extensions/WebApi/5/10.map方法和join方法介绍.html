@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <ul></ul>
+  <script>
+    // 1. map方法 => 映射数组 / 迭代数组
+    const arr = ['狗哥', '马超', '奇奇']
+    // const newArr = arr.map(function (数组每一项, 数组索引) {
+    //  return 结果
+    // })
+    // const newArr = arr.map(function (ele, index) {
+    //   // console.log(ele)
+    //   // console.log(index)
+    //   return ele + '你好'
+    // })
+    // console.log(newArr)
+
+    // 2. join() => 将数组拼接字符串
+    // const arr = ['你好', '狗哥', '我稀饭你']
+    // 相当于将数组元素进行字符串拼接,如果不传参数,则默认以逗号分割
+    // console.log(arr.join())
+    // console.log(arr.join(''))  // 你好狗哥我稀饭你
+
+    // 应用 => 
+    const str = arr.map(function (ele, index) {
+      return `<li>${ele}</li>`
+    })
+    console.log(str)
+    document.querySelector('ul').innerHTML = str.join('')
+  </script>
+</body>
+
+</html>

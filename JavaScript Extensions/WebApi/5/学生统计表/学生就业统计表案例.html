@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>学生就业统计表</title>
+    <link rel="stylesheet" href="./iconfont/iconfont.css" />
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+
+  <body>
+    <h1>学生就业统计表</h1>
+    <form class="info" autocomplete="off">
+      <input type="text" class="uname" name="uname" placeholder="姓名" />
+      <input type="text" class="age" name="age" placeholder="年龄" />
+
+      <input type="text" class="salary" name="salary" placeholder="薪资" />
+      <select name="gender" class="gender">
+        <option value="男">男</option>
+        <option value="女">女</option>
+      </select>
+      <select name="city" class="city">
+        <option value="北京">北京</option>
+        <option value="上海">上海</option>
+        <option value="广州">广州</option>
+        <option value="深圳">深圳</option>
+        <option value="曹县">曹县</option>
+      </select>
+      <button class="add"><i class="iconfont icon-tianjia"></i>添加</button>
+    </form>
+
+    <div class="title">共有数据<span>0</span>条</div>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>姓名</th>
+          <th>年龄</th>
+          <th>性别</th>
+          <th>薪资</th>
+          <th>就业城市</th>
+          <th>录入时间</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>迪丽热巴</td>
+          <td>23</td>
+          <td>女</td>
+          <td>12000</td>
+          <td>北京</td>
+          <td>2099/9/9 08:08:08</td>
+          <td>
+            <a href="javascript:">
+              <i class="iconfont icon-shanchu"></i>
+              删除
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <script>
+      // 参考数据
+      /* const initData = [
+      {
+        stuId: 1,
+        uname: '迪丽热巴',
+        age: 22,
+        gender: '女',
+        salary: '12000',
+        city: '北京',
+        time: '2099/9/9 08:08:08'
+      },
+      {
+        stuId: 2,
+        uname: '狗哥',
+        age: 22,
+        gender: '女',
+        salary: '12000',
+        city: '北京',
+        time: '2099/9/9 08:08:08'
+      }
+    ] */
+      // 此时我为了验证下面的函数是否正确
+      // 我先存一个假数据进去, 后续要注释这句话
+      // localStorage.setItem('data', JSON.stringify(initData))
+      // 业务1: 渲染页面 => 封装函数
+      const tbody = document.querySelector("tbody");
+      let data; // 全局变量 => 存储本地存储获取到的数据
+      function render() {
+        // 1.1 因为要做持久化存储, 所以我们应该先去本地存储中查看是否存在数据
+        // 约定: 我们的本地数据键叫 data
+        data = localStorage.getItem("data");
+        // - 存在数据 => 一定是一个json字符串 => 要转换成js数据才能使用
+        // - 不存在数据 => 我就新建一个空数据,等待数据存储
+        data = data ? JSON.parse(data) : [];
+        // console.log(data)
+        // 1.2 遍历数组将数据处理
+        const newArr = data.map(function (ele, index) {
+          return `
+          <tr>
+            <td>${ele.stuId}</td>
+            <td>${ele.uname}</td>
+            <td>${ele.age}</td>
+            <td>${ele.gender}</td>
+            <td>${ele.salary}</td>
+            <td>${ele.city}</td>
+            <td>${ele.time}</td>
+            <td>
+              <a href="javascript:" data-id="${index}">
+                <i class="iconfont icon-shanchu"></i>
+                删除
+              </a>
+            </td>
+          </tr>`;
+        });
+        // console.log(newArr)
+        // 1.3 将处理后的数组newArr转换为字符串 join('')
+        const str = newArr.join("");
+        // console.log(str)
+        // 1.4 将字符串追加到页面中
+        tbody.innerHTML = str;
+      }
+      render();
+
+      // 业务2. 点击按钮新增数据
+      const form = document.querySelector(".info");
+      // 获取输入框
+      const uname = document.querySelector(".uname");
+      const age = document.querySelector(".age");
+      const salary = document.querySelector(".salary");
+      const gender = document.querySelector(".gender");
+      const city = document.querySelector(".city");
+
+      // 2.1 绑定事件
+      form.addEventListener("submit", function (e) {
+        // 阻止默认的form提交行为
+        e.preventDefault();
+        // 2.2 判断数据有效性 姓名, 年龄, 薪资不能为空
+        if (!uname.value || !age.value || !salary.value) {
+          return alert("输入不能为空");
+        }
+        // 2.3 新增数据 => 在本地存储数据基础上做新增
+        // 将表单中的数据转换为 {} 格式
+        const obj = {
+          // stuId: data.length + 1,
+          // 我应该拿到数组的最后一项的 stuId值 然后再+1
+          // 如果数组没有长度,则代表数组是空的,则id从1开始
+          // 如果数组有长度,则表示数据不为空,则id从数组的最后一个id+1开始
+          stuId: data.length ? data[data.length - 1].stuId + 1 : 1,
+          uname: uname.value,
+          age: age.value,
+          gender: gender.value,
+          salary: salary.value,
+          city: city.value,
+          time: new Date().toLocaleString(),
+        };
+        // console.log(obj)
+        data.push(obj);
+        // console.log(data) // 此时还没有做本地存储呢~
+        // 2.4 把数组数据存储到本地存储里面, 利用 JSON.stringify() 存储为JSON字符串
+        localStorage.setItem("data", JSON.stringify(data));
+        // 2.5 利用本地存储最新数据渲染页面和重置表单
+        // 渲染页面
+        render();
+        // 重置表单 表单.reset()
+        this.reset();
+      });
+
+      // 业务3: 删除业务
+      // 3.1 给tbody绑定点击事件,事件委托的形式给删除按钮注册事件
+      tbody.addEventListener("click", function (e) {
+        // 判断点击的是不是 a
+        if (e.target.tagName === "A") {
+          // 根据索引删除数据
+          // console.log(e.target.dataset) // 自定义数据集合
+          const id = e.target.dataset.id;
+          // 先删除页面中 data数组中的数据,然后再更新本地存储
+          const flag = confirm("是否删除?");
+          if (!flag) {
+            return alert("取消");
+          }
+          data.splice(id, 1);
+          // 本地存储修改
+          localStorage.setItem("data", JSON.stringify(data));
+          // 渲染页面
+          render();
+        }
+      });
+    </script>
+  </body>
+</html>
