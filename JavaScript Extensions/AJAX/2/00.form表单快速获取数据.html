@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 
+    form 表单域
+    input button 表单控件
+   -->
+  <form>
+    用户名 <input type="text" name="username">
+    <br>
+    密 码 <input type="password" name="password">
+    <br>
+    <button type="button">提交</button>
+  </form>
+  <script src="./lib/form-serialize.js"></script>
+  <script>
+    /*
+     1. 得到查询字符串 serialize(表单域)  会将 表单域中的 input的name和value获取到 => name=value&name=value
+     2. 得到对象格式   serialize(表单域, { hash: true }) 会将 表单域中的 input的name和value获取到 
+        => { name:value, name: value  } PS: 如果 接口文档要求 body参数 并且是 application/json
+
+     3. 得到对象格式,会获取空值 serialize(表单域, { hash: true, empty: true })
+      PS: 如果我只输入了用户名没输入密码 { uasrname: 'zs', password: ''  } 
+
+
+
+    注意: 以上操作,都需要 表单控件有自己的 name 属性
+    */
+    const form = document.querySelector('form')
+    document.querySelector('[type="button"]').addEventListener('click', e => {
+      // console.log(serialize(form)) // username=111&password=222
+      // console.log(serialize(form, { hash: true }))
+      console.log(serialize(form, { hash: true, empty: true }))
+    })
+
+  </script>
+</body>
+
+</html>
