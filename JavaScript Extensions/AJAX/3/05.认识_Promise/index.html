@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>认识Promise</title>
+  </head>
+
+  <body>
+    <script>
+      /**
+       * 目标：使用 Promise 管理异步任务
+       */
+      //  1. 创建 Promise 对象
+      // const p = new Promise(function (成功, 失败) { })
+      const p = new Promise(function (resolve, reject) {
+        // 执行异步任务
+        setTimeout(function () {
+          resolve("成功");
+        }, 2000);
+        // 如果成功 则调用 resolve函数
+        // resolve('成功') // 相当于调用then的回调函数
+        // 如果失败 则调用 reject函数
+        // reject('失败')
+      });
+      // 2. 接收成功或失败的结果
+      p.then(function (res) {
+        console.log(res);
+      }).catch(function (err) {
+        console.log(err);
+      });
+    </script>
+  </body>
+</html>

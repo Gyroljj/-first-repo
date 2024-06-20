@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>封装_简易axios函数_获取省份列表</title>
+  </head>
+
+  <body>
+    <script>
+      /**
+       * 目标：封装_简易axios函数_获取省份列表
+       *  1. 定义myAxios函数，接收配置对象，返回Promise对象
+       *  2. 发起XHR请求，默认请求方法为GET
+       *  3. 调用成功/失败的处理程序
+       *  4. 使用myAxios函数，获取省份列表展示
+       */
+      // 1. 定义myAxios函数，接收配置对象，返回Promise对象
+      function myAxios(option) {
+        const { url, method } = option; // 存在问题
+        return new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open(method, url);
+          xhr.addEventListener("loadend", () => {
+            // console.log(xhr.response)
+            resolve(xhr.response);
+          });
+          xhr.send();
+        });
+      }
+      // 调用
+      myAxios({
+        url: "http://hmajax.itheima.net/api/province",
+        method: "GET",
+      }).then((res) => {
+        document.body.innerHTML = JSON.parse(res)
+          .list.map((item) => item)
+          .join("<br>");
+      });
+    </script>
+  </body>
+</html>

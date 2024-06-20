@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>封装_简易axios函数_获取地区列表</title>
+</head>
+
+<body>
+  <p class="my-p"></p>
+  <script>
+    /**
+     * 目标：封装_简易axios函数_获取地区列表
+     *  1. 判断有params选项，携带查询参数
+     *  2. 使用URLSearchParams转换，并携带到url上
+     *  3. 使用myAxios函数，获取地区列表
+    */
+    function myAxios(option) {
+      let { url, method, params } = option
+      // console.log(params)
+      // 获取到了 params 参数, 判断是否有值
+      // 如果有值,则进行查询参数拼接,没有则返回空值
+      params = params ? new URLSearchParams(params).toString() : ''
+      // console.log(params)
+      url = params ? url + '?' + params : url
+      // console.log(url)
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest
+        xhr.open(method, url)
+        xhr.addEventListener('loadend', () => {
+          resolve(JSON.parse(xhr.response))
+        })
+        xhr.send()
+      })
+    }
+    myAxios({
+      url: 'http://hmajax.itheima.net/api/area',
+      method: 'GET',
+      params: { pname: '河北省', cname: '邯郸市' }
+    }).then(res => {
+      document.querySelector('.my-p').innerHTML = res.list.map(item => item).join('<br>')
+    })
+
+  </script>
+</body>
+
+</html>

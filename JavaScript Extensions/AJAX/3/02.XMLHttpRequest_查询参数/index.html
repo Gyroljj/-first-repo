@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XMLHttpRequest_查询参数</title>
+  </head>
+
+  <body>
+    <script>
+      /**
+       * 目标：使用XHR携带查询参数，展示某个省下属的城市列表
+       */
+      const pname = "河北省";
+      //  1. 创建对象 XHR
+      const xhr = new XMLHttpRequest();
+      // 2. 调用 open方法
+      xhr.open("GET", `http://hmajax.itheima.net/api/city?pname=${pname}`);
+      // 3. 等待返回结果
+      xhr.addEventListener("loadend", () => {
+        console.log(JSON.parse(xhr.response));
+      });
+      // 4. 发起请求
+      xhr.send();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>认识Promise状态</title>
+  </head>
+
+  <body>
+    <script>
+      /**
+       * 目标：认识Promise状态
+       */
+      // 1. 创建Promise对象
+      const p = new Promise((resolve, reject) => {
+        // 2. 执行异步代码
+        setTimeout(() => {
+          // fulfilled 调用 resolve 函数后, Promise对象就变成了 兑现状态
+          resolve("模拟AJAX请求-成功结果");
+          // rejected 调用了 reject 函数后,Promise 对象就变成了 拒绝状态
+          // reject(new Error('模拟AJAX请求-失败结果'))
+        }, 2000);
+      });
+      console.log(p);
+      // 创建了 Promise实例对象,但是没有执行成功和失败的回调函数此时就是 "pending"
+
+      // 3. 获取结果
+      p.then((result) => {
+        console.log(result);
+      }).catch((error) => {
+        console.log(error);
+      });
+      // 注意: Promise 存在状态凝固特性,一旦状态从 <pending> 修改为 fulfilled或值是rejected 后就不会在此修改了
+    </script>
+  </body>
+</html>
