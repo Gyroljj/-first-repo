@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+      // Promise的其他静态方法
+      // all  等待机制
+      // race 赛跑机制 => 只要有一个Promise对象返回了成功或失败的结果就支持对象的then或catch
+      // const arr = [
+      //   // 深圳-440300
+      //   axios({
+      //     url: 'http://hmajax.itheima.net/api/weather',
+      //     method: 'GET',
+      //     params: {
+      //       city: '440300'
+      //     }
+      //   }),
+      //   // 北京-110100
+      //   axios({
+      //     url: 'http://hmajax.itheima.net/api/weather',
+      //     method: 'GET',
+      //     params: {
+      //       city: '110100'
+      //     }
+      //   }),
+      //   // 上海-310100
+      //   axios({
+      //     url: 'http://hmajax.itheima.net/api/weather',
+      //     method: 'GET',
+      //     params: {
+      //       city: '310100'
+      //     }
+      //   }),
+      //   // 广州-440100
+      //   axios({
+      //     url: 'http://hmajax.itheima.net/api/weather',
+      //     method: 'GET',
+      //     params: {
+      //       city: '440100'
+      //     }
+      //   }),
+      // ]
+      // const p = Promise.race(arr)
+      // p.then(res => {
+      //   console.log(res)
+      // })
+      // Promise.resolve() 手动返回一个成功的promise对象
+      // Promise.resolve()
+      // Promise.reject() 手动返回一个失败的promise对象
+      // Promise.reject('错误')
+    </script>
+  </body>
+</html>

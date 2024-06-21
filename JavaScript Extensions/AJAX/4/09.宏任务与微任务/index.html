@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>微任务与宏任务</title>
+</head>
+
+<body>
+  <script>
+    /**
+     * 目标：阅读并回答打印的执行顺序
+    */
+    console.log(1)
+    setTimeout(() => {
+      console.log(2)
+    }, 0)
+    const p = new Promise((resolve, reject) => {
+      resolve(3)
+    })
+    p.then(res => {
+      console.log(res)
+    })
+    console.log(4)
+    // 先执行第一个宏任务(scipt 或者 js文件),
+    // 如果宏任务中有微任务,那么在执行完当前宏任务后,会优先执行当前宏任务的微任务
+    // 微任务执行完成后，继续执行下一个宏任务
+  </script>
+</body>
+
+</html>
