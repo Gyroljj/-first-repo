@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-size: 18px;
+      }
+
+      #app {
+        padding: 10px 20px;
+      }
+
+      .query {
+        margin: 10px 0;
+      }
+
+      .box {
+        display: flex;
+      }
+
+      textarea {
+        width: 300px;
+        height: 160px;
+        font-size: 18px;
+        border: 1px solid #dedede;
+        outline: none;
+        resize: none;
+        padding: 10px;
+      }
+
+      textarea:hover {
+        border: 1px solid #1589f5;
+      }
+
+      .transbox {
+        width: 300px;
+        height: 160px;
+        background-color: #f0f0f0;
+        padding: 10px;
+        border: none;
+      }
+
+      .tip-box {
+        width: 300px;
+        height: 25px;
+        line-height: 25px;
+        display: flex;
+      }
+
+      .tip-box span {
+        flex: 1;
+        text-align: center;
+      }
+
+      .query span {
+        font-size: 18px;
+      }
+
+      .input-wrap {
+        position: relative;
+      }
+
+      .input-wrap span {
+        position: absolute;
+        right: 15px;
+        bottom: 15px;
+        font-size: 12px;
+      }
+
+      .input-wrap i {
+        font-size: 20px;
+        font-style: normal;
+      }
+
+      .query {
+        display: inline-block;
+        margin: 10px;
+      }
+
+      select {
+        width: 100px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <!-- 条件选择框 -->
+      <div class="query">
+        <span>源语言：</span>
+        <select v-model="obj.from">
+          <option value="en">英语</option>
+          <option value="zh">简体中文</option>
+          <option value="jp">日语</option>
+          <option value="fra">法语</option>
+        </select>
+      </div>
+      <div class="query">
+        <span>目标语言：</span>
+        <select v-model="obj.to">
+          <option value="zh">简体中文</option>
+          <option value="en">英语</option>
+          <option value="jp">日语</option>
+          <option value="fra">法语</option>
+        </select>
+      </div>
+
+      <!-- 翻译框 -->
+      <div class="box">
+        <div class="input-wrap">
+          <textarea v-model="obj.q"></textarea>
+          <span><i>⌨️</i>文档翻译</span>
+        </div>
+        <div class="output-wrap">
+          <div class="transbox">{{ result }}</div>
+        </div>
+      </div>
+    </div>
+    <script src="./js/vue-2.7.14.js"></script>
+    <script src="./js/axios.js"></script>
+    <script>
+      // 接口地址：http://www.itcbc.com:3006/api/translate
+      // 请求方式：get
+      // 请求参数：
+      // （1）q：   需要被翻译的文本（必传）
+      // （2）from：源语言（可选），默认-英语
+      // （3）to：  需要被翻译成的语言（可选）默认值-中文
+      // -----------------------------------------------
+
+      const app = new Vue({
+        el: "#app",
+        data: {
+          words: "",
+          obj: {
+            q: "What the fuck is a surprise", //把输入框双向绑定
+            from: "en", //你输入的是什么语言
+            to: "zh", //翻译成什么语言
+          },
+          result: "", //翻译后的结果
+          timer: null,
+        },
+        // 侦听器
+        watch: {
+          // -------------------------- 侦听器简写写法 --------------------------
+          // words:(变化后的值,变化前的值(变化前的值可写可不写))
+          // words(newVal, oldVal) {
+          //   console.log(newVal, oldVal)
+          // },
+          // // 如果侦听的是对象的属性 要加'引号'
+          // 'obj.q'(newVal, oldVal) {
+          //   console.log(newVal, oldVal)
+          // }
+
+          // -------------------------- 侦听器完整写法 --------------------------
+          //   数据:{
+          //     handler(变化后的值,变化前的值){
+          // },
+          // deep:true, //加入该配置,表示深度侦听;当对象的任意属性改变后,都可以侦听到
+          // immediate:true //立即侦听(页面刷新,马上执行一次handler函数)
+          //   }
+          obj: {
+            handler(val) {
+              if (val === "") {
+                this.result = "";
+                return;
+              }
+              clearTimeout(timer);
+              this.timer = setTimeout(async () => {
+                const { data: res } = await axios({
+                  url: "http://www.itcbc.com:3006/api/translate",
+                  params: val,
+                });
+                console.log(res);
+                // 把服务器返回的结果,赋值给数据项
+                this.result = res.trans_result[0].dst;
+              }, 1000);
+            },
+            deep: true, //加入该配置,表示深度侦听;当对象的任意属性改变后,都可以侦听到
+            immediate: true, //立即侦听(页面刷新,马上执行一次handler函数)
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
