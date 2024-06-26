@@ -167,11 +167,11 @@
           //   }
           obj: {
             handler(val) {
-              if (val === "") {
+              if (val.q === "") {
                 this.result = "";
                 return;
               }
-              clearTimeout(timer);
+              clearTimeout(this.timer);
               this.timer = setTimeout(async () => {
                 const { data: res } = await axios({
                   url: "http://www.itcbc.com:3006/api/translate",
