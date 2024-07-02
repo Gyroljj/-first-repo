@@ -1,20 +1,25 @@
 <template>
   <div class="dialog">
     <div class="dialog-header">
-      <h3>友情提示</h3>
+      <!-- 标题也不能写死 -->
+      <slot name="title"></slot>
       <span class="close">✖️</span>
     </div>
-    <div class="dialog-content">我是文本内容</div>
+    <div class="dialog-content">
+      <!-- 内容区，内容不固定，所以不能写死，这时用 <slot></slot> 占位 -->
+      <!-- 没有name属性的插槽，其实也有名字，叫做 default -->
+      <slot username="张三" age="21"></slot>
+    </div>
     <div class="dialog-footer">
-      <button>取消</button>
-      <button>确认</button>
+      <!-- 按钮是什么，也不能写死 -->
+      <slot name="btn" sex="男"></slot>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {}
   }
 }

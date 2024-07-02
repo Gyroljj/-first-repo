@@ -9,28 +9,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>1</td>
-        <td>小张</td>
-        <td>8</td>
+      <tr v-for="item in data" :key="item.id">
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.age }}</td>
         <td>
-          <button>删除</button>
-        </td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>小张</td>
-        <td>8</td>
-        <td>
-          <button>删除</button>
-        </td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>小张</td>
-        <td>8</td>
-        <td>
-          <button>删除</button>
+          <!-- 表格的最后一列，放什么按钮，不能写死 -->
+          <slot :id="item.id"></slot>
         </td>
       </tr>
     </tbody>
@@ -39,7 +24,7 @@
 
 <script>
 export default {
-  props: ['data', 'includes']
+  props: ['data']
 }
 </script>
 
