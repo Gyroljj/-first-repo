@@ -33,11 +33,22 @@ const routes = [
 ]
 const router = new VueRouter({ routes })
 
-// 白名单(就是一个数组，数组收录所有无需登录即可访问的页面)
-
-// 路由前置守卫
-// 1. to 往哪去
-// 2. from 从哪来
-// 3. next 是否放行 next() 放行 next(路径) 拦截到某个页面
+// 这里，加入导航守卫（全局前置导航守卫）
+router.beforeEach((to, from, next) => {
+  // 访问任何地址，都会执行这个函数
+  // - to 表示你要访问的那个页面   to.path 表示你要访问的那个路由地址
+  // - from 表示你哪里跳转过来的
+  // - next() -- 允许通过；  next('/login') -- 表示不允许通过，并跳转到/login
+  // console.log(to)
+  if (
+    !localStorage.getItem('mobile-token') &&
+    to.path !== '/login' &&
+    to.path !== '/register'
+  ) {
+    next('/login') // 跳转到登录页
+    return
+  }
+  next() // 不符合上述条件，允许通过
+})
 
 export default router
