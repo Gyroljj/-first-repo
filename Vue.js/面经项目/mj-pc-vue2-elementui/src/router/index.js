@@ -1,3 +1,4 @@
+import store from '@/store'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
@@ -27,6 +28,18 @@ const routes = [
 
 const router = new VueRouter({
   routes
+})
+
+// 加入导航守卫：如果没有登录，则不允许访问其他页面
+router.beforeEach((to, from, next) => {
+  // to.path --- 要访问的地址
+  // from.path --- 从哪个地址跳转过来
+  // next() --- 放行    next('/login') -- 不放行，并跳转到登录页面
+  if (to.path !== '/login' && store.state.user.token === '') {
+    next('/login')
+    return
+  }
+  next()
 })
 
 export default router
