@@ -1,0 +1,3 @@
+[submodule "react-native-image-viewer"]
+	path = Vue3+TS优医问诊项目/consult-patient-vue3
+	url = git@github.com:Gyroljj/consult-patient-vue3.git
