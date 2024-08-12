@@ -1,7 +1,7 @@
 <template>
   <div class="login-page">
     <el-card>
-      <template #header>面经后台管理系统</template>
+      <template #header>浩方面经后台管理系统</template>
       <!-- 卡片内容，默认插槽，不用嵌套template -->
       <el-form ref="form" label-width="80px" :model="user" :rules="rules">
         <!-- 第一项：账号 -->

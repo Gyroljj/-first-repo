@@ -1,7 +1,7 @@
 <template>
   <el-container class="layout-page">
     <el-aside width="200px">
-      <div class="logo">黑马面经</div>
+      <div class="logo">浩方面经</div>
       <!-- 侧边栏菜单 start -->
       <el-menu
         background-color="#313a46"
